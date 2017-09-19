@@ -181,6 +181,16 @@ hr.small {
     filter: blur(2px); */
 }
 
+.brand {
+    color: rgba(0, 150, 135, 0.93);
+    text-shadow : 1px 1px rgba(59, 59, 59, 0.9);
+}
+
+.porquerolles {
+    color: rgba(255, 255, 255, 0.93);
+    text-shadow : 1px 1px rgba(59, 59, 59, 0.9);
+}
+
 .bg1 {
     background: url(../img/bg1.jpg) no-repeat center center scroll;
     background-size: cover;

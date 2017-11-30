@@ -9,7 +9,6 @@
         <script src="bootstrap.min.js"></script>
         <script src="jquery.checkboxes-1.2.0.min.js"></script>
 
-
     </head>
 
 <body  onkeydown="unbindselect(event);" onkeyup="bindselect(event);" onmousedown="bindhover(event);" onmouseup="unbindhover(event);" >
@@ -24,11 +23,17 @@
             
         </div>
         <div class="row">
+            <div class="col-md-4"><button id="btn-check-all" type="button" class="btn btn-primary">Check All</button>
+                </div>
+            <div class="col-md-4"><button id="btn-uncheck-all" type="button" class="btn btn-danger">Uncheck All</button></div>
+            <div class="col-md-4"></div>
+        </div>
+        <div class="row">
             
             <div class="col-md-12">
 
-                    <table class="table table-condensed" id="table" >
-                            <tbody>
+                    <table class="table table-condensed" id="table" >    
+                        <tbody>
                               <tr>
                                 <td><div class="checkbox checkbox-success checkbox-inline">
                                     <input type="checkbox" class="styled" name="group1" value="option1" >
@@ -66,6 +71,8 @@
                                     <input type="checkbox" class="styled" name="group1" value="option1" >
                                     <label></label>
                                 </div></td>
+                              </tr>
+                              <tr>
                                 <td><div class="checkbox checkbox-success checkbox-inline">
                                     <input type="checkbox" class="styled" name="group1" value="option1" >
                                     <label></label>
@@ -102,6 +109,8 @@
                                     <input type="checkbox" class="styled" name="group1" value="option1" >
                                     <label></label>
                                 </div></td>
+                              </tr>
+                              <tr>
                                 <td><div class="checkbox checkbox-success checkbox-inline">
                                     <input type="checkbox" class="styled" name="group1" value="option1" >
                                     <label></label>
@@ -130,8 +139,90 @@
                                     <input type="checkbox" class="styled" name="group1" value="option1" >
                                     <label></label>
                                 </div></td>
-                                
-                                
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                              </tr>
+                              <tr>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                              </tr>
+                              <tr>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
+                                <td><div class="checkbox checkbox-success checkbox-inline">
+                                    <input type="checkbox" class="styled" name="group1" value="option1" >
+                                    <label></label>
+                                </div></td>
                               </tr>
                             </tbody>
                           </table>
@@ -162,6 +253,17 @@
     };
 
     var handlerHoverSelect = function () { $(this).click();  };
+
+
+    $('#btn-check-all').on('click', function(e) {
+        $('#table').checkboxes('check');
+        e.preventDefault();
+    });
+
+    $('#btn-uncheck-all').on('click', function(e) {
+        $('#table').checkboxes('uncheck');
+        e.preventDefault();
+    });
 
     
     function bindselect(e){$("input:checkbox").on('click', handlerSingleSelect);}

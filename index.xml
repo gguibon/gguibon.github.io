@@ -276,7 +276,7 @@ data.head()
 &lt;p&gt;Demo:&lt;/p&gt;
 
 
-&lt;div id=&#34;chart-134957628&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-826579413&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -286,7 +286,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-134957628&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-826579413&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
@@ -1004,9 +1004,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Analyse syntaxique de l’ancien français : quelles propriétés de la langue influent le plus sur la qualité de l’apprentissage ?</title>
-      <link>/publication/oldfrench-tlt2014/</link>
-      <pubDate>Mon, 22 Jun 2015 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-tlt2014/</guid>
+      <link>/publication/oldfrench-taln2015/</link>
+      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/oldfrench-taln2015/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -1026,10 +1026,10 @@ Supplementary notes can be added here, including [code, math, and images](https:
     </item>
     
     <item>
-      <title>Analyse syntaxique de l’ancien français : quelles propriétés de la langue influent le plus sur la qualité de l’apprentissage ?</title>
-      <link>/publication/oldfrench-taln2015/</link>
-      <pubDate>Mon, 22 Dec 2014 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-taln2015/</guid>
+      <title>Parsing Poorly Standardized Language Dependency on Old French</title>
+      <link>/publication/oldfrench-tlt2014/</link>
+      <pubDate>Fri, 12 Dec 2014 00:00:00 +0000</pubDate>
+      <guid>/publication/oldfrench-tlt2014/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.

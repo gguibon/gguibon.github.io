@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/courses/example/python/</loc>
-    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/courses/example/visualization/</loc>
-    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/courses/example/stats/</loc>
-    <lastmod>2021-01-01T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/talk/example-talk/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
@@ -23,7 +14,7 @@
     <loc>/courses/</loc>
     <lastmod>2021-01-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/courses/example/</loc>
+    <loc>/courses/ml4nlp/</loc>
     <lastmod>2021-01-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/academic/</loc>
@@ -118,6 +109,9 @@
   </url><url>
     <loc>/publication/arborator-lrec2020/</loc>
     <lastmod>2020-05-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/courses/essec/</loc>
+    <lastmod>2020-01-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/post/writing-technical-content/</loc>
     <lastmod>2019-07-12T00:00:00+00:00</lastmod>
@@ -218,6 +212,9 @@
     <loc>/slides/example/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/courses/javaee/</loc>
+    <lastmod>2019-01-24T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/privacy/</loc>
     <lastmod>2018-06-28T00:00:00+01:00</lastmod>
   </url><url>
@@ -263,6 +260,9 @@
     <loc>/tag/prediction/</loc>
     <lastmod>2018-03-13T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/courses/deeplearning-introduction/</loc>
+    <lastmod>2018-01-24T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/publication/emoji-taln2017/</loc>
     <lastmod>2017-06-13T00:00:00+00:00</lastmod>
   </url><url>
@@ -274,6 +274,12 @@
   </url><url>
     <loc>/publication/emoji-coria2017/</loc>
     <lastmod>2017-03-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/courses/database-java/</loc>
+    <lastmod>2017-01-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/courses/python-intro-amu/</loc>
+    <lastmod>2017-01-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication/oldfrench-taln2016/</loc>
     <lastmod>2016-07-13T00:00:00+00:00</lastmod>
@@ -321,7 +327,7 @@
     <lastmod>2015-12-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication/oldfrench-taln2015/</loc>
-    <lastmod>2014-12-22T00:00:00+00:00</lastmod>
+    <lastmod>2015-06-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication/oldfrench-tlt2014/</loc>
     <lastmod>2014-12-12T00:00:00+00:00</lastmod>

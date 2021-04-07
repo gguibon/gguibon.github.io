@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning for Natural Language Processing | Gaël Guibon</title>
+    <link>/courses/ml4nlp/</link>
+      <atom:link href="/courses/ml4nlp/index.xml" rel="self" type="application/rss+xml" />
+    <description>Machine Learning for Natural Language Processing</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 24 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/courses/ml4nlp/featured.png</url>
+      <title>Machine Learning for Natural Language Processing</title>
+      <link>/courses/ml4nlp/</link>
+    </image>
+    
+  </channel>
+</rss>

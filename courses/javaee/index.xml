@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java Enterprise Edition - Java pour le web | Gaël Guibon</title>
+    <link>/courses/javaee/</link>
+      <atom:link href="/courses/javaee/index.xml" rel="self" type="application/rss+xml" />
+    <description>Java Enterprise Edition - Java pour le web</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/courses/javaee/featured.png</url>
+      <title>Java Enterprise Edition - Java pour le web</title>
+      <link>/courses/javaee/</link>
+    </image>
+    
+  </channel>
+</rss>

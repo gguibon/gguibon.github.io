@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publications | Gaël Guibon</title>
-    <link>/publication/</link>
-      <atom:link href="/publication/index.xml" rel="self" type="application/rss+xml" />
+    <link>gguibon.github.io/publication/</link>
+      <atom:link href="gguibon.github.io/publication/index.xml" rel="self" type="application/rss+xml" />
     <description>Publications</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 22 May 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021 Gaël Guibon</copyright><lastBuildDate>Fri, 22 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <url>/gguibon.github.io/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
       <title>Publications</title>
-      <link>/publication/</link>
+      <link>gguibon.github.io/publication/</link>
     </image>
     
     <item>
       <title>Analyse syntaxique de l’ancien français : quelles propriétés de la langue influent le plus sur la qualité de l’apprentissage ?</title>
-      <link>/publication/oldfrench-lrec2020/</link>
+      <link>gguibon.github.io/publication/oldfrench-lrec2020/</link>
       <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-lrec2020/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-lrec2020/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -37,9 +37,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>When Collaborative Treebank Curation Meets Graph Grammars</title>
-      <link>/publication/arborator-lrec2020/</link>
+      <link>gguibon.github.io/publication/arborator-lrec2020/</link>
       <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/arborator-lrec2020/</guid>
+      <guid>gguibon.github.io/publication/arborator-lrec2020/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -58,9 +58,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Recommandation automatique et adaptative d&#39;émojis</title>
-      <link>/publication/thesis/</link>
+      <link>gguibon.github.io/publication/thesis/</link>
       <pubDate>Fri, 24 May 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/thesis/</guid>
+      <guid>gguibon.github.io/publication/thesis/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -81,9 +81,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Multilingual Fake News Detection with Satire</title>
-      <link>/publication/fakenews-cicling2019/</link>
+      <link>gguibon.github.io/publication/fakenews-cicling2019/</link>
       <pubDate>Fri, 19 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/fakenews-cicling2019/</guid>
+      <guid>gguibon.github.io/publication/fakenews-cicling2019/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -104,9 +104,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>On the Use of Dependencies in Relation Classification of Text with Deep Learning </title>
-      <link>/publication/relation-cicling2019/</link>
+      <link>gguibon.github.io/publication/relation-cicling2019/</link>
       <pubDate>Fri, 19 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/relation-cicling2019/</guid>
+      <guid>gguibon.github.io/publication/relation-cicling2019/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -127,9 +127,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>De l’usage réel des emojis à une prédiction de leurs catégories</title>
-      <link>/publication/emoji-taln2018/</link>
+      <link>gguibon.github.io/publication/emoji-taln2018/</link>
       <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-taln2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-taln2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -150,9 +150,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Emoji Recommendation in Private Instant Messages</title>
-      <link>/publication/emoji-sac2018/</link>
+      <link>gguibon.github.io/publication/emoji-sac2018/</link>
       <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-sac2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-sac2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -174,9 +174,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>From Emoji Usage to Categorical Emoji Prediction</title>
-      <link>/publication/emoji-cicling2018/</link>
+      <link>gguibon.github.io/publication/emoji-cicling2018/</link>
       <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-cicling2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-cicling2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -198,9 +198,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>LIS at SemEval-2018 Task 2: Mixing Word Embeddings and Bag of Features for Multilingual Emoji Prediction</title>
-      <link>/publication/emoji-semeval2018/</link>
+      <link>gguibon.github.io/publication/emoji-semeval2018/</link>
       <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-semeval2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-semeval2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -221,9 +221,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>De l’usage réel des emojis à une prédiction de leurs catégories</title>
-      <link>/publication/emoji-taln2017/</link>
+      <link>gguibon.github.io/publication/emoji-taln2017/</link>
       <pubDate>Tue, 13 Jun 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-taln2017/</guid>
+      <guid>gguibon.github.io/publication/emoji-taln2017/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -244,9 +244,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Prédiction automatique d&#39;emojis sentimentaux </title>
-      <link>/publication/emoji-coria2017/</link>
+      <link>gguibon.github.io/publication/emoji-coria2017/</link>
       <pubDate>Wed, 22 Mar 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-coria2017/</guid>
+      <guid>gguibon.github.io/publication/emoji-coria2017/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -267,9 +267,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>SOFA : Une plateforme d’analyse syntaxique en ligne pour l’ancien français (SOFA : An online Syntactic Old French Annotator)</title>
-      <link>/publication/oldfrench-taln2016/</link>
+      <link>gguibon.github.io/publication/oldfrench-taln2016/</link>
       <pubDate>Wed, 13 Jul 2016 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-taln2016/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-taln2016/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -290,9 +290,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>From Emojis to Sentiment Analysis</title>
-      <link>/publication/emoji-wacai2016/</link>
+      <link>gguibon.github.io/publication/emoji-wacai2016/</link>
       <pubDate>Fri, 13 May 2016 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-wacai2016/</guid>
+      <guid>gguibon.github.io/publication/emoji-wacai2016/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -313,9 +313,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Searching for Discriminative Metadata of Heterogenous Corpora</title>
-      <link>/publication/oldfrench-tlt2015/</link>
+      <link>gguibon.github.io/publication/oldfrench-tlt2015/</link>
       <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-tlt2015/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-tlt2015/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -336,9 +336,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Analyse syntaxique de l’ancien français : quelles propriétés de la langue influent le plus sur la qualité de l’apprentissage ?</title>
-      <link>/publication/oldfrench-taln2015/</link>
+      <link>gguibon.github.io/publication/oldfrench-taln2015/</link>
       <pubDate>Mon, 22 Jun 2015 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-taln2015/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-taln2015/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -359,9 +359,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Parsing Poorly Standardized Language Dependency on Old French</title>
-      <link>/publication/oldfrench-tlt2014/</link>
+      <link>gguibon.github.io/publication/oldfrench-tlt2014/</link>
       <pubDate>Fri, 12 Dec 2014 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-tlt2014/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-tlt2014/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.

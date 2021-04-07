@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>multi-label classification | Gaël Guibon</title>
-    <link>/tag/multi-label-classification/</link>
-      <atom:link href="/tag/multi-label-classification/index.xml" rel="self" type="application/rss+xml" />
+    <link>gguibon.github.io/tag/multi-label-classification/</link>
+      <atom:link href="gguibon.github.io/tag/multi-label-classification/index.xml" rel="self" type="application/rss+xml" />
     <description>multi-label classification</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 13 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021 Gaël Guibon</copyright><lastBuildDate>Fri, 13 Apr 2018 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <url>/gguibon.github.io/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
       <title>multi-label classification</title>
-      <link>/tag/multi-label-classification/</link>
+      <link>gguibon.github.io/tag/multi-label-classification/</link>
     </image>
     
     <item>
       <title>Emoji Recommendation in Private Instant Messages</title>
-      <link>/publication/emoji-sac2018/</link>
+      <link>gguibon.github.io/publication/emoji-sac2018/</link>
       <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-sac2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-sac2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.

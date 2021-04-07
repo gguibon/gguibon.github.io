@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>prediction | Gaël Guibon</title>
-    <link>/tag/prediction/</link>
-      <atom:link href="/tag/prediction/index.xml" rel="self" type="application/rss+xml" />
+    <link>gguibon.github.io/tag/prediction/</link>
+      <atom:link href="gguibon.github.io/tag/prediction/index.xml" rel="self" type="application/rss+xml" />
     <description>prediction</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 13 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021 Gaël Guibon</copyright><lastBuildDate>Tue, 13 Mar 2018 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <url>/gguibon.github.io/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
       <title>prediction</title>
-      <link>/tag/prediction/</link>
+      <link>gguibon.github.io/tag/prediction/</link>
     </image>
     
     <item>
       <title>LIS at SemEval-2018 Task 2: Mixing Word Embeddings and Bag of Features for Multilingual Emoji Prediction</title>
-      <link>/publication/emoji-semeval2018/</link>
+      <link>gguibon.github.io/publication/emoji-semeval2018/</link>
       <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-semeval2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-semeval2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.

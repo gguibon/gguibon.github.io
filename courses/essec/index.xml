@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Introduction to Python and Programming | Gaël Guibon</title>
-    <link>/courses/essec/</link>
-      <atom:link href="/courses/essec/index.xml" rel="self" type="application/rss+xml" />
+    <link>gguibon.github.io/courses/essec/</link>
+      <atom:link href="gguibon.github.io/courses/essec/index.xml" rel="self" type="application/rss+xml" />
     <description>Introduction to Python and Programming</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 24 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021 Gaël Guibon</copyright><lastBuildDate>Fri, 24 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/courses/essec/featured.png</url>
+      <url>/gguibon.github.io/courses/essec/featured.png</url>
       <title>Introduction to Python and Programming</title>
-      <link>/courses/essec/</link>
+      <link>gguibon.github.io/courses/essec/</link>
     </image>
     
   </channel>

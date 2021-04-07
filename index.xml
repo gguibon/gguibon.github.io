@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gaël Guibon</title>
-    <link>/</link>
-      <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <link>gguibon.github.io/</link>
+      <atom:link href="gguibon.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Gaël Guibon</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© 2021 Gaël Guibon</copyright><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
     <image>
-      <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <url>/gguibon.github.io/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
       <title>Gaël Guibon</title>
-      <link>/</link>
+      <link>gguibon.github.io/</link>
     </image>
     
     <item>
       <title>Example Talk</title>
-      <link>/talk/example-talk/</link>
+      <link>gguibon.github.io/talk/example-talk/</link>
       <pubDate>Sat, 01 Jun 2030 13:00:00 +0000</pubDate>
-      <guid>/talk/example-talk/</guid>
+      <guid>gguibon.github.io/talk/example-talk/</guid>
       <description>&lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click on the &lt;strong&gt;Slides&lt;/strong&gt; button above to view the built-in slides feature.
@@ -34,9 +34,9 @@
     
     <item>
       <title>Welcome to Wowchemy, the website builder for Hugo</title>
-      <link>/post/getting-started/</link>
+      <link>gguibon.github.io/post/getting-started/</link>
       <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
-      <guid>/post/getting-started/</guid>
+      <guid>gguibon.github.io/post/getting-started/</guid>
       <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;The Wowchemy website builder for Hugo, along with its starter templates, is designed for professional creators, educators, and teams/organizations - although it can be used to create any kind of site&lt;/li&gt;
@@ -111,9 +111,9 @@
     
     <item>
       <title>Analyse syntaxique de l’ancien français : quelles propriétés de la langue influent le plus sur la qualité de l’apprentissage ?</title>
-      <link>/publication/oldfrench-lrec2020/</link>
+      <link>gguibon.github.io/publication/oldfrench-lrec2020/</link>
       <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-lrec2020/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-lrec2020/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -134,9 +134,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>When Collaborative Treebank Curation Meets Graph Grammars</title>
-      <link>/publication/arborator-lrec2020/</link>
+      <link>gguibon.github.io/publication/arborator-lrec2020/</link>
       <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/arborator-lrec2020/</guid>
+      <guid>gguibon.github.io/publication/arborator-lrec2020/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -155,9 +155,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Writing technical content in Academic</title>
-      <link>/post/writing-technical-content/</link>
+      <link>gguibon.github.io/post/writing-technical-content/</link>
       <pubDate>Fri, 12 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>/post/writing-technical-content/</guid>
+      <guid>gguibon.github.io/post/writing-technical-content/</guid>
       <description>&lt;p&gt;Academic is designed to give technical content creators a seamless experience. You can focus on the content and Academic handles the rest.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Highlight your code snippets, take notes on math classes, and draw diagrams from textual representation.&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;On this page, you&amp;rsquo;ll find some examples of the types of technical content that can be rendered with Academic.&lt;/p&gt;
@@ -181,7 +181,7 @@ data.head()
 &lt;p&gt;Demo:&lt;/p&gt;
 
 
-&lt;div id=&#34;chart-738641529&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-478926351&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   (function() {
     let a = setInterval( function() {
@@ -191,7 +191,7 @@ data.head()
       clearInterval( a );
 
       Plotly.d3.json(&#34;./line-chart.json&#34;, function(chart) {
-        Plotly.plot(&#39;chart-738641529&#39;, chart.data, chart.layout, {responsive: true});
+        Plotly.plot(&#39;chart-478926351&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
@@ -419,9 +419,9 @@ You found me!
     
     <item>
       <title>Recommandation automatique et adaptative d&#39;émojis</title>
-      <link>/publication/thesis/</link>
+      <link>gguibon.github.io/publication/thesis/</link>
       <pubDate>Fri, 24 May 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/thesis/</guid>
+      <guid>gguibon.github.io/publication/thesis/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -442,9 +442,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Multilingual Fake News Detection with Satire</title>
-      <link>/publication/fakenews-cicling2019/</link>
+      <link>gguibon.github.io/publication/fakenews-cicling2019/</link>
       <pubDate>Fri, 19 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/fakenews-cicling2019/</guid>
+      <guid>gguibon.github.io/publication/fakenews-cicling2019/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -465,9 +465,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>On the Use of Dependencies in Relation Classification of Text with Deep Learning </title>
-      <link>/publication/relation-cicling2019/</link>
+      <link>gguibon.github.io/publication/relation-cicling2019/</link>
       <pubDate>Fri, 19 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/relation-cicling2019/</guid>
+      <guid>gguibon.github.io/publication/relation-cicling2019/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -488,9 +488,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Display Jupyter Notebooks with Academic</title>
-      <link>/post/jupyter/</link>
+      <link>gguibon.github.io/post/jupyter/</link>
       <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>/post/jupyter/</guid>
+      <guid>gguibon.github.io/post/jupyter/</guid>
       <description>&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from IPython.core.display import Image
 Image(&#39;https://www.python.org/static/community_logos/python-logo-master-v3-TM-flattened.png&#39;)
 &lt;/code&gt;&lt;/pre&gt;
@@ -532,9 +532,9 @@ date: 2019-09-01
     
     <item>
       <title>Slides</title>
-      <link>/slides/example/</link>
+      <link>gguibon.github.io/slides/example/</link>
       <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>/slides/example/</guid>
+      <guid>gguibon.github.io/slides/example/</guid>
       <description>&lt;h1 id=&#34;create-slides-in-markdown-with-wowchemy&#34;&gt;Create slides in Markdown with Wowchemy&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://wowchemy.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Wowchemy&lt;/a&gt; | &lt;a href=&#34;https://owchemy.com/docs/managing-content/#create-slides&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
@@ -661,27 +661,27 @@ Three
     
     <item>
       <title>Privacy Policy</title>
-      <link>/privacy/</link>
+      <link>gguibon.github.io/privacy/</link>
       <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/privacy/</guid>
+      <guid>gguibon.github.io/privacy/</guid>
       <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Terms</title>
-      <link>/terms/</link>
+      <link>gguibon.github.io/terms/</link>
       <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/terms/</guid>
+      <guid>gguibon.github.io/terms/</guid>
       <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>De l’usage réel des emojis à une prédiction de leurs catégories</title>
-      <link>/publication/emoji-taln2018/</link>
+      <link>gguibon.github.io/publication/emoji-taln2018/</link>
       <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-taln2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-taln2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -702,9 +702,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Emoji Recommendation in Private Instant Messages</title>
-      <link>/publication/emoji-sac2018/</link>
+      <link>gguibon.github.io/publication/emoji-sac2018/</link>
       <pubDate>Fri, 13 Apr 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-sac2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-sac2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -726,9 +726,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>From Emoji Usage to Categorical Emoji Prediction</title>
-      <link>/publication/emoji-cicling2018/</link>
+      <link>gguibon.github.io/publication/emoji-cicling2018/</link>
       <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-cicling2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-cicling2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -750,9 +750,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>LIS at SemEval-2018 Task 2: Mixing Word Embeddings and Bag of Features for Multilingual Emoji Prediction</title>
-      <link>/publication/emoji-semeval2018/</link>
+      <link>gguibon.github.io/publication/emoji-semeval2018/</link>
       <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-semeval2018/</guid>
+      <guid>gguibon.github.io/publication/emoji-semeval2018/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -773,9 +773,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>De l’usage réel des emojis à une prédiction de leurs catégories</title>
-      <link>/publication/emoji-taln2017/</link>
+      <link>gguibon.github.io/publication/emoji-taln2017/</link>
       <pubDate>Tue, 13 Jun 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-taln2017/</guid>
+      <guid>gguibon.github.io/publication/emoji-taln2017/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -796,9 +796,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Prédiction automatique d&#39;emojis sentimentaux </title>
-      <link>/publication/emoji-coria2017/</link>
+      <link>gguibon.github.io/publication/emoji-coria2017/</link>
       <pubDate>Wed, 22 Mar 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-coria2017/</guid>
+      <guid>gguibon.github.io/publication/emoji-coria2017/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -819,9 +819,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>SOFA : Une plateforme d’analyse syntaxique en ligne pour l’ancien français (SOFA : An online Syntactic Old French Annotator)</title>
-      <link>/publication/oldfrench-taln2016/</link>
+      <link>gguibon.github.io/publication/oldfrench-taln2016/</link>
       <pubDate>Wed, 13 Jul 2016 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-taln2016/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-taln2016/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -842,9 +842,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>From Emojis to Sentiment Analysis</title>
-      <link>/publication/emoji-wacai2016/</link>
+      <link>gguibon.github.io/publication/emoji-wacai2016/</link>
       <pubDate>Fri, 13 May 2016 00:00:00 +0000</pubDate>
-      <guid>/publication/emoji-wacai2016/</guid>
+      <guid>gguibon.github.io/publication/emoji-wacai2016/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -865,17 +865,17 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>External Project</title>
-      <link>/project/external-project/</link>
+      <link>gguibon.github.io/project/external-project/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      <guid>/project/external-project/</guid>
+      <guid>gguibon.github.io/project/external-project/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Internal Project</title>
-      <link>/project/internal-project/</link>
+      <link>gguibon.github.io/project/internal-project/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      <guid>/project/internal-project/</guid>
+      <guid>gguibon.github.io/project/internal-project/</guid>
       <description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.&lt;/p&gt;
 &lt;p&gt;Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.&lt;/p&gt;
 &lt;p&gt;Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.&lt;/p&gt;
@@ -886,9 +886,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Searching for Discriminative Metadata of Heterogenous Corpora</title>
-      <link>/publication/oldfrench-tlt2015/</link>
+      <link>gguibon.github.io/publication/oldfrench-tlt2015/</link>
       <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-tlt2015/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-tlt2015/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -909,9 +909,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Analyse syntaxique de l’ancien français : quelles propriétés de la langue influent le plus sur la qualité de l’apprentissage ?</title>
-      <link>/publication/oldfrench-taln2015/</link>
+      <link>gguibon.github.io/publication/oldfrench-taln2015/</link>
       <pubDate>Mon, 22 Jun 2015 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-taln2015/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-taln2015/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -932,9 +932,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title>Parsing Poorly Standardized Language Dependency on Old French</title>
-      <link>/publication/oldfrench-tlt2014/</link>
+      <link>gguibon.github.io/publication/oldfrench-tlt2014/</link>
       <pubDate>Fri, 12 Dec 2014 00:00:00 +0000</pubDate>
-      <guid>/publication/oldfrench-tlt2014/</guid>
+      <guid>gguibon.github.io/publication/oldfrench-tlt2014/</guid>
       <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
@@ -955,9 +955,9 @@ Supplementary notes can be added here, including [code, math, and images](https:
     
     <item>
       <title></title>
-      <link>/admin/config.yml</link>
+      <link>gguibon.github.io/admin/config.yml</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/admin/config.yml</guid>
+      <guid>gguibon.github.io/admin/config.yml</guid>
       <description></description>
     </item>
     

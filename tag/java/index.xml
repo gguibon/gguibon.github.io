@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java | Gaël Guibon</title>
+    <link>/tag/java/</link>
+      <atom:link href="/tag/java/index.xml" rel="self" type="application/rss+xml" />
+    <description>Java</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 27 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>Java</title>
+      <link>/tag/java/</link>
+    </image>
+    
+    <item>
+      <title>LEMA</title>
+      <link>/project/lema/</link>
+      <pubDate>Thu, 27 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>/project/lema/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Treebank Browser</title>
+      <link>/project/treebank-browser/</link>
+      <pubDate>Sat, 27 Aug 2016 00:00:00 +0000</pubDate>
+      <guid>/project/treebank-browser/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LSIS-AppGestion</title>
+      <link>/project/lsis-appgestion/</link>
+      <pubDate>Mon, 27 Jun 2016 00:00:00 +0000</pubDate>
+      <guid>/project/lsis-appgestion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SOFA: Syntactic Old French Annotator</title>
+      <link>/project/sofa/</link>
+      <pubDate>Sun, 27 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>/project/sofa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LAKME-SRCMF visualization</title>
+      <link>/project/lakme-srcmf-visu/</link>
+      <pubDate>Fri, 27 Nov 2015 00:00:00 +0000</pubDate>
+      <guid>/project/lakme-srcmf-visu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SRCMF-nlp API</title>
+      <link>/project/srcmf-nlp-api/</link>
+      <pubDate>Mon, 27 Jul 2015 00:00:00 +0000</pubDate>
+      <guid>/project/srcmf-nlp-api/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

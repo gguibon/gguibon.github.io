@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VueJS | Gaël Guibon</title>
+    <link>/tag/vuejs/</link>
+      <atom:link href="/tag/vuejs/index.xml" rel="self" type="application/rss+xml" />
+    <description>VueJS</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 27 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>VueJS</title>
+      <link>/tag/vuejs/</link>
+    </image>
+    
+    <item>
+      <title>Emotion Chat Annotator</title>
+      <link>/project/poc-annotator/</link>
+      <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>/project/poc-annotator/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LEMA</title>
+      <link>/project/lema/</link>
+      <pubDate>Thu, 27 Aug 2020 00:00:00 +0000</pubDate>
+      <guid>/project/lema/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Arborator-Grew</title>
+      <link>/project/arborator-grew/</link>
+      <pubDate>Mon, 27 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>/project/arborator-grew/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>EmoReco</title>
+      <link>/project/emoreco/</link>
+      <pubDate>Fri, 27 Jul 2018 00:00:00 +0000</pubDate>
+      <guid>/project/emoreco/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

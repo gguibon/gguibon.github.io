@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/project/</loc>
+    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/talk/example-talk/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
@@ -11,44 +14,50 @@
     <loc>/event/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
+    <loc>/software/sofa/</loc>
+    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/software/treebank2svg/</loc>
+    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/software/</loc>
+    <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+  </url><url>
     <loc>/courses/</loc>
     <lastmod>2021-01-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/courses/ml4nlp/</loc>
     <lastmod>2021-01-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/academic/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <loc>/tag/annotation/</loc>
+    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <loc>/tag/emotion/</loc>
+    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/demo/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/gael-guibon/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <loc>/project/poc-annotator/</loc>
+    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/getting-started/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <loc>/tag/vuejs/</loc>
+    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/author/%E5%90%B3%E6%81%A9%E9%81%94/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <loc>/tag/collaborative/</loc>
+    <lastmod>2020-08-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/%E5%BC%80%E6%BA%90/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <loc>/tag/java/</loc>
+    <lastmod>2020-08-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/category/%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    <loc>/project/lema/</loc>
+    <lastmod>2020-08-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/lexicon/</loc>
+    <lastmod>2020-08-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/old-french/</loc>
+    <lastmod>2020-08-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication-type/1/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
@@ -56,16 +65,19 @@
     <loc>/publication/oldfrench-lrec2020/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/authors/</loc>
+    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/author/benoit-sagot/</loc>
+    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/gael-guibon/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/lexicon-enrichment/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/morphological-lexicon/</loc>
-    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/old-french/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication_types/</loc>
@@ -110,11 +122,17 @@
     <loc>/publication/arborator-lrec2020/</loc>
     <lastmod>2020-05-13T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/project/arborator-grew/</loc>
+    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/python/</loc>
+    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/treebank/</loc>
+    <lastmod>2020-04-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/courses/essec/</loc>
     <lastmod>2020-01-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/writing-technical-content/</loc>
-    <lastmod>2019-07-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication-type/7/</loc>
     <lastmod>2019-05-24T00:00:00+00:00</lastmod>
@@ -203,9 +221,6 @@
     <loc>/tag/word-embedding/</loc>
     <lastmod>2019-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/jupyter/</loc>
-    <lastmod>2019-09-05T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/slides/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
   </url><url>
@@ -215,11 +230,20 @@
     <loc>/courses/javaee/</loc>
     <lastmod>2019-01-24T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/tag/emojis/</loc>
+    <lastmod>2018-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/project/emoreco/</loc>
+    <lastmod>2018-07-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/privacy/</loc>
     <lastmod>2018-06-28T00:00:00+01:00</lastmod>
   </url><url>
     <loc>/terms/</loc>
     <lastmod>2018-06-28T00:00:00+01:00</lastmod>
+  </url><url>
+    <loc>/project/faceemojis/</loc>
+    <lastmod>2018-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/clustering/</loc>
     <lastmod>2018-04-13T00:00:00+00:00</lastmod>
@@ -266,6 +290,18 @@
     <loc>/publication/emoji-taln2017/</loc>
     <lastmod>2017-06-13T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/project/airbnb-scrapper/</loc>
+    <lastmod>2017-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/hackatal/</loc>
+    <lastmod>2017-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/nodejs/</loc>
+    <lastmod>2017-05-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/project/treebank2svg/</loc>
+    <lastmod>2017-05-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/tag/emoji-recommendation/</loc>
     <lastmod>2017-03-22T00:00:00+00:00</lastmod>
   </url><url>
@@ -281,8 +317,20 @@
     <loc>/courses/python-intro-amu/</loc>
     <lastmod>2017-01-24T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/tag/javafx/</loc>
+    <lastmod>2016-08-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/project/treebank-browser/</loc>
+    <lastmod>2016-08-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/publication/oldfrench-taln2016/</loc>
     <lastmod>2016-07-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/project/lsis-appgestion/</loc>
+    <lastmod>2016-06-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/management/</loc>
+    <lastmod>2016-06-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/emoticon/</loc>
     <lastmod>2016-05-13T00:00:00+00:00</lastmod>
@@ -293,17 +341,14 @@
     <loc>/tag/kaomoji/</loc>
     <lastmod>2016-05-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/demo/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/tag/part-of-speech/</loc>
+    <lastmod>2016-03-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/project/external-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/project/sofa/</loc>
+    <lastmod>2016-03-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/project/internal-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/software/example/</loc>
+    <lastmod>2016-03-01T13:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/corpus-exploration/</loc>
     <lastmod>2015-12-22T00:00:00+00:00</lastmod>
@@ -326,6 +371,15 @@
     <loc>/author/sophie-prevost/</loc>
     <lastmod>2015-12-22T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/project/lakme-srcmf-visu/</loc>
+    <lastmod>2015-11-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/api/</loc>
+    <lastmod>2015-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/project/srcmf-nlp-api/</loc>
+    <lastmod>2015-07-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/publication/oldfrench-taln2015/</loc>
     <lastmod>2015-06-22T00:00:00+00:00</lastmod>
   </url><url>
@@ -333,5 +387,9 @@
     <lastmod>2014-12-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/admin/</loc>
+  </url><url>
+    <loc>/categories/</loc>
+  </url><url>
+    <loc>/author/%E5%90%B3%E6%81%A9%E9%81%94/</loc>
   </url>
 </urlset>

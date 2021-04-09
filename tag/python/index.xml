@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python | Gaël Guibon</title>
+    <link>/tag/python/</link>
+      <atom:link href="/tag/python/index.xml" rel="self" type="application/rss+xml" />
+    <description>Python</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 27 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
+      <title>Python</title>
+      <link>/tag/python/</link>
+    </image>
+    
+    <item>
+      <title>Arborator-Grew</title>
+      <link>/project/arborator-grew/</link>
+      <pubDate>Mon, 27 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>/project/arborator-grew/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>EmoReco</title>
+      <link>/project/emoreco/</link>
+      <pubDate>Fri, 27 Jul 2018 00:00:00 +0000</pubDate>
+      <guid>/project/emoreco/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FaceEmojis</title>
+      <link>/project/faceemojis/</link>
+      <pubDate>Fri, 27 Apr 2018 00:00:00 +0000</pubDate>
+      <guid>/project/faceemojis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AirBnB Scrapper</title>
+      <link>/project/airbnb-scrapper/</link>
+      <pubDate>Sat, 27 May 2017 00:00:00 +0000</pubDate>
+      <guid>/project/airbnb-scrapper/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

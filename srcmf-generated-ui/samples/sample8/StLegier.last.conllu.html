@@ -1,0 +1,2539 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+
+  <title>StLegier.last.conllu - Treebank Browser</title>
+
+  <!-- <link rel="icon" 
+  type="image/png" 
+  href=""/> -->
+  
+      <!-- Bootstrap Core CSS -->
+      <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+      <!-- Fonts -->
+      <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+      <link href="../css/animate.css" rel="stylesheet" type="text/css"/>
+      <!-- Squad theme CSS -->
+      <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+      <link href="../color/default.css" rel="stylesheet" type="text/css"/>
+      <!-- animsition.css -->
+      <link rel="stylesheet" href="../css/animsition.min.css">
+      <!-- pace style -->
+      <link rel="stylesheet" href="../css/pace.css">
+            <!-- bootstrap-switch css -->
+      <link href="../css/bootstrap-switch.min.css" rel="stylesheet">
+
+      <!-- Arborator files -->
+      <script src="../js/jquery.min.js"></script>
+      <script type='text/javascript' src='../js/modernizr.js'></script>
+      <script type="text/javascript" src="../js/pace.min.js"></script>
+      <script type="text/javascript" src="../js/raphael.js"></script>
+      <script type="text/javascript" src="../js/arborator.view.js"></script>
+      <script type="text/javascript" src="../js/justDrawConll.js"></script>
+      <script type="text/javascript" src="../js/conll2tree.js"></script>
+      <script type="text/javascript" src="../js/filesaver.min.js"></script>
+      
+      
+    </head>
+
+    <body id="page-top" data-spy="scroll" data-target=".navbar-custom" class="bg-dark">
+      <div id="loading">
+        <div id='loading-progress-bar' class='progress overlay-content' > </div>
+        <div  class='overlay-content' > <button type='button' class='btn btn-danger opacity-hover' id='loaderstop'>Stop!</button>  </div>
+      </div>
+     <div id="page-wrap">
+      
+<!-- The actual snackbar -->
+<div id="snackbar">Copied to clipboard !</div>
+
+     <header>
+      <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+       <div class="container">
+        <div class="navbar-header page-scroll">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand animsition-link" href="../../index.html">
+          <img src="../img/icons/list-orange.svg" alt="" title="Samples List" class="opacity-hover"/>
+        </a>
+        <span>StLegier.last.conllu</span>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+       <ul class="nav navbar-nav">
+        <li ><a href="../../project.html" class="animsition-link">Project</a></li>
+        <li ><a href="../../licence.html" class="animsition-link">Project Licence</a></li>
+        <li ><a href="../../about.html" class="animsition-link">About</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container -->
+</nav>
+</header>
+
+<div class="arrownav">
+  <div id="divOnLeft" style="  position: fixed; left: 50px;">
+    <a class="animsition-link " href="../sample7/StAlexis.last.conllu.html"><img src="../img/icons/left-arrow-key-grey.svg" class="arrownav-hover" onmouseover="this.src='../img/icons/left-arrow-key.svg';" onmouseout="$(this).addClass('shrink');   this.src='../img/icons/left-arrow-key-grey.svg'; $(this).addClass(arrownav-hover);" /></a>
+  </div>
+  <div id="divOnRight" style=" position: fixed; right: 50px;">
+    <a class="animsition-link " href="../sample9/Strasbourg.last.conllu.html"><img src="../img/icons/right-arrow-key-grey.svg" class="arrownav-hover" onmouseover="this.src='../img/icons/right-arrow-key.svg';" onmouseout="$(this).addClass('shrink');   this.src='../img/icons/right-arrow-key-grey.svg'; $(this).addClass(arrownav-hover);" /></a>
+  </div>
+  <!-- <div id="divOnRightBottom" style=" position: fixed; right: 65px; bottom: 50px;">
+    <button type="button" class="btn btn-success opacity-hover" id="loader">Speed Up!</button>
+  </div>
+  <div id="divOnRightBottom2" style=" position: fixed; right: 200px; bottom: 50px;">
+    <input class="opacity-hover" type="checkbox" name="my-checkbox" checked data-size="normal" data-on-color="primary" data-off-color="danger" data-on-text="Timer" data-off-text="Scroll" data-label-text="Auto Load" data-handle-width="200">
+  </div> -->
+  <div class="container" style="position: fixed; top: 75px; left: 10px; width: 20%;">
+    <div class="row">
+      <div class="col-sm-3"><button type="button" class="btn btn-danger opacity-hover2" onclick="stopload()" title="Stop: stop charging further trees. Charge only on scroll" id="stop"><img src="../img/icons/stop-button.svg"/></button></div>
+      <div class="col-sm-3"><button type="button" class="btn btn-default opacity-hover2" onclick="resumeload()" title="Show: show all trees - pausing between trees (default)" id="show"><img src="../img/icons/play-arrow.svg"/></button></div>
+      <div class="col-sm-3"><button type="button" class="btn btn-info opacity-hover2" title="Fast forward: show all trees without pausing - might slow down the browser until finished" id="loader"><img src="../img/icons/fast-forward-button.svg"/></button></div>
+      <div class="col-sm-3"><button type="button" class="btn btn-success opacity-hover2" onclick="exportall();" title="Download: Save the currently loaded trees. To save them all speed up the loading using the fast forward button. Then press this button."><img src="../img/icons/download.svg"/></button></div>
+    </div>
+  </div>
+</div>
+
+<section id="main-content" style="height:100%">
+ <div id="guts" style="height:100%; padding-bottom:0;" class="animsition" data-animsition-in-class="fade-in-up"
+  data-animsition-in-duration="500"
+  data-animsition-out-class="fade-out-down"
+  data-animsition-out-duration="300">
+
+
+
+  <!-- Section: samples -->
+  <section id="samplelist" class="wide-section text-center bg-dark">
+   <div class="heading-about">
+    <div class="container">
+     <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+       <div class="wow fadeInDown" data-wow-delay="0.2s">
+        <div class="section-heading">
+         <h2 id="samplename">StLegier.last.conllu</h2>
+         <img src="../img/icons/arrow-down-grey.svg" />
+
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+</div>
+
+<div id="treecontainer" class="container wide">
+
+  <div class="row">
+   <div class="col-sm-12 col-md-12">
+    <div class="wow fadeInUp" data-wow-delay="0.2s">
+     <div class="service-box">
+      <div class="service-icon">
+        <a href="http://arborator.ilpga.fr/" target="_blank" alt="Arborator Website">
+       <img src="../img/icons/arboratorNano.png" alt="" title="Arborator" class="opacity-hover"/>
+     </a>
+     </div>
+     <div class="service-desc">
+       <!-- <h5>Trees</h5> -->
+       <div class="list">
+         <conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17486
+# text = Dominedeu devemps lauder et a sus sancz honor porter
+# timestamp = 1591544745718
+1	Dominedeu	_	PROPN	NOMpro	_	3	obj	_	_
+2	devemps	_	AUX	VERcjg	VerbForm=Fin	3	aux	_	_
+3	lauder	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+4	et	_	CCONJ	CONcoo	_	9	cc	_	_
+5	a	_	ADP	PRE	_	7	case	_	_
+6	sus	_	DET	DETpos	Poss=Yes	7	det	_	_
+7	sancz	_	ADJ	ADJqua	_	3	obl	_	_
+8	honor	_	NOUN	NOMcom	_	1	conj	_	_
+9	porter	_	VERB	VERinf	VerbForm=Inf	3	conj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17487
+# text = in su' amor cantomps del ·sanz quae por lui augrent granz aanz
+# timestamp = 1591544745719
+1	in	_	ADP	PRE	_	3	case	_	_
+2	su'	_	DET	DETpos	Poss=Yes	3	det	_	_
+3	amor	_	NOUN	NOMcom	_	4	obl	_	_
+4	cantomps	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	del	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	6	case:det	_	_
+6	·sanz	_	ADJ	ADJqua	_	4	obl	_	_
+7	quae	_	PRON	PROrel	PronType=Prs,Rel	10	nsubj	_	_
+8	por	_	ADP	PRE	_	9	case	_	_
+9	lui	_	PRON	PROper	PronType=Prs	10	obl	_	_
+10	augrent	_	VERB	VERcjg	VerbForm=Fin	6	acl:relcl	_	_
+11	granz	_	ADJ	ADJqua	_	12	amod	_	_
+12	aanz	_	NOUN	NOMcom	_	10	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17488
+# text = et or es temps
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	or	_	ADV	ADVgen	_	4	advmod	_	_
+3	es	_	AUX	VERcjg	VerbForm=Fin	4	cop	_	_
+4	temps	_	NOUN	NOMcom	_	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17489
+# text = et si est biens quae nos cantumps de sant Lethgier
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	si	_	ADV	ADVgen	_	4	advmod	_	_
+3	est	_	AUX	VERcjg	VerbForm=Fin	4	cop	_	_
+4	biens	_	ADV	ADVgen	_	0	root	_	_
+5	quae	_	SCONJ	CONsub	_	7	mark	_	_
+6	nos	_	PRON	PROper	PronType=Prs	7	nsubj	_	_
+7	cantumps	_	VERB	VERcjg	VerbForm=Fin	4	csubj	_	_
+8	de	_	ADP	PRE	_	10	case	_	_
+9	sant	_	ADJ	ADJqua	_	10	amod	_	_
+10	Lethgier	_	PROPN	NOMpro	_	7	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17490
+# text = Primos didrai vos dels honors quae il awret ab duos seniors
+# timestamp = 1591544745719
+1	Primos	_	ADV	ADVgen	_	2	advmod	_	_
+2	didrai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	vos	_	PRON	PROper	PronType=Prs	2	iobj	_	_
+4	dels	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	5	case:det	_	_
+5	honors	_	NOUN	NOMcom	_	2	obl	_	_
+6	quae	_	PRON	PROrel	PronType=Prs,Rel	8	obj	_	_
+7	il	_	PRON	PROper	PronType=Prs	8	nsubj	_	_
+8	awret	_	VERB	VERcjg	VerbForm=Fin	5	acl:relcl	_	_
+9	ab	_	ADP	PRE	_	11	case	_	_
+10	duos	_	NUM	ADJcar	NumType=Card	11	nummod	_	_
+11	seniors	_	NOUN	NOMcom	_	8	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17491
+# text = apres ditrai vos dels aanz que li suos corps susting si granz et Ewruïns cil deumentiz que lui a grand torment occist
+# timestamp = 1591544745719
+1	apres	_	ADV	ADVgen	_	2	advmod	_	_
+2	ditrai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	vos	_	PRON	PROper	PronType=Prs	2	iobj	_	_
+4	dels	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	5	case:det	_	_
+5	aanz	_	NOUN	NOMcom	_	2	obj	_	_
+6	que	_	PRON	PROrel	PronType=Prs,Rel	10	obj	_	_
+7	li	_	DET	DETdef	Definite=Def|PronType=Art	9	det	_	_
+8	suos	_	ADJ	ADJpos	Poss=Yes	9	amod	_	_
+9	corps	_	NOUN	NOMcom	_	10	nsubj	_	_
+10	susting	_	VERB	VERcjg	VerbForm=Fin	5	acl:relcl	_	_
+11	si	_	ADV	ADVgen	_	12	advmod	_	_
+12	granz	_	ADJ	ADJqua	_	5	amod	_	_
+13	et	_	CCONJ	CONcoo	_	14	cc	_	_
+14	Ewruïns	_	PROPN	NOMpro	_	5	conj	_	_
+15	cil	_	DET	DETdem	PronType=Dem	16	det	_	_
+16	deumentiz	_	ADJ	ADJqua	_	14	appos	_	_
+17	que	_	PRON	PROrel	PronType=Prs,Rel	22	nsubj	_	_
+18	lui	_	PRON	PROper	PronType=Prs	22	obj	_	_
+19	a	_	ADP	PRE	_	21	case	_	_
+20	grand	_	ADJ	ADJqua	_	21	amod	_	_
+21	torment	_	NOUN	NOMcom	_	22	obl	_	_
+22	occist	_	VERB	VERcjg	VerbForm=Fin	14	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17492
+# text = Quant infans fud donc a ciels temps al rei lo duistrent soi parent qui donc regnevet a ciel di
+# timestamp = 1591544745719
+1	Quant	_	SCONJ	CONsub	_	2	mark	_	_
+2	infans	_	NOUN	NOMcom	_	11	advcl	_	_
+3	fud	_	AUX	VERcjg	VerbForm=Fin	2	cop	_	_
+4	donc	_	ADV	ADVgen	_	11	advmod	_	_
+5	a	_	ADP	PRE	_	7	case	_	_
+6	ciels	_	DET	DETdem	PronType=Dem	7	det	_	_
+7	temps	_	NOUN	NOMcom	_	11	obl	_	_
+8	al	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	9	case:det	_	_
+9	rei	_	NOUN	NOMcom	_	11	obl	_	_
+10	lo	_	PRON	PROper	PronType=Prs	11	obj	_	_
+11	duistrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+12	soi	_	DET	DETpos	Poss=Yes	13	det	_	_
+13	parent	_	NOUN	NOMcom	_	11	nsubj	_	_
+14	qui	_	PRON	PROrel	PronType=Prs,Rel	16	nsubj	_	_
+15	donc	_	ADV	ADVgen	_	16	advmod	_	_
+16	regnevet	_	VERB	VERcjg	VerbForm=Fin	9	acl:relcl	_	_
+17	a	_	ADP	PRE	_	19	case	_	_
+18	ciel	_	DET	DETdem	PronType=Dem	19	det	_	_
+19	di	_	NOUN	NOMcom	_	16	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17493
+# text = cio fud Lothiers fils Baldequi
+# timestamp = 1591544745719
+1	cio	_	PRON	PROdem	PronType=Dem	3	nsubj	_	_
+2	fud	_	AUX	VERcjg	VerbForm=Fin	3	cop	_	_
+3	Lothiers	_	PROPN	NOMpro	_	0	root	_	_
+4	fils	_	NOUN	NOMcom	_	3	appos	_	_
+5	Baldequi	_	PROPN	NOMpro	_	4	nmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17494
+# text = Ille amat Deu
+# timestamp = 1591544745719
+1	Ille	_	PRON	PROper	PronType=Prs	2	nsubj	_	_
+2	amat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	Deu	_	PROPN	NOMpro	_	2	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17495
+# text = lo covit
+# timestamp = 1591544745719
+1	lo	_	PRON	PROper	PronType=Prs	2	obj	_	_
+2	covit	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17496
+# text = rovat que litteras apresist
+# timestamp = 1591544745719
+1	rovat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	que	_	SCONJ	CONsub	_	4	mark	_	_
+3	litteras	_	NOUN	NOMcom	_	4	obj	_	_
+4	apresist	_	VERB	VERcjg	VerbForm=Fin	1	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17497
+# text = Didun l' ebisque de Peitieus lui ·l comandat ciel reis Lothiers
+# timestamp = 1591544745719
+1	Didun	_	PROPN	NOMpro	_	8	dislocated	_	_
+2	l'	_	DET	DETdef	Definite=Def|PronType=Art	3	det	_	_
+3	ebisque	_	NOUN	NOMcom	_	1	appos	_	_
+4	de	_	ADP	PRE	_	5	case	_	_
+5	Peitieus	_	PROPN	NOMpro	_	3	nmod	_	_
+6	lui	_	PRON	PROper	PronType=Prs	8	iobj	_	_
+7	·l	_	PRON	PROper	PronType=Prs	8	obj	_	_
+8	comandat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+9	ciel	_	DET	DETdem	PronType=Dem	10	det	_	_
+10	reis	_	NOUN	NOMcom	_	8	nsubj	_	_
+11	Lothiers	_	PROPN	NOMpro	_	10	flat	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17498
+# text = Il lo reciut
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	3	nsubj	_	_
+2	lo	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	reciut	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17499
+# text = tam ben en fist
+# timestamp = 1591544745719
+1	tam	_	ADV	ADVgen	_	2	advmod	_	_
+2	ben	_	ADV	ADVgen	_	4	advmod	_	_
+3	en	_	ADV	PROadv	PronType=Dem	4	obl	_	_
+4	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17500
+# text = ab u· magistre sempre ·l mist qui ·llo doist bien de ciel saveir don Deu servir per bona feid
+# timestamp = 1591544745719
+1	ab	_	ADP	PRE	_	3	case	_	_
+2	u·	_	DET	DETndf	Definite=Ind|PronType=Art	3	det	_	_
+3	magistre	_	NOUN	NOMcom	_	6	obl	_	_
+4	sempre	_	ADV	ADVgen	_	6	advmod	_	_
+5	·l	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	mist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+7	qui	_	PRON	PROrel	PronType=Prs,Rel	9	nsubj	_	_
+8	·llo	_	PRON	PROper	PronType=Prs	9	obj	_	_
+9	doist	_	VERB	VERcjg	VerbForm=Fin	3	acl:relcl	_	_
+10	bien	_	ADV	ADVgen	_	9	advmod	_	_
+11	de	_	ADP	PRE	_	13	case	_	_
+12	ciel	_	DET	DETdem	PronType=Dem	13	det	_	_
+13	saveir	_	VERB	VERinf	VerbForm=Inf	9	obj	_	_
+14	don	_	PRON	PROrel	PronType=Prs,Rel	16	obl	_	_
+15	Deu	_	PROPN	NOMpro	_	16	obj	_	_
+16	servir	_	VERB	VERinf	VerbForm=Inf	13	acl:relcl	_	_
+17	per	_	ADP	PRE	_	19	case	_	_
+18	bona	_	ADJ	ADJqua	_	19	amod	_	_
+19	feid	_	NOUN	NOMcom	_	16	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17501
+# text = Et cum il l' aut doit de ciel art rende ·l qui lui lo comandat
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	10	cc:nc	_	_
+2	cum	_	SCONJ	CONsub	_	6	mark	_	_
+3	il	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+4	l'	_	PRON	PROper	PronType=Prs	6	obj	_	_
+5	aut	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+6	doit	_	VERB	VERppe	Tense=Past|VerbForm=Part	10	advcl	_	_
+7	de	_	ADP	PRE	_	9	case	_	_
+8	ciel	_	DET	DETdem	PronType=Dem	9	det	_	_
+9	art	_	NOUN	NOMcom	_	6	obl	_	_
+10	rende	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+11	·l	_	PRON	PROper	PronType=Prs	10	obj	_	_
+12	qui	_	PRON	PROrel	PronType=Prs,Rel	15	nsubj	_	_
+13	lui	_	PRON	PROper	PronType=Prs	15	iobj	_	_
+14	lo	_	PRON	PROper	PronType=Prs	15	obj	_	_
+15	comandat	_	VERB	VERcjg	VerbForm=Fin	10	ccomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17502
+# text = Il lo reciu
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	3	nsubj	_	_
+2	lo	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	reciu	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17503
+# text = bien lo nonrit
+# timestamp = 1591544745719
+1	bien	_	ADV	ADVgen	_	3	advmod	_	_
+2	lo	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	nonrit	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17504
+# text = cio fud lonx temps ob se lo ·s ting
+# timestamp = 1591544745719
+1	cio	_	PRON	PROdem	PronType=Dem	4	nsubj	_	_
+2	fud	_	AUX	VERcjg	VerbForm=Fin	4	cop	_	_
+3	lonx	_	ADJ	ADJqua	_	4	amod	_	_
+4	temps	_	NOUN	NOMcom	_	0	root	_	_
+5	ob	_	ADP	PRE	_	6	case	_	_
+6	se	_	PRON	PROper	PronType=Prs	9	obl	_	_
+7	lo	_	PRON	PROper	PronType=Prs	9	obj	_	_
+8	·s	_	PRON	PROper	PronType=Prs	9	expl	_	_
+9	ting	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17505
+# text = Deus l' exaltat cui el servid
+# timestamp = 1591544745719
+1	Deus	_	PROPN	NOMpro	_	3	nsubj	_	_
+2	l'	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	exaltat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	cui	_	PRON	PROrel	PronType=Prs,Rel	6	obj	_	_
+5	el	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+6	servid	_	VERB	VERcjg	VerbForm=Fin	1	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17506
+# text = de Sanct MAXENZ abbas divint
+# timestamp = 1591544745719
+1	de	_	ADP	PRE	_	3	case	_	_
+2	Sanct	_	ADJ	ADJqua	_	3	amod	_	_
+3	MAXENZ	_	PROPN	NOMpro	_	4	nmod	_	_
+4	abbas	_	NOUN	NOMcom	_	0	root	_	_
+5	divint	_	AUX	devenir	VerbForm=Fin	4	cop	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17507
+# text = Ne fud nuls om del son juvent qui mieldre fust donc a ciels temps
+# timestamp = 1591544745719
+1	Ne	_	ADV	ADVneg	Polarity=Neg	2	advmod	_	_
+2	fud	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	nuls	_	DET	DETind	PronType=Ind	4	det	_	_
+4	om	_	NOUN	NOMcom	_	2	nsubj	_	_
+5	del	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	7	case:det	_	_
+6	son	_	ADJ	ADJpos	Poss=Yes	7	amod	_	_
+7	juvent	_	NOUN	NOMcom	_	2	obl	_	_
+8	qui	_	PRON	PROrel	PronType=Prs,Rel	9	nsubj	_	_
+9	mieldre	_	ADJ	ADJqua	_	4	acl:relcl	_	_
+10	fust	_	AUX	VERcjg	VerbForm=Fin	9	cop	_	_
+11	donc	_	ADV	ADVgen	_	9	advmod	_	_
+12	a	_	ADP	PRE	_	14	case	_	_
+13	ciels	_	DET	DETdem	PronType=Dem	14	det	_	_
+14	temps	_	NOUN	NOMcom	_	9	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17508
+# text = perfectus fud in caritet
+# timestamp = 1591544745719
+1	perfectus	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_
+2	fud	_	AUX	VERcjg	VerbForm=Fin	1	cop	_	_
+3	in	_	ADP	PRE	_	4	case	_	_
+4	caritet	_	NOUN	NOMcom	_	1	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17509
+# text = fid aut ·il grand et veritet
+# timestamp = 1591544745719
+1	fid	_	NOUN	NOMcom	_	2	obj	_	_
+2	aut	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	·il	_	PRON	PROper	PronType=Prs	2	nsubj	_	_
+4	grand	_	ADJ	ADJqua	_	1	amod	_	_
+5	et	_	CCONJ	CONcoo	_	6	cc	_	_
+6	veritet	_	NOUN	NOMcom	_	1	conj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17510
+# text = et in raizons bels oth sermons
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	5	cc:nc	_	_
+2	in	_	ADP	PRE	_	3	case	_	_
+3	raizons	_	NOUN	NOMcom	_	5	obl	_	_
+4	bels	_	ADJ	ADJqua	_	3	amod	_	_
+5	oth	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	sermons	_	NOUN	NOMcom	_	5	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17511
+# text = humilitet oth por trestoz
+# timestamp = 1591544745719
+1	humilitet	_	NOUN	NOMcom	_	2	obj	_	_
+2	oth	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	por	_	ADP	PRE	_	4	case	_	_
+4	trestoz	_	PRON	PROind	PronType=Ind	2	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17512
+# text = Cio sempre fud
+# timestamp = 1591544745719
+1	Cio	_	PRON	PROdem	PronType=Dem	3	nsubj	_	_
+2	sempre	_	ADV	ADVgen	_	3	advmod	_	_
+3	fud	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17513
+# text = et ja si er
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	ja	_	ADV	ADVgen	_	4	advmod	_	_
+3	si	_	ADV	ADVgen	_	4	advmod	_	_
+4	er	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17514
+# text = qui fai lo bien laudaz enn er
+# timestamp = 1591544745719
+1	qui	_	PRON	PROrel	PronType=Prs,Rel	2	nsubj	_	_
+2	fai	_	VERB	VERcjg	VerbForm=Fin	5	csubj	_	_
+3	lo	_	DET	DETdef	Definite=Def|PronType=Art	4	det	_	_
+4	bien	_	NOUN	NOMcom	_	2	obj	_	_
+5	laudaz	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_
+6	enn	_	ADV	PROadv	PronType=Dem	5	obl:advmod	_	_
+7	er	_	AUX	VERcjg	VerbForm=Fin	5	aux:pass	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17515
+# text = et sanz Letgiers sempre fud bons
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	6	cc:nc	_	_
+2	sanz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Letgiers	_	PROPN	NOMpro	_	6	nsubj	_	_
+4	sempre	_	ADV	ADVgen	_	6	advmod	_	_
+5	fud	_	AUX	VERcjg	VerbForm=Fin	6	cop	_	_
+6	bons	_	ADJ	ADJqua	_	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17516
+# text = sempre fist bien u que el pod
+# timestamp = 1591544745719
+1	sempre	_	ADV	ADVgen	_	2	advmod	_	_
+2	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	bien	_	NOUN	NOMcom	_	2	obj	_	_
+4	u	_	PRON	PROrel	PronType=Prs,Rel	7	obl	_	_
+5	que	_	SCONJ	CONsub	_	7	mark	_	_
+6	el	_	PRON	PROper	PronType=Prs	7	nsubj	_	_
+7	pod	_	VERB	VERcjg	VerbForm=Fin	2	advcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17517
+# text = Davant lo rei en fud laudez
+# timestamp = 1591544745719
+1	Davant	_	ADP	PRE	_	3	case	_	_
+2	lo	_	DET	DETdef	Definite=Def|PronType=Art	3	det	_	_
+3	rei	_	NOUN	NOMcom	_	6	obl	_	_
+4	en	_	ADV	PROadv	PronType=Dem	6	obl:advmod	_	_
+5	fud	_	AUX	VERcjg	VerbForm=Fin	6	aux:pass	_	_
+6	laudez	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17518
+# text = cum il l' audit fu ·li ·n amet
+# timestamp = 1591544745719
+1	cum	_	SCONJ	CONsub	_	4	mark	_	_
+2	il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+3	l'	_	PRON	PROper	PronType=Prs	4	obj	_	_
+4	audit	_	VERB	VERcjg	VerbForm=Fin	8	advcl	_	_
+5	fu	_	AUX	VERcjg	VerbForm=Fin	8	aux:pass	_	_
+6	·li	_	PRON	PROper	PronType=Prs	8	iobj	_	_
+7	·n	_	ADV	PROadv	PronType=Dem	8	obl:advmod	_	_
+8	amet	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17519
+# text = A se ·l mandat
+# timestamp = 1591544745719
+1	A	_	ADP	PRE	_	2	case	_	_
+2	se	_	PRON	PROper	PronType=Prs	4	iobj	_	_
+3	·l	_	PRON	PROper	PronType=Prs	4	obj	_	_
+4	mandat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17520
+# text = et cio li dist a curt fust sempre lui servist
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	cio	_	PRON	PROdem	PronType=Dem	4	obj	_	_
+3	li	_	PRON	PROper	PronType=Prs	4	iobj	_	_
+4	dist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	a	_	ADP	PRE	_	6	case	_	_
+6	curt	_	NOUN	NOMcom	_	7	obl	_	_
+7	fust	_	VERB	VERcjg	VerbForm=Fin	2	acl	_	_
+8	sempre	_	ADV	ADVgen	_	10	advmod	_	_
+9	lui	_	PRON	PROper	PronType=Prs	10	obj	_	_
+10	servist	_	VERB	VERcjg	VerbForm=Fin	7	conj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17521
+# text = Il l' exaltat
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	3	nsubj	_	_
+2	l'	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	exaltat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17522
+# text = e l' onorat
+# timestamp = 1591544745719
+1	e	_	CCONJ	CONcoo	_	3	cc:nc	_	_
+2	l'	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	onorat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17523
+# text = sa gratia li per donat
+# timestamp = 1591544745719
+1	sa	_	DET	DETpos	Poss=Yes	2	det	_	_
+2	gratia	_	NOUN	NOMcom	_	5	obj	_	_
+3	li	_	PRON	PROper	PronType=Prs	5	iobj	_	_
+4	per	_	ADV	ADVgen	_	5	advmod	_	_
+5	donat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17524
+# text = et hunc tam bien que il en fist de Hostedun evesqu' en fist
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	13	cc:nc	_	_
+2	hunc	_	ADV	ADVgen	_	13	advmod	_	_
+3	tam	_	ADV	ADVgen	_	4	advmod	_	_
+4	bien	_	NOUN	NOMcom	_	13	obl	_	_
+5	que	_	PRON	PROrel	PronType=Prs,Rel	8	obj	_	_
+6	il	_	PRON	PROper	PronType=Prs	8	nsubj	_	_
+7	en	_	ADV	PROadv	PronType=Dem	8	obl	_	_
+8	fist	_	VERB	VERcjg	VerbForm=Fin	4	acl:relcl	_	_
+9	de	_	ADP	PRE	_	10	case	_	_
+10	Hostedun	_	PROPN	NOMpro	_	11	nmod	_	_
+11	evesqu'	_	NOUN	NOMcom	_	13	obj	_	_
+12	en	_	ADV	PROadv	PronType=Dem	13	obl	_	_
+13	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17525
+# text = Quandius visquet ciel reis Lothiers bien honorez fud sancz Lethgiers
+# timestamp = 1591544745719
+1	Quandius	_	SCONJ	CONsub	_	2	mark	_	_
+2	visquet	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_
+3	ciel	_	DET	DETdem	PronType=Dem	4	det	_	_
+4	reis	_	NOUN	NOMcom	_	2	nsubj	_	_
+5	Lothiers	_	PROPN	NOMpro	_	4	flat	_	_
+6	bien	_	ADV	ADVgen	_	7	advmod	_	_
+7	honorez	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_
+8	fud	_	AUX	VERcjg	VerbForm=Fin	7	aux:pass	_	_
+9	sancz	_	ADJ	ADJqua	_	10	amod	_	_
+10	Lethgiers	_	PROPN	NOMpro	_	7	nsubj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17526
+# text = Il se fud morz
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+2	se	_	PRON	PROper	PronType=Prs	4	expl	_	_
+3	fud	_	AUX	VERcjg	VerbForm=Fin	4	aux	_	_
+4	morz	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17527
+# text = damz i fud granz
+# timestamp = 1591544745719
+1	damz	_	NOUN	NOMcom	_	4	nsubj	_	_
+2	i	_	ADV	PROadv	PronType=Dem	4	obl:advmod	_	_
+3	fud	_	AUX	VERcjg	VerbForm=Fin	4	cop	_	_
+4	granz	_	ADJ	ADJqua	_	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17528
+# text = Cio controverent baron franc por cio que fud de bona feit de Chielperig feïssent rei
+# timestamp = 1591544745719
+1	Cio	_	PRON	PROdem	PronType=Dem	2	obj	_	_
+2	controverent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	baron	_	NOUN	NOMcom	_	2	nsubj	_	_
+4	franc	_	ADJ	ADJqua	_	3	amod	_	_
+5	por	_	ADP	PRE	_	6	case	_	_
+6	cio	_	PRON	PROdem	PronType=Dem	2	obl	_	_
+7	que	_	SCONJ	CONsub	_	8	mark	_	_
+8	fud	_	VERB	VERcjg	VerbForm=Fin	6	acl	_	_
+9	de	_	ADP	PRE	_	11	case	_	_
+10	bona	_	ADJ	ADJqua	_	11	amod	_	_
+11	feit	_	NOUN	NOMcom	_	8	obl	_	_
+12	de	_	ADP	PRE	_	13	case	_	_
+13	Chielperig	_	PROPN	NOMpro	_	14	obl	_	_
+14	feïssent	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_
+15	rei	_	NOUN	NOMcom	_	14	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17529
+# text = Un compt' i oth
+# timestamp = 1591544745719
+1	Un	_	DET	DETndf	Definite=Ind|PronType=Art	2	det	_	_
+2	compt'	_	NOUN	NOMcom	_	4	obl	_	_
+3	i	_	ADV	PROadv	PronType=Dem	4	obl	_	_
+4	oth	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17530
+# text = pres ·en l' estrit
+# timestamp = 1591544745719
+1	pres	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	·en	_	ADV	PROadv	PronType=Dem	1	obl:advmod	_	_
+3	l'	_	DET	DETdef	Definite=Def|PronType=Art	4	det	_	_
+4	estrit	_	NOUN	NOMcom	_	1	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17531
+# text = ciel eps num auret Evruï
+# timestamp = 1591544745719
+1	ciel	_	PRON	PROdem	PronType=Dem	4	nsubj	_	_
+2	eps	_	ADJ	ADJind	_	1	amod	_	_
+3	num	_	NOUN	NOMcom	_	4	obj	_	_
+4	auret	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	Evruï	_	PROPN	NOMpro	_	4	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17532
+# text = Ne vol reciwre Chielperin mais li seu fredre Theoiri
+# timestamp = 1591544745719
+1	Ne	_	ADV	ADVneg	Polarity=Neg	3	advmod	_	_
+2	vol	_	AUX	VERcjg	VerbForm=Fin	3	aux	_	_
+3	reciwre	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+4	Chielperin	_	PROPN	NOMpro	_	3	obj	_	_
+5	mais	_	CCONJ	CONcoo	_	8	cc	_	_
+6	li	_	DET	DETdef	Definite=Def|PronType=Art	8	det	_	_
+7	seu	_	ADJ	ADJpos	Poss=Yes	8	amod	_	_
+8	fredre	_	NOUN	NOMcom	_	4	conj	_	_
+9	Theoiri	_	PROPN	NOMpro	_	8	flat	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17533
+# text = ne ·l condignet nuls de sos pers
+# timestamp = 1591544745719
+1	ne	_	ADV	ADVneg	Polarity=Neg	3	advmod	_	_
+2	·l	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	condignet	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	nuls	_	PRON	PROind	PronType=Ind	3	nsubj	_	_
+5	de	_	ADP	PRE	_	7	case	_	_
+6	sos	_	DET	DETpos	Poss=Yes	7	det	_	_
+7	pers	_	NOUN	NOMcom	_	4	nmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17534
+# text = rei volunt fair' estre so gred
+# timestamp = 1591544745719
+1	rei	_	NOUN	NOMcom	_	3	obj	_	_
+2	volunt	_	AUX	VERcjg	VerbForm=Fin	3	aux	_	_
+3	fair'	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+4	estre	_	ADP	PRE	_	6	case	_	_
+5	so	_	DET	DETpos	Poss=Yes	6	det	_	_
+6	gred	_	NOUN	NOMcom	_	3	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17535
+# text = Il lo presdrent tuit a conseil
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	3	nsubj	_	_
+2	lo	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	presdrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	tuit	_	PRON	PROind	PronType=Ind	1	amod	_	_
+5	a	_	ADP	PRE	_	6	case	_	_
+6	conseil	_	NOUN	NOMcom	_	3	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17536
+# text = estre so gret en fisdren rei
+# timestamp = 1591544745719
+1	estre	_	ADP	PRE	_	3	case	_	_
+2	so	_	DET	DETpos	Poss=Yes	3	det	_	_
+3	gret	_	NOUN	NOMcom	_	5	obl	_	_
+4	en	_	ADV	PROadv	PronType=Dem	5	obl	_	_
+5	fisdren	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	rei	_	NOUN	NOMcom	_	5	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17537
+# text = Et Ewruïns ott en gran dol porr o que ventre no ·ls en poth
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	3	cc:nc	_	_
+2	Ewruïns	_	PROPN	NOMpro	_	3	nsubj	_	_
+3	ott	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	en	_	ADV	PROadv	PronType=Dem	3	obl:advmod	_	_
+5	gran	_	ADJ	ADJqua	_	6	amod	_	_
+6	dol	_	NOUN	NOMcom	_	3	obj	_	_
+7	porr	_	ADP	PRE	_	8	case	_	_
+8	o	_	PRON	PROdem	PronType=Dem	3	obl	_	_
+9	que	_	SCONJ	CONsub	_	10	mark	_	_
+10	ventre	_	VERB	VERinf	VerbForm=Inf	8	acl	_	_
+11	no	_	ADV	ADVneg	Polarity=Neg	10	advmod	_	_
+12	·ls	_	PRON	PROper	PronType=Prs	10	obj	_	_
+13	en	_	ADV	PROadv	PronType=Dem	10	obl:advmod	_	_
+14	poth	_	AUX	VERcjg	VerbForm=Fin	10	aux	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17538
+# text = Por ciel tel duol rova ·s clergier
+# timestamp = 1591544745719
+1	Por	_	ADP	PRE	_	4	case	_	_
+2	ciel	_	DET	DETdem	PronType=Dem	4	det	_	_
+3	tel	_	ADJ	ADJind	PronType=Ind	4	amod	_	_
+4	duol	_	NOUN	NOMcom	_	5	obl	_	_
+5	rova	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	·s	_	PRON	PROper	PronType=Prs	7	expl	_	_
+7	clergier	_	NOUN	NOMcom	_	5	obj	_	Morph=VInf</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17539
+# text = si s' en intrat in un monstier
+# timestamp = 1591544745719
+1	si	_	ADV	ADVgen	_	4	advmod	_	_
+2	s'	_	PRON	PROper	PronType=Prs	4	expl	_	_
+3	en	_	ADV	PROadv	PronType=Dem	4	obl	_	_
+4	intrat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	in	_	ADP	PRE	_	7	case	_	_
+6	un	_	DET	DETndf	Definite=Ind|PronType=Art	7	det	_	_
+7	monstier	_	NOUN	NOMcom	_	4	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17540
+# text = Reis Chielperics tam bien en fist
+# timestamp = 1591544745719
+1	Reis	_	NOUN	NOMcom	_	6	nsubj	_	_
+2	Chielperics	_	PROPN	NOMpro	_	1	flat	_	_
+3	tam	_	ADV	ADVgen	_	4	advmod	_	_
+4	bien	_	NOUN	NOMcom	_	6	obl	_	_
+5	en	_	ADV	PROadv	PronType=Dem	6	obl	_	_
+6	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17541
+# text = de sanct Lethgier consilier fist
+# timestamp = 1591544745719
+1	de	_	ADP	PRE	_	3	case	_	_
+2	sanct	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgier	_	PROPN	NOMpro	_	5	obl	_	_
+4	consilier	_	NOUN	NOMcom	_	5	obj	_	_
+5	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17542
+# text = Quandius al suo conseil edrat incontra Deu ben si garda
+# timestamp = 1591544745719
+1	Quandius	_	SCONJ	CONsub	_	5	mark	_	_
+2	al	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	4	case:det	_	_
+3	suo	_	DET	DETpos	Poss=Yes	4	det	_	_
+4	conseil	_	NOUN	NOMcom	_	5	obl	_	_
+5	edrat	_	VERB	VERcjg	VerbForm=Fin	10	advcl	_	_
+6	incontra	_	ADP	PRE	_	7	case	_	_
+7	Deu	_	PROPN	NOMpro	_	10	obl	_	_
+8	ben	_	ADV	ADVgen	_	10	advmod	_	_
+9	si	_	PRON	PROper	_	10	expl	_	_
+10	garda	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17543
+# text = lei consentit
+# timestamp = 1591544745719
+1	lei	_	NOUN	NOMcom	_	2	obj	_	_
+2	consentit	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17544
+# text = et observat
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	2	cc:nc	_	_
+2	observat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17545
+# text = et son regnet ben dominat
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	5	cc:nc	_	_
+2	son	_	DET	DETpos	Poss=Yes	3	det	_	_
+3	regnet	_	NOUN	NOMcom	_	5	obj	_	_
+4	ben	_	ADV	ADVgen	_	5	advmod	_	_
+5	dominat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17546
+# text = Ja fud tels om Deu inimix qui l' encusat ab Chielpering
+# timestamp = 1591544745719
+1	Ja	_	ADV	ADVgen	_	2	advmod	_	_
+2	fud	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	tels	_	DET	DETind	PronType=Ind	4	det	_	_
+4	om	_	NOUN	NOMcom	_	2	nsubj	_	_
+5	Deu	_	PROPN	NOMpro	_	6	nmod	_	_
+6	inimix	_	NOUN	NOMcom	_	4	appos	_	_
+7	qui	_	PRON	PROrel	PronType=Prs,Rel	9	nsubj	_	_
+8	l'	_	PRON	PROper	PronType=Prs	9	obj	_	_
+9	encusat	_	VERB	VERcjg	VerbForm=Fin	4	acl:relcl	_	_
+10	ab	_	ADP	PRE	_	11	case	_	_
+11	Chielpering	_	PROPN	NOMpro	_	9	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17547
+# text = L' ira fud granz cum de senior
+# timestamp = 1591544745719
+1	L'	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	ira	_	NOUN	NOMcom	_	4	nsubj	_	_
+3	fud	_	AUX	VERcjg	VerbForm=Fin	4	cop	_	_
+4	granz	_	ADJ	ADJqua	_	0	root	_	_
+5	cum	_	SCONJ	CONsub	_	7	mark	_	_
+6	de	_	ADP	PRE	_	7	case	_	_
+7	senior	_	NOUN	NOMcom	_	4	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17548
+# text = et sancz Lethgiers oc s' ent pavor
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	sancz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	4	nsubj	_	_
+4	oc	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	s'	_	PRON	PROper	PronType=Prs	4	expl	_	_
+6	ent	_	ADV	PROadv	PronType=Dem	4	obl:advmod	_	_
+7	pavor	_	NOUN	NOMcom	_	4	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17549
+# text = Ja lo sot bien
+# timestamp = 1591544745719
+1	Ja	_	ADV	ADVgen	_	3	advmod	_	_
+2	lo	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	sot	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	bien	_	ADV	ADVgen	_	3	advmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17550
+# text = il le celat
+# timestamp = 1591544745719
+1	il	_	PRON	PROper	PronType=Prs	3	nsubj	_	_
+2	le	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	celat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17551
+# text = a nuil omne no ·l demonstrat
+# timestamp = 1591544745719
+1	a	_	ADP	PRE	_	3	case	_	_
+2	nuil	_	DET	DETind	PronType=Ind	3	det	_	_
+3	omne	_	NOUN	NOMcom	_	6	obl	_	_
+4	no	_	ADV	ADVneg	Polarity=Neg	6	advmod	_	_
+5	·l	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	demonstrat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17552
+# text = Quant ciel' irae tels esdevint Paschas furent in eps cel di
+# timestamp = 1591544745719
+1	Quant	_	SCONJ	CONsub	_	4	mark	_	_
+2	ciel'	_	DET	DETdem	PronType=Dem	3	det	_	_
+3	irae	_	NOUN	NOMcom	_	4	nsubj	_	_
+4	tels	_	ADJ	ADJind	PronType=Ind	7	advcl	_	_
+5	esdevint	_	AUX	esdevenir	VerbForm=Fin	4	cop	_	_
+6	Paschas	_	PROPN	NOMpro	_	7	nsubj	_	_
+7	furent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+8	in	_	ADP	PRE	_	11	case	_	_
+9	eps	_	ADJ	ADJind	PronType=Ind	11	amod	_	_
+10	cel	_	DET	DETdem	PronType=Dem	11	det	_	_
+11	di	_	NOUN	NOMcom	_	7	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17553
+# text = Et sancz Lethgiers fist son mistier
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	sancz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	4	nsubj	_	_
+4	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	son	_	DET	DETpos	Poss=Yes	6	det	_	_
+6	mistier	_	NOUN	NOMcom	_	4	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17554
+# text = Missae cantat
+# timestamp = 1591544745719
+1	Missae	_	NOUN	NOMcom	_	2	obj	_	_
+2	cantat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17555
+# text = fist ·lo mul bien
+# timestamp = 1591544745719
+1	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	·lo	_	PRON	PROper	PronType=Prs	1	obj	_	_
+3	mul	_	ADV	ADVgen	_	4	advmod	_	_
+4	bien	_	ADV	ADVgen	_	1	advmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17556
+# text = pobl' e ·nlo rei communïat
+# timestamp = 1591544745719
+1	pobl'	_	NOUN	NOMcom	_	5	obj	_	_
+2	e	_	CCONJ	CONcoo	_	4	cc	_	_
+3	·nlo	_	DET	DETdef	Definite=Def|PronType=Art	4	det	_	_
+4	rei	_	NOUN	NOMcom	_	1	conj	_	_
+5	communïat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17557
+# text = et sens cumgiet si s' en ralat
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	7	cc:nc	_	_
+2	sens	_	ADP	PRE	_	3	case	_	_
+3	cumgiet	_	NOUN	NOMcom	_	7	obl	_	_
+4	si	_	ADV	ADVgen	_	7	advmod	_	_
+5	s'	_	PRON	PROper	PronType=Prs	7	expl	_	_
+6	en	_	ADV	PROadv	PronType=Dem	7	obl	_	_
+7	ralat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17558
+# text = Reis Chielperics cum il l' audit presdra sos meis
+# timestamp = 1591544745719
+1	Reis	_	NOUN	NOMcom	_	7	nsubj	_	_
+2	Chielperics	_	PROPN	NOMpro	_	1	flat	_	_
+3	cum	_	SCONJ	CONsub	_	6	mark	_	_
+4	il	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+5	l'	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	audit	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_
+7	presdra	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+8	sos	_	DET	DETpos	Poss=Yes	9	det	_	_
+9	meis	_	NOUN	NOMcom	_	7	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17559
+# text = a lui ·s tramist
+# timestamp = 1591544745719
+1	a	_	ADP	PRE	_	2	case	_	_
+2	lui	_	PRON	PROper	PronType=Prs	4	iobj	_	_
+3	·s	_	PRON	PROper	PronType=Prs	4	obj	_	_
+4	tramist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17560
+# text = cio li mandat que revenist sa gratia per tot ouist
+# timestamp = 1591544745719
+1	cio	_	PRON	PROdem	PronType=Dem	3	obj	_	_
+2	li	_	PRON	PROper	PronType=Prs	3	iobj	_	_
+3	mandat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	que	_	SCONJ	CONsub	_	5	mark	_	_
+5	revenist	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_
+6	sa	_	DET	DETpos	Poss=Yes	7	det	_	_
+7	gratia	_	NOUN	NOMcom	_	10	obj	_	_
+8	per	_	ADP	PRE	_	9	case	_	_
+9	tot	_	PRON	PROind	PronType=Ind	10	obl	_	_
+10	ouist	_	VERB	VERcjg	VerbForm=Fin	5	conj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17561
+# text = Et sancz Lethgiers ne ·s soth mesfait
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	6	cc:nc	_	_
+2	sancz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	6	nsubj	_	_
+4	ne	_	ADV	ADVneg	Polarity=Neg	6	advmod	_	_
+5	·s	_	PRON	PROper	PronType=Prs	6	expl	_	_
+6	soth	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+7	mesfait	_	VERB	VERppe	Tense=Past|VerbForm=Part	6	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17562
+# text = cum vit les meis a lui ralat
+# timestamp = 1591544745719
+1	cum	_	SCONJ	CONsub	_	2	mark	_	_
+2	vit	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_
+3	les	_	DET	DETdef	Definite=Def|PronType=Art	4	det	_	_
+4	meis	_	NOUN	NOMcom	_	2	obj	_	_
+5	a	_	ADP	PRE	_	6	case	_	_
+6	lui	_	PRON	PROper	PronType=Prs	7	iobj	_	_
+7	ralat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17563
+# text = Il cio li dist
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+2	cio	_	PRON	PROdem	PronType=Dem	4	obj	_	_
+3	li	_	PRON	PROper	PronType=Prs	4	iobj	_	_
+4	dist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17564
+# text = et adunat
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	2	cc:nc	_	_
+2	adunat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17565
+# text = Tos consiliers ja non estrai
+# timestamp = 1591544745719
+1	Tos	_	DET	DETpos	Poss=Yes	2	det	_	_
+2	consiliers	_	NOUN	NOMcom	_	0	root	_	_
+3	ja	_	ADV	ADVgen	_	2	advmod	_	_
+4	non	_	ADV	ADVneg	Polarity=Neg	2	advmod	_	_
+5	estrai	_	AUX	VERcjg	VerbForm=Fin	2	cop	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17566
+# text = meu' evesquet ne ·m lez teneir por te qui sempre ·m vols aveir
+# timestamp = 1591544745719
+1	meu'	_	DET	DETpos	Poss=Yes	2	det	_	_
+2	evesquet	_	NOUN	NOMcom	_	6	obj	_	_
+3	ne	_	ADV	ADVneg	Polarity=Neg	5	advmod	_	_
+4	·m	_	PRON	PROper	PronType=Prs	5	iobj	_	_
+5	lez	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	teneir	_	VERB	VERinf	VerbForm=Inf	5	xcomp	_	_
+7	por	_	ADP	PRE	_	8	case	_	_
+8	te	_	PRON	PROper	PronType=Prs	5	obl	_	_
+9	qui	_	PRON	PROrel	PronType=Prs,Rel	13	nsubj	_	_
+10	sempre	_	ADV	ADVgen	_	13	advmod	_	_
+11	·m	_	PRON	PROper	PronType=Prs	13	obj	_	_
+12	vols	_	AUX	VERcjg	VerbForm=Fin	13	aux	_	_
+13	aveir	_	VERB	VERinf	VerbForm=Inf	8	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17567
+# text = En u· monstier me laiss' intrer
+# timestamp = 1591544745719
+1	En	_	ADP	PRE	_	3	case	_	_
+2	u·	_	DET	DETndf	Definite=Ind|PronType=Art	3	det	_	_
+3	monstier	_	NOUN	NOMcom	_	6	obl	_	_
+4	me	_	PRON	PROper	PronType=Prs	5	obj	_	_
+5	laiss'	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	intrer	_	VERB	VERinf	VerbForm=Inf	5	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17568
+# text = pos ci non posc
+# timestamp = 1591544745719
+1	pos	_	ADV	ADVgen	_	4	advmod	_	_
+2	ci	_	ADV	ADVgen	_	4	advmod	_	_
+3	non	_	ADV	ADVneg	Polarity=Neg	4	advmod	_	_
+4	posc	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17569
+# text = lai vol ester
+# timestamp = 1591544745719
+1	lai	_	ADV	ADVgen	_	3	advmod	_	_
+2	vol	_	AUX	VERcjg	VerbForm=Fin	3	aux	_	_
+3	ester	_	VERB	VERinf	VerbForm=Inf	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17570
+# text = Enviz lo fist non voluntiers
+# timestamp = 1591544745719
+1	Enviz	_	ADV	ADVgen	_	3	advmod	_	_
+2	lo	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	non	_	ADV	ADVneg	Polarity=Neg	5	advmod	_	_
+5	voluntiers	_	ADV	ADVgen	_	3	advmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17571
+# text = laisse ·l intrar in u· monstier
+# timestamp = 1591544745719
+1	laisse	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	·l	_	PRON	PROper	PronType=Prs	1	obj	_	_
+3	intrar	_	VERB	VERinf	VerbForm=Inf	1	xcomp	_	_
+4	in	_	ADP	PRE	_	6	case	_	_
+5	u·	_	DET	DETndf	Definite=Ind|PronType=Art	6	det	_	_
+6	monstier	_	NOUN	NOMcom	_	3	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17572
+# text = Cio fud Lusos ut il intrat
+# timestamp = 1591544745719
+1	Cio	_	PRON	PROdem	PronType=Dem	3	nsubj	_	_
+2	fud	_	AUX	VERcjg	VerbForm=Fin	3	cop	_	_
+3	Lusos	_	PROPN	NOMpro	_	0	root	_	_
+4	ut	_	PRON	PROrel	PronType=Prs,Rel	6	obl	_	_
+5	il	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+6	intrat	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17573
+# text = clerj' Ewruï illo trovat
+# timestamp = 1591544745719
+1	clerj'	_	NOUN	NOMcom	_	4	obj	_	_
+2	Ewruï	_	PROPN	NOMpro	_	1	flat	_	_
+3	illo	_	ADV	ADVgen	_	4	advmod	_	_
+4	trovat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17574
+# text = Cil Ewruïns molt li vol mel toth per enveja non por el
+# timestamp = 1591544745719
+1	Cil	_	DET	DETdem	PronType=Dem	2	det	_	_
+2	Ewruïns	_	PROPN	NOMpro	_	5	nsubj	_	_
+3	molt	_	ADV	ADVgen	_	5	advmod	_	_
+4	li	_	PRON	PROper	PronType=Prs	5	iobj	_	_
+5	vol	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	mel	_	NOUN	NOMcom	_	5	obj	_	_
+7	toth	_	ADV	ADVgen	_	5	advmod	_	_
+8	per	_	ADP	PRE	_	9	case	_	_
+9	enveja	_	NOUN	NOMcom	_	5	obl	_	_
+10	non	_	ADV	ADVneg	Polarity=Neg	12	advmod	_	_
+11	por	_	ADP	PRE	_	12	case	_	_
+12	el	_	PRON	PROind	PronType=Ind	9	conj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17575
+# text = Et sancz Lethgiers fist so· mistier
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	sancz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	4	nsubj	_	_
+4	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	so·	_	DET	DETpos	Poss=Yes	6	det	_	_
+6	mistier	_	NOUN	NOMcom	_	4	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17576
+# text = Ewruï prist a castïier
+# timestamp = 1591544745719
+1	Ewruï	_	PROPN	NOMpro	_	4	obj	_	_
+2	prist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	a	_	ADP	PRE	_	4	mark	_	_
+4	castïier	_	VERB	VERinf	VerbForm=Inf	2	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17577
+# text = Ciel' ira grand et ciel corropt cio li preia laissas lo toth
+# timestamp = 1591544745719
+1	Ciel'	_	DET	DETdem	PronType=Dem	2	det	_	_
+2	ira	_	NOUN	NOMcom	_	12	dislocated	_	Morph=VFin
+3	grand	_	ADJ	ADJqua	_	2	amod	_	_
+4	et	_	CCONJ	CONcoo	_	6	cc	_	_
+5	ciel	_	DET	DETdem	PronType=Dem	6	det	_	_
+6	corropt	_	NOUN	NOMcom	_	2	conj	_	Morph=VPar
+7	cio	_	PRON	PROdem	PronType=Dem	9	nsubj	_	_
+8	li	_	PRON	PROper	PronType=Prs	9	iobj	_	_
+9	preia	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+10	laissas	_	VERB	VERcjg	VerbForm=Fin	9	ccomp	_	_
+11	lo	_	PRON	PROper	PronType=Prs	12	det	_	_
+12	toth	_	PRON	PROind	PronType=Ind	10	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17578
+# text = Fus ·li por Deu ne fus por lui cio li preia paia ·s' ab lui
+# timestamp = 1591544745719
+1	Fus	_	VERB	VERcjg	VerbForm=Fin	12	advcl	_	_
+2	·li	_	PRON	PROper	PronType=Prs	1	iobj	_	_
+3	por	_	ADP	PRE	_	4	case	_	_
+4	Deu	_	PROPN	NOMpro	_	1	obl	_	_
+5	ne	_	ADV	ADVneg	Polarity=Neg	6	advmod	_	_
+6	fus	_	VERB	VERcjg	VerbForm=Fin	1	conj	_	_
+7	por	_	ADP	PRE	_	8	case	_	_
+8	lui	_	PRON	PROper	PronType=Prs	6	obl	_	_
+9	cio	_	PRON	PROdem	PronType=Dem	11	obj	_	_
+10	li	_	PRON	PROper	PronType=Prs	11	iobj	_	_
+11	preia	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+12	paia	_	VERB	VERcjg	VerbForm=Fin	9	acl	_	_
+13	·s'	_	PRON	PROper	PronType=Prs	12	obj	_	_
+14	ab	_	ADP	PRE	_	15	case	_	_
+15	lui	_	PRON	PROper	PronType=Prs	12	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17579
+# text = Et Ewruïns fist fincta pais
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	3	cc:nc	_	_
+2	Ewruïns	_	PROPN	NOMpro	_	3	nsubj	_	_
+3	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	fincta	_	VERB	VERppe	Tense=Past|VerbForm=Part	5	acl	_	_
+5	pais	_	NOUN	NOMcom	_	3	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17580
+# text = cio demonstrat que si paias
+# timestamp = 1591544745719
+1	cio	_	PRON	PROdem	PronType=Dem	2	obj	_	_
+2	demonstrat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	que	_	SCONJ	CONsub	_	5	mark	_	_
+4	si	_	ADV	ADVgen	_	5	advmod	_	_
+5	paias	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17581
+# text = Quandius in ciel monstier instud cio demonstrat amix li fust
+# timestamp = 1591544745719
+1	Quandius	_	SCONJ	CONsub	_	5	mark	_	_
+2	in	_	ADP	PRE	_	4	case	_	_
+3	ciel	_	DET	DETdem	PronType=Dem	4	det	_	_
+4	monstier	_	NOUN	NOMcom	_	5	obl	_	_
+5	instud	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_
+6	cio	_	PRON	PROdem	PronType=Dem	7	obj	_	_
+7	demonstrat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+8	amix	_	NOUN	NOMcom	_	6	acl	_	_
+9	li	_	PRON	PROper	PronType=Prs	8	iobj	_	_
+10	fust	_	AUX	VERcjg	VerbForm=Fin	8	cop	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17582
+# text = Mais en avant vos cio aureiz com ill edrat per mala feid
+# timestamp = 1591544745719
+1	Mais	_	CCONJ	CONcoo	_	6	cc:nc	_	_
+2	en	_	ADP	PRE	_	3	case	_	_
+3	avant	_	ADV	ADVgen	_	6	advmod	_	_
+4	vos	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+5	cio	_	PRON	PROdem	PronType=Dem	6	obj	_	_
+6	aureiz	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+7	com	_	SCONJ	CONsub	_	9	mark	_	_
+8	ill	_	PRON	PROper	PronType=Prs	9	nsubj	_	_
+9	edrat	_	VERB	VERcjg	VerbForm=Fin	5	acl	_	_
+10	per	_	ADP	PRE	_	12	case	_	_
+11	mala	_	ADJ	ADJqua	_	12	amod	_	_
+12	feid	_	NOUN	NOMcom	_	9	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17583
+# text = Rex Chielperings il se fud mors
+# timestamp = 1591544745719
+1	Rex	_	NOUN	NOMcom	_	6	dislocated	_	_
+2	Chielperings	_	PROPN	NOMpro	_	1	flat	_	_
+3	il	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+4	se	_	PRON	PROper	PronType=Prs	6	expl	_	_
+5	fud	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+6	mors	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17584
+# text = per lo regnet lo sowrent tost
+# timestamp = 1591544745719
+1	per	_	ADP	PRE	_	3	case	_	_
+2	lo	_	DET	DETdef	Definite=Def|PronType=Art	3	det	_	_
+3	regnet	_	NOUN	NOMcom	_	5	obl	_	_
+4	lo	_	PRON	PROper	PronType=Prs	5	obj	_	_
+5	sowrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	tost	_	ADV	ADVgen	_	5	advmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17585
+# text = Vindrent parent e lor amic li sanct Lethgier li Ewruï
+# timestamp = 1591544745719
+1	Vindrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	parent	_	NOUN	NOMcom	_	1	nsubj	_	_
+3	e	_	CCONJ	CONcoo	_	5	cc	_	_
+4	lor	_	DET	DETpos	Poss=Yes	5	det	_	_
+5	amic	_	NOUN	NOMcom	_	2	conj	_	_
+6	li	_	DET	DETdef	Definite=Def|PronType=Art	5	appos	_	_
+7	sanct	_	ADJ	ADJqua	_	8	amod	_	_
+8	Lethgier	_	PROPN	NOMpro	_	6	nmod	_	_
+9	li	_	DET	DETdef	Definite=Def|PronType=Art	6	conj	_	_
+10	Ewruï	_	PROPN	NOMpro	_	9	nmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17586
+# text = cio confortent ad ambes duos que s' ent ralgent in lor honors
+# timestamp = 1591544745719
+1	cio	_	PRON	PROdem	PronType=Dem	2	obj	_	_
+2	confortent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	ad	_	ADP	PRE	_	5	case	_	_
+4	ambes	_	NUM	PROcar	NumType=Card	5	nummod	_	_
+5	duos	_	PRON	PROcar	NumType=Card	2	obl	_	_
+6	que	_	SCONJ	CONsub	_	9	mark	_	_
+7	s'	_	PRON	PROper	PronType=Prs	9	expl	_	_
+8	ent	_	ADV	PROadv	PronType=Dem	9	obl:advmod	_	_
+9	ralgent	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_
+10	in	_	ADP	PRE	_	12	case	_	_
+11	lor	_	DET	DETpos	Poss=Yes	12	det	_	_
+12	honors	_	NOUN	NOMcom	_	9	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17587
+# text = Et sancz Lethgiers den fistdra bien quae s' en ralat en s' evequiet
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	5	cc:nc	_	_
+2	sancz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	5	nsubj	_	_
+4	den	_	ADV	ADVgen	_	5	advmod	_	_
+5	fistdra	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	bien	_	NOUN	NOMcom	_	5	obj	_	_
+7	quae	_	SCONJ	CONsub	_	10	mark	_	_
+8	s'	_	PRON	PROper	PronType=Prs	10	expl	_	_
+9	en	_	ADV	PROadv	PronType=Dem	10	obl	_	_
+10	ralat	_	VERB	VERcjg	VerbForm=Fin	5	advcl	_	_
+11	en	_	ADP	PRE	_	13	case	_	_
+12	s'	_	DET	DETpos	Poss=Yes	13	det	_	_
+13	evequiet	_	NOUN	NOMcom	_	10	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17588
+# text = et Ewruïns den fisdra mel quae donc deveng anatemez
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	Ewruïns	_	PROPN	NOMpro	_	4	nsubj	_	_
+3	den	_	ADV	ADVgen	_	4	advmod	_	_
+4	fisdra	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	mel	_	NOUN	NOMcom	_	4	obj	_	_
+6	quae	_	SCONJ	CONsub	_	9	mark	_	_
+7	donc	_	ADV	ADVgen	_	9	advmod	_	_
+8	deveng	_	AUX	devenir	VerbForm=Fin	9	cop	_	_
+9	anatemez	_	VERB	VERppe	Tense=Past|VerbForm=Part	4	advcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17589
+# text = Son quev que il a coronet toth lo laisera recimer
+# timestamp = 1591544745719
+1	Son	_	DET	DETpos	Poss=Yes	2	det	_	_
+2	quev	_	NOUN	NOMcom	_	10	dislocated	_	_
+3	que	_	PRON	PROrel	PronType=Prs,Rel	6	obj	_	_
+4	il	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+5	a	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+6	coronet	_	VERB	VERppe	Tense=Past|VerbForm=Part	2	acl:relcl	_	_
+7	toth	_	ADV	ADVgen	_	9	advmod	_	_
+8	lo	_	PRON	PROper	PronType=Prs	10	obj	_	_
+9	laisera	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+10	recimer	_	VERB	VERinf	VerbForm=Inf	9	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17590
+# text = Dominedeu il lo laissat
+# timestamp = 1591544745719
+1	Dominedeu	_	PROPN	NOMpro	_	4	dislocated	_	_
+2	il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+3	lo	_	PRON	PROper	PronType=Prs	4	obj	_	_
+4	laissat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17591
+# text = et a dïable ·s comandat
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	5	cc:nc	_	_
+2	a	_	ADP	PRE	_	3	case	_	_
+3	dïable	_	NOUN	NOMcom	_	5	obl	_	_
+4	·s	_	PRON	PROper	PronType=Prs	5	obj	_	_
+5	comandat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17592
+# text = Qui donc fud mels et a lui vint il voluntiers semper reciut
+# timestamp = 1591544745719
+1	Qui	_	PRON	PROrel	PronType=Prs,Rel	4	nsubj	_	_
+2	donc	_	ADV	ADVgen	_	4	advmod	_	_
+3	fud	_	AUX	VERcjg	VerbForm=Fin	4	cop	_	_
+4	mels	_	ADJ	ADJqua	_	12	ccomp	_	_
+5	et	_	CCONJ	CONcoo	_	8	cc	_	_
+6	a	_	ADP	PRE	_	7	case	_	_
+7	lui	_	PRON	PROper	PronType=Prs	8	iobj	_	_
+8	vint	_	VERB	VERcjg	VerbForm=Fin	4	conj	_	_
+9	il	_	PRON	PROper	PronType=Prs	12	nsubj	_	_
+10	voluntiers	_	ADV	ADVgen	_	12	advmod	_	_
+11	semper	_	ADV	ADVgen	_	12	advmod	_	_
+12	reciut	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17593
+# text = Cum fulc en aut grand adunet lo regne prest a deuaster
+# timestamp = 1591544745719
+1	Cum	_	SCONJ	CONsub	_	6	mark	_	_
+2	fulc	_	NOUN	NOMcom	_	6	obj	_	_
+3	en	_	ADV	PROadv	PronType=Dem	6	obl:advmod	_	_
+4	aut	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+5	grand	_	ADJ	ADJqua	_	2	amod	_	_
+6	adunet	_	VERB	VERppe	Tense=Past|VerbForm=Part	9	advcl	_	_
+7	lo	_	DET	DETdef	Definite=Def|PronType=Art	8	det	_	_
+8	regne	_	NOUN	NOMcom	_	11	obj	_	_
+9	prest	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+10	a	_	ADP	PRE	_	11	mark	_	_
+11	deuaster	_	VERB	VERinf	VerbForm=Inf	9	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17594
+# text = A foc a flamma vai ardant et a gladïes percutan
+# timestamp = 1591544745719
+1	A	_	ADP	PRE	_	2	case	_	_
+2	foc	_	NOUN	NOMcom	_	6	obl	_	_
+3	a	_	ADP	PRE	_	4	case	_	_
+4	flamma	_	NOUN	NOMcom	_	6	obl	_	_
+5	vai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	ardant	_	VERB	VERppa	Tense=Pres|VerbForm=Part	5	xcomp	_	_
+7	et	_	CCONJ	CONcoo	_	10	cc	_	_
+8	a	_	ADP	PRE	_	9	case	_	_
+9	gladïes	_	NOUN	NOMcom	_	10	obl	_	_
+10	percutan	_	VERB	VERppa	Tense=Pres|VerbForm=Part	6	conj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17595
+# text = Por quant il pot tan fai de mel
+# timestamp = 1591544745719
+1	Por	_	ADP	PRE	_	4	case	_	_
+2	quant	_	SCONJ	CONsub	_	4	mark	_	_
+3	il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+4	pot	_	VERB	VERcjg	VerbForm=Fin	6	advcl	_	_
+5	tan	_	ADV	ADVgen	_	6	advmod	_	_
+6	fai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+7	de	_	ADP	PRE	_	8	case	_	_
+8	mel	_	NOUN	NOMcom	_	6	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17596
+# text = por Deu ne ·l volt ·il observer
+# timestamp = 1591544745719
+1	por	_	ADP	PRE	_	2	case	_	_
+2	Deu	_	PROPN	NOMpro	_	7	obl	_	_
+3	ne	_	ADV	ADVneg	Polarity=Neg	7	advmod	_	_
+4	·l	_	PRON	PROper	PronType=Prs	7	obj	_	_
+5	volt	_	AUX	VERcjg	VerbForm=Fin	7	aux	_	_
+6	·il	_	PRON	PROper	PronType=Prs	7	nsubj	_	_
+7	observer	_	VERB	VERinf	VerbForm=Inf	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17597
+# text = Ciel ne fud nez de medre vius qui tal exercite vidist
+# timestamp = 1591544745719
+1	Ciel	_	PRON	PROdem	PronType=Dem	4	nsubj	_	_
+2	ne	_	ADV	ADVneg	Polarity=Neg	4	advmod	_	_
+3	fud	_	AUX	VERcjg	VerbForm=Fin	4	aux	_	_
+4	nez	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_
+5	de	_	ADP	PRE	_	6	case	_	_
+6	medre	_	NOUN	NOMcom	_	4	obl	_	_
+7	vius	_	ADJ	ADJqua	_	6	amod	_	_
+8	qui	_	PRON	PROrel	PronType=Prs,Rel	11	nsubj	_	_
+9	tal	_	DET	DETind	PronType=Ind	10	det	_	_
+10	exercite	_	NOUN	NOMcom	_	11	obj	_	_
+11	vidist	_	VERB	VERcjg	VerbForm=Fin	1	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17598
+# text = Ad Ostedun a cilla ciu donc sanct Lethgier vai asalir
+# timestamp = 1591544745719
+1	Ad	_	ADP	PRE	_	2	case	_	_
+2	Ostedun	_	PROPN	NOMpro	_	9	obl	_	_
+3	a	_	ADP	PRE	_	5	case	_	_
+4	cilla	_	DET	DETdem	PronType=Dem	5	det	_	_
+5	ciu	_	NOUN	NOMcom	_	9	obl	_	_
+6	donc	_	ADV	ADVgen	_	9	advmod	_	_
+7	sanct	_	ADJ	ADJqua	_	8	amod	_	_
+8	Lethgier	_	PROPN	NOMpro	_	10	obj	_	_
+9	vai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+10	asalir	_	VERB	VERinf	VerbForm=Inf	9	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17599
+# text = Ne pot intrer en la ciutet
+# timestamp = 1591544745719
+1	Ne	_	ADV	ADVneg	Polarity=Neg	3	advmod	_	_
+2	pot	_	AUX	VERcjg	VerbForm=Fin	3	aux	_	_
+3	intrer	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+4	en	_	ADP	PRE	_	6	case	_	_
+5	la	_	DET	DETdef	Definite=Def|PronType=Art	6	det	_	_
+6	ciutet	_	NOUN	NOMcom	_	3	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17600
+# text = defors l' asist
+# timestamp = 1591544745719
+1	defors	_	ADV	ADVgen	_	3	advmod	_	_
+2	l'	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	asist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17601
+# text = fist ·i gran mel
+# timestamp = 1591544745719
+1	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	·i	_	ADV	PROadv	PronType=Dem	1	obl:advmod	_	_
+3	gran	_	ADJ	ADJqua	_	4	amod	_	_
+4	mel	_	NOUN	NOMcom	_	1	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17602
+# text = Et sancz Lethgiers mul en fud trist por ciel tel mel quae defors vid
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	7	cc:nc	_	_
+2	sancz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	7	nsubj	_	_
+4	mul	_	ADV	ADVgen	_	7	advmod	_	_
+5	en	_	ADV	PROadv	PronType=Dem	7	obl:advmod	_	_
+6	fud	_	AUX	VERcjg	VerbForm=Fin	7	cop	_	_
+7	trist	_	ADJ	ADJqua	_	0	root	_	_
+8	por	_	ADP	PRE	_	11	case	_	_
+9	ciel	_	DET	DETdem	PronType=Dem	11	det	_	_
+10	tel	_	ADJ	ADJind	PronType=Ind	11	amod	_	_
+11	mel	_	NOUN	NOMcom	_	7	obl	_	_
+12	quae	_	PRON	PROrel	PronType=Prs,Rel	14	obj	_	_
+13	defors	_	ADV	ADVgen	_	14	advmod	_	_
+14	vid	_	VERB	VERcjg	VerbForm=Fin	11	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17603
+# text = Sos clerjes pres ·il revestiz
+# timestamp = 1591544745719
+1	Sos	_	DET	DETpos	Poss=Yes	2	det	_	_
+2	clerjes	_	NOUN	NOMcom	_	3	obj	_	_
+3	pres	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	·il	_	PRON	PROper	PronType=Prs	3	nsubj	_	_
+5	revestiz	_	VERB	VERppe	Tense=Past|VerbForm=Part	2	acl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17604
+# text = et ob ses croix fors s' en exit
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	8	cc:nc	_	_
+2	ob	_	ADP	PRE	_	4	case	_	_
+3	ses	_	DET	DETpos	Poss=Yes	4	det	_	_
+4	croix	_	NOUN	NOMcom	_	8	obl	_	_
+5	fors	_	ADV	ADVgen	_	8	advmod	_	_
+6	s'	_	PRON	PROper	PronType=Prs	8	expl	_	_
+7	en	_	ADV	PROadv	PronType=Dem	8	obl	_	_
+8	exit	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17605
+# text = Porr o ·n exit
+# timestamp = 1591544745719
+1	Porr	_	ADP	PRE	_	2	case	_	_
+2	o	_	PRON	PROdem	PronType=Dem	4	obl	_	_
+3	·n	_	ADV	PROadv	PronType=Dem	4	obl	_	_
+4	exit	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17606
+# text = vol ·li preier quae tot ciel mel laisses por Dieu
+# timestamp = 1591544745719
+1	vol	_	AUX	VERcjg	VerbForm=Fin	3	aux	_	_
+2	·li	_	PRON	PROper	PronType=Prs	3	iobj	_	_
+3	preier	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+4	quae	_	SCONJ	CONsub	_	8	mark	_	_
+5	tot	_	DET	DETind	PronType=Ind	7	det	_	_
+6	ciel	_	DET	DETdem	PronType=Dem	7	det	_	_
+7	mel	_	NOUN	NOMcom	_	8	obj	_	_
+8	laisses	_	VERB	VERcjg	VerbForm=Fin	3	obl	_	_
+9	por	_	ADP	PRE	_	10	case	_	_
+10	Dieu	_	PROPN	NOMpro	_	8	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17607
+# text = Ciel Ewruïns qual hora ·l vid penre ·l rovat
+# timestamp = 1591544745719
+1	Ciel	_	DET	DETdem	PronType=Dem	2	det	_	_
+2	Ewruïns	_	PROPN	NOMpro	_	9	nsubj	_	_
+3	qual	_	DET	DETrel	PronType=Rel	4	det	_	_
+4	hora	_	NOUN	NOMcom	_	6	obl	_	_
+5	·l	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	vid	_	VERB	VERcjg	VerbForm=Fin	9	advcl	_	_
+7	penre	_	VERB	VERinf	VerbForm=Inf	9	xcomp	_	_
+8	·l	_	PRON	PROper	PronType=Prs	7	obj	_	_
+9	rovat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17608
+# text = lïer lo fist
+# timestamp = 1591544745719
+1	lïer	_	VERB	VERinf	VerbForm=Inf	3	xcomp	_	_
+2	lo	_	PRON	PROper	PronType=Prs	1	obj	_	_
+3	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17609
+# text = HOR EN AUREZ LAS POENAS granz quae il en fisdra li tiranz
+# timestamp = 1591544745719
+1	HOR	_	ADV	ADVgen	_	3	advmod	_	_
+2	EN	_	ADV	PROadv	PronType=Dem	5	advmod	_	_
+3	AUREZ	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	LAS	_	DET	DETdef	Definite=Def|PronType=Art	5	det	_	_
+5	POENAS	_	NOUN	NOMcom	_	3	obj	_	_
+6	granz	_	ADJ	ADJqua	_	5	amod	_	_
+7	quae	_	PRON	PROrel	PronType=Prs,Rel	10	obj	_	_
+8	il	_	PRON	PROper	PronType=Prs	10	nsubj	_	_
+9	en	_	ADV	PROadv	PronType=Dem	10	obl	_	_
+10	fisdra	_	VERB	VERcjg	VerbForm=Fin	5	acl:relcl	_	_
+11	li	_	DET	DETdef	Definite=Def|PronType=Art	12	det	_	_
+12	tiranz	_	NOUN	NOMcom	_	10	dislocated	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17610
+# text = Li perfides tam fud cruels
+# timestamp = 1591544745719
+1	Li	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	perfides	_	ADJ	ADJqua	_	5	nsubj	_	_
+3	tam	_	ADV	ADVgen	_	5	advmod	_	_
+4	fud	_	AUX	VERcjg	VerbForm=Fin	5	cop	_	_
+5	cruels	_	ADJ	ADJqua	_	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17611
+# text = lis ols del cap li fai crever
+# timestamp = 1591544745719
+1	lis	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	ols	_	NOUN	NOMcom	_	7	obj	_	_
+3	del	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	4	case:det	_	_
+4	cap	_	NOUN	NOMcom	_	7	obl	_	_
+5	li	_	PRON	PROper	PronType=Prs	6	iobj	_	_
+6	fai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+7	crever	_	VERB	VERinf	VerbForm=Inf	6	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17612
+# text = Cum si l' aut fait mis ·l en reclus
+# timestamp = 1591544745719
+1	Cum	_	SCONJ	CONsub	_	5	mark	_	_
+2	si	_	ADV	ADVgen	_	5	advmod	_	_
+3	l'	_	PRON	PROper	PronType=Prs	5	obj	_	_
+4	aut	_	AUX	VERcjg	VerbForm=Fin	5	aux	_	_
+5	fait	_	VERB	VERppe	Tense=Past|VerbForm=Part	6	advcl	_	_
+6	mis	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+7	·l	_	PRON	PROper	PronType=Prs	6	obj	_	_
+8	en	_	ADP	PRE	_	9	case	_	_
+9	reclus	_	NOUN	NOMcom	_	6	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17613
+# text = ne soth nuls om qu' es devengunz
+# timestamp = 1591544745719
+1	ne	_	ADV	ADVneg	Polarity=Neg	2	advmod	_	_
+2	soth	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	nuls	_	DET	DETind	PronType=Ind	4	det	_	_
+4	om	_	NOUN	NOMcom	_	2	nsubj	_	_
+5	qu'	_	PRON	PROrel	PronType=Prs,Rel	2	xcomp	_	_
+6	es	_	AUX	VERcjg	VerbForm=Fin	5	aux:pass	_	_
+7	devengunz	_	AUX	devenir	Tense=Past|VerbForm=Part	5	cop	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17614
+# text = A terra joth
+# timestamp = 1591544745719
+1	A	_	ADP	PRE	_	2	case	_	_
+2	terra	_	NOUN	NOMcom	_	3	obl	_	_
+3	joth	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17615
+# text = mult fo afflicz
+# timestamp = 1591544745719
+1	mult	_	ADV	ADVgen	_	3	advmod	_	_
+2	fo	_	AUX	VERcjg	VerbForm=Fin	3	aux:pass	_	_
+3	afflicz	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17616
+# text = non oct ob se cui en calsist
+# timestamp = 1591544745719
+1	non	_	ADV	ADVneg	Polarity=Neg	2	advmod	_	_
+2	oct	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	ob	_	ADP	PRE	_	4	case	_	_
+4	se	_	PRON	PROper	PronType=Prs	2	obl	_	_
+5	cui	_	PRON	PROrel	PronType=Prs,Rel	7	obl	_	_
+6	en	_	ADV	PROadv	PronType=Dem	7	obl:advmod	_	_
+7	calsist	_	VERB	VERcjg	VerbForm=Fin	2	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17617
+# text = Super lis piez ne pod ester qui toz los at ·il condemnets
+# timestamp = 1591544745719
+1	Super	_	ADP	PRE	_	3	case	_	_
+2	lis	_	DET	DETdef	Definite=Def|PronType=Art	3	det	_	_
+3	piez	_	NOUN	NOMcom	_	6	obl	_	_
+4	ne	_	ADV	ADVneg	Polarity=Neg	6	advmod	_	_
+5	pod	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+6	ester	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+7	qui	_	PRON	PROrel	PronType=Prs,Rel	12	dislocated	_	_
+8	toz	_	PRON	PROind	PronType=Ind	12	obl	_	_
+9	los	_	PRON	PROper	PronType=Prs	12	obj	_	_
+10	at	_	AUX	VERcjg	VerbForm=Fin	12	aux	_	_
+11	·il	_	PRON	PROper	PronType=Prs	12	nsubj	_	_
+12	condemnets	_	VERB	VERppe	Tense=Past|VerbForm=Part	6	csubj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17618
+# text = Am las lawras li fai talier hanc la lingua quae aut in quiev
+# timestamp = 1591544745719
+1	Am	_	NUM	DETcar	NumType=Card	3	nummod	_	_
+2	las	_	DET	DETdef	Definite=Def|PronType=Art	3	det	_	_
+3	lawras	_	NOUN	NOMcom	_	6	obj	_	_
+4	li	_	PRON	PROper	PronType=Prs	5	iobj	_	_
+5	fai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	talier	_	VERB	VERinf	VerbForm=Inf	5	xcomp	_	_
+7	hanc	_	ADV	ADVgen	_	6	advmod	_	_
+8	la	_	DET	DETdef	Definite=Def|PronType=Art	9	det	_	_
+9	lingua	_	NOUN	NOMcom	_	3	conj	_	_
+10	quae	_	PRON	PROrel	PronType=Prs,Rel	11	obj	_	_
+11	aut	_	VERB	VERcjg	VerbForm=Fin	9	acl:relcl	_	_
+12	in	_	ADP	PRE	_	13	case	_	_
+13	quiev	_	NOUN	NOMcom	_	11	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17619
+# text = Cum si l' aut toth vituperet dist Ewruïns qui tan fud mels
+# timestamp = 1591544745719
+1	Cum	_	SCONJ	CONsub	_	6	mark	_	_
+2	si	_	ADV	ADVgen	_	6	advmod	_	_
+3	l'	_	PRON	PROper	PronType=Prs	6	obj	_	_
+4	aut	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+5	toth	_	ADV	ADVgen	_	6	advmod	_	_
+6	vituperet	_	VERB	VERppe	Tense=Past|VerbForm=Part	7	advcl	_	_
+7	dist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+8	Ewruïns	_	PROPN	NOMpro	_	7	nsubj	_	_
+9	qui	_	PRON	PROrel	PronType=Prs,Rel	12	nsubj	_	_
+10	tan	_	ADV	ADVgen	_	12	advmod	_	_
+11	fud	_	AUX	VERcjg	VerbForm=Fin	12	cop	_	_
+12	mels	_	ADJ	ADJqua	_	8	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17620
+# text = Hor a perdud don Deu parler
+# timestamp = 1591544745719
+1	Hor	_	ADV	ADVgen	_	3	advmod	_	_
+2	a	_	AUX	VERcjg	VerbForm=Fin	3	aux	_	_
+3	perdud	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_
+4	don	_	PRON	PROrel	PronType=Prs,Rel	6	obl	_	_
+5	Deu	_	PROPN	NOMpro	_	6	obl	_	_
+6	parler	_	VERB	VERinf	VerbForm=Inf	3	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17621
+# text = ja non podra mais Deu lauder
+# timestamp = 1591544745719
+1	ja	_	ADV	ADVgen	_	6	advmod	_	_
+2	non	_	ADV	ADVneg	Polarity=Neg	6	advmod	_	_
+3	podra	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+4	mais	_	ADV	ADVgen	_	6	advmod	_	_
+5	Deu	_	PROPN	NOMpro	_	6	obj	_	_
+6	lauder	_	VERB	VERinf	VerbForm=Inf	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17622
+# text = Sed il non ad lingu' a parler Deus exaudis lis sos pensaez
+# timestamp = 1591544745719
+1	Sed	_	SCONJ	CONsub	_	4	mark	_	_
+2	il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+3	non	_	ADV	ADVneg	Polarity=Neg	4	advmod	_	_
+4	ad	_	VERB	VERcjg	VerbForm=Fin	9	advcl	_	_
+5	lingu'	_	NOUN	NOMcom	_	4	obj	_	_
+6	a	_	ADP	PRE	_	7	mark	_	_
+7	parler	_	VERB	VERinf	VerbForm=Inf	4	advcl	_	_
+8	Deus	_	PROPN	NOMpro	_	9	nsubj	_	_
+9	exaudis	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+10	lis	_	DET	DETdef	Definite=Def|PronType=Art	12	det	_	_
+11	sos	_	ADJ	ADJpos	Poss=Yes	12	amod	_	_
+12	pensaez	_	NOUN	NOMcom	_	9	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17623
+# text = et si el non ad ols carnels en cor los ad etspiritels
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	11	cc:nc	_	_
+2	si	_	SCONJ	CONsub	_	5	mark	_	_
+3	el	_	PRON	PROper	PronType=Prs	5	nsubj	_	_
+4	non	_	ADV	ADVneg	Polarity=Neg	2	fixed	_	_
+5	ad	_	VERB	VERcjg	VerbForm=Fin	11	advcl	_	_
+6	ols	_	NOUN	NOMcom	_	5	obj	_	_
+7	carnels	_	ADJ	ADJqua	_	6	amod	_	_
+8	en	_	ADP	PRE	_	9	case	_	_
+9	cor	_	NOUN	NOMcom	_	11	obl	_	_
+10	los	_	PRON	PROper	PronType=Prs	11	obj	_	_
+11	ad	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+12	etspiritels	_	ADJ	ADJqua	_	10	amod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17624
+# text = et si en corps a grand torment l' anima ·n awra consolament
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	11	cc:nc	_	_
+2	si	_	SCONJ	CONsub	_	5	mark	_	_
+3	en	_	ADP	PRE	_	4	case	_	_
+4	corps	_	NOUN	NOMcom	_	5	obl	_	_
+5	a	_	VERB	VERcjg	VerbForm=Fin	11	advcl	_	_
+6	grand	_	ADJ	ADJqua	_	7	amod	_	_
+7	torment	_	NOUN	NOMcom	_	5	obj	_	_
+8	l'	_	DET	DETdef	Definite=Def|PronType=Art	9	det	_	_
+9	anima	_	NOUN	NOMcom	_	11	nsubj	_	_
+10	·n	_	ADV	PROadv	PronType=Dem	11	obl:advmod	_	_
+11	awra	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+12	consolament	_	NOUN	NOMcom	_	11	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17625
+# text = Guenes oth num cui ·l comandat
+# timestamp = 1591544745719
+1	Guenes	_	PROPN	NOMpro	_	2	xcomp	_	_
+2	oth	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	num	_	NOUN	NOMcom	_	2	obj	_	_
+4	cui	_	PRON	PROrel	PronType=Prs,Rel	6	obl	_	_
+5	·l	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	comandat	_	VERB	VERcjg	VerbForm=Fin	2	csubj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17626
+# text = la jus en cartres l' en menat
+# timestamp = 1591544745719
+1	la	_	ADV	ADVgen	_	7	advmod	_	_
+2	jus	_	ADV	ADVgen	_	7	advmod	_	_
+3	en	_	ADP	PRE	_	4	case	_	_
+4	cartres	_	NOUN	NOMcom	_	7	obl	_	_
+5	l'	_	PRON	PROper	PronType=Prs	7	obj	_	_
+6	en	_	ADV	PROadv	PronType=Dem	7	obl	_	_
+7	menat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17627
+# text = et en Fescant in ciel monstier illo reclusdrent sanct Lethgier
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	8	cc:nc	_	_
+2	en	_	ADP	PRE	_	3	case	_	_
+3	Fescant	_	PROPN	NOMpro	_	8	obl	_	_
+4	in	_	ADP	PRE	_	6	case	_	_
+5	ciel	_	DET	DETdem	PronType=Dem	6	det	_	_
+6	monstier	_	NOUN	NOMcom	_	8	obl	_	_
+7	illo	_	ADV	ADVgen	_	8	advmod	_	_
+8	reclusdrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+9	sanct	_	ADJ	ADJqua	_	10	amod	_	_
+10	Lethgier	_	PROPN	NOMpro	_	8	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17628
+# text = Dominedeus in ciel flaiel i visitet Lethgier son serw
+# timestamp = 1591544745719
+1	Dominedeus	_	PROPN	NOMpro	_	6	nsubj	_	_
+2	in	_	ADP	PRE	_	4	case	_	_
+3	ciel	_	DET	DETdem	PronType=Dem	4	det	_	_
+4	flaiel	_	NOUN	NOMcom	_	6	obl	_	_
+5	i	_	ADV	PROadv	PronType=Dem	6	obl:advmod	_	_
+6	visitet	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+7	Lethgier	_	PROPN	NOMpro	_	6	obj	_	_
+8	son	_	DET	DETpos	Poss=Yes	9	det	_	_
+9	serw	_	NOUN	NOMcom	_	7	appos	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17629
+# text = La labï' a li restauret
+# timestamp = 1591544745719
+1	La	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	labï'	_	NOUN	NOMcom	_	5	obj	_	_
+3	a	_	AUX	PRE	_	5	aux	_	Morph=VFin
+4	li	_	PRON	PROper	PronType=Prs	5	iobj	_	_
+5	restauret	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17630
+# text = si cum desanz Deu pres lauder
+# timestamp = 1591544745719
+1	si	_	ADV	ADVgen	_	5	advmod	_	_
+2	cum	_	SCONJ	CONsub	_	3	mark	_	_
+3	desanz	_	ADV	ADVgen	_	1	advmod	_	_
+4	Deu	_	PROPN	NOMpro	_	6	obj	_	_
+5	pres	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	lauder	_	VERB	VERinf	VerbForm=Inf	5	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17631
+# text = et hanc en aut merci si grand parler lo fist si cum desanz
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	hanc	_	ADV	ADVgen	_	4	advmod	_	_
+3	en	_	ADV	PROadv	PronType=Dem	4	obl:advmod	_	_
+4	aut	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	merci	_	NOUN	NOMcom	_	4	obj	_	_
+6	si	_	ADV	ADVgen	_	10	advmod	_	_
+7	grand	_	ADJ	ADJqua	_	5	amod	_	_
+8	parler	_	VERB	VERinf	VerbForm=Inf	10	xcomp	_	_
+9	lo	_	PRON	PROper	PronType=Prs	10	obj	_	_
+10	fist	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_
+11	si	_	ADV	ADVgen	_	8	advmod	_	_
+12	cum	_	SCONJ	CONsub	_	13	mark	_	_
+13	desanz	_	ADV	ADVgen	_	11	advmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17632
+# text = Doc pres Lethgiers a preïier
+# timestamp = 1591544745719
+1	Doc	_	ADV	ADVgen	_	2	advmod	_	_
+2	pres	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	2	nsubj	_	_
+4	a	_	ADP	PRE	_	5	mark	_	_
+5	preïier	_	VERB	VERinf	VerbForm=Inf	2	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17633
+# text = poble ben fist credre in Dieu
+# timestamp = 1591544745719
+1	poble	_	NOUN	NOMcom	_	3	obj	_	_
+2	ben	_	ADV	ADVgen	_	3	advmod	_	_
+3	fist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	credre	_	VERB	VERinf	VerbForm=Inf	3	xcomp	_	_
+5	in	_	ADP	PRE	_	6	case	_	_
+6	Dieu	_	PROPN	NOMpro	_	4	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17634
+# text = Et Ewruïs cum il l' audit credre ·nne ·l pot antro que ·l vid
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	7	cc:nc	_	_
+2	Ewruïs	_	PROPN	NOMpro	_	7	nsubj	_	_
+3	cum	_	SCONJ	CONsub	_	6	mark	_	_
+4	il	_	PRON	PROper	PronType=Prs	6	nsubj	_	_
+5	l'	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	audit	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_
+7	credre	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+8	·nne	_	ADV	ADVneg	Polarity=Neg	7	advmod	_	_
+9	·l	_	PRON	PROper	PronType=Prs	7	obj	_	_
+10	pot	_	AUX	VERcjg	VerbForm=Fin	7	aux	_	_
+11	antro	_	ADP	PRE	_	7	case	_	_
+12	que	_	SCONJ	CONsub	_	14	mark	_	_
+13	·l	_	PRON	PROper	PronType=Prs	14	obj	_	_
+14	vid	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17635
+# text = Cum il lo vid fud corroptios
+# timestamp = 1591544745719
+1	Cum	_	SCONJ	CONsub	_	4	mark	_	_
+2	il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+3	lo	_	PRON	PROper	PronType=Prs	4	obj	_	_
+4	vid	_	VERB	VERcjg	VerbForm=Fin	6	advcl	_	_
+5	fud	_	AUX	VERcjg	VerbForm=Fin	6	cop	_	_
+6	corroptios	_	ADJ	ADJqua	_	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17636
+# text = donc oct ab lui dures raizons
+# timestamp = 1591544745719
+1	donc	_	ADV	ADVgen	_	2	advmod	_	_
+2	oct	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	ab	_	ADP	PRE	_	4	case	_	_
+4	lui	_	PRON	PROper	PronType=Prs	2	obl	_	_
+5	dures	_	ADJ	ADJqua	_	6	amod	_	_
+6	raizons	_	NOUN	NOMcom	_	2	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17637
+# text = Li cors exastra al tirant
+# timestamp = 1591544745719
+1	Li	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	cors	_	NOUN	NOMcom	_	3	nsubj	_	_
+3	exastra	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	al	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	5	case:det	_	_
+5	tirant	_	NOUN	NOMcom	_	3	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17638
+# text = peis li promest adenavant
+# timestamp = 1591544745719
+1	peis	_	NOUN	NOMcom	_	3	obj	_	_
+2	li	_	PRON	PROper	PronType=Prs	3	iobj	_	_
+3	promest	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	adenavant	_	ADV	ADVgen	_	3	advmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17639
+# text = A grand furor a gran flaiel si ·l recommand' a Laudebert
+# timestamp = 1591544745719
+1	A	_	ADP	PRE	_	3	case	_	_
+2	grand	_	ADJ	ADJqua	_	3	amod	_	_
+3	furor	_	NOUN	NOMcom	_	9	obl	_	_
+4	a	_	ADP	PRE	_	6	case	_	_
+5	gran	_	ADJ	ADJqua	_	6	amod	_	_
+6	flaiel	_	NOUN	NOMcom	_	9	obl	_	_
+7	si	_	ADV	ADVgen	_	9	advmod	_	_
+8	·l	_	PRON	PROper	PronType=Prs	9	obj	_	_
+9	recommand'	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+10	a	_	ADP	PRE	_	11	case	_	_
+11	Laudebert	_	PROPN	NOMpro	_	9	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17640
+# text = Cio li rova et noit et di mel li fesist dontre qu' el viu
+# timestamp = 1591544745719
+1	Cio	_	PRON	PROdem	PronType=Dem	3	obj	_	_
+2	li	_	PRON	PROper	PronType=Prs	3	iobj	_	_
+3	rova	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	et	_	CCONJ	CONcoo	_	5	cc	_	_
+5	noit	_	NOUN	NOMcom	_	3	obl	_	_
+6	et	_	CCONJ	CONcoo	_	7	cc	_	_
+7	di	_	NOUN	NOMcom	_	5	conj	_	_
+8	mel	_	NOUN	NOMcom	_	10	obj	_	_
+9	li	_	PRON	PROper	PronType=Prs	10	iobj	_	_
+10	fesist	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_
+11	dontre	_	ADV	ADVgen	_	10	advmod	_	_
+12	qu'	_	SCONJ	CONsub	_	14	mark	_	_
+13	el	_	PRON	PROper	PronType=Prs	14	nsubj	_	_
+14	viu	_	VERB	VERcjg	VerbForm=Fin	10	advcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17641
+# text = Ciel Laudebert fura buons om
+# timestamp = 1591544745719
+1	Ciel	_	DET	DETdem	PronType=Dem	2	det	_	_
+2	Laudebert	_	PROPN	NOMpro	_	5	nsubj	_	_
+3	fura	_	AUX	VERcjg	VerbForm=Fin	5	cop	_	_
+4	buons	_	ADJ	ADJqua	_	5	amod	_	_
+5	om	_	NOUN	NOMcom	_	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17642
+# text = et sanct Lethgier duis a son dom
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	4	cc:nc	_	_
+2	sanct	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgier	_	PROPN	NOMpro	_	4	obj	_	_
+4	duis	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	a	_	ADP	PRE	_	7	case	_	_
+6	son	_	DET	DETpos	Poss=Yes	7	det	_	_
+7	dom	_	NOUN	NOMcom	_	4	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17643
+# text = Il li vol faire mult amet
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+2	li	_	PRON	PROper	PronType=Prs	4	iobj	_	_
+3	vol	_	AUX	VERcjg	VerbForm=Fin	4	aux	_	_
+4	faire	_	VERB	VERinf	VerbForm=Inf	0	root	_	_
+5	mult	_	ADV	ADVgen	_	4	advmod	_	_
+6	amet	_	VERB	VERppe	Tense=Past|VerbForm=Part	4	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17644
+# text = bewre li rova aporter
+# timestamp = 1591544745719
+1	bewre	_	VERB	VERinf	VerbForm=Inf	4	xcomp	_	_
+2	li	_	PRON	PROper	PronType=Prs	4	iobj	_	_
+3	rova	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	aporter	_	VERB	VERinf	VerbForm=Inf	3	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17645
+# text = Uarda
+# timestamp = 1591544745719
+1	Uarda	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17646
+# text = si vid grand claritet
+# timestamp = 1591544745719
+1	si	_	ADV	ADVgen	_	2	advmod	_	_
+2	vid	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+3	grand	_	ADJ	ADJqua	_	4	amod	_	_
+4	claritet	_	NOUN	NOMcom	_	2	obj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17647
+# text = de cel vindre
+# timestamp = 1591544745719
+1	de	_	ADP	PRE	_	2	case	_	_
+2	cel	_	NOUN	NOMcom	_	3	obl	_	_
+3	vindre	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17648
+# text = fud de par Deu
+# timestamp = 1591544745719
+1	fud	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	de	_	ADP	PRE	_	4	case	_	_
+3	par	_	ADP	PRE	_	4	case	_	_
+4	Deu	_	PROPN	NOMpro	_	1	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17649
+# text = Si cum ruörs in cel es granz
+# timestamp = 1591544745719
+1	Si	_	ADV	ADVgen	_	3	advmod	_	_
+2	cum	_	SCONJ	CONsub	_	3	mark	_	_
+3	ruörs	_	NOUN	NOMcom	_	7	obl	_	_
+4	in	_	ADP	PRE	_	5	case	_	_
+5	cel	_	NOUN	NOMcom	_	3	nmod	_	_
+6	es	_	AUX	VERcjg	VerbForm=Fin	7	cop	_	_
+7	granz	_	ADJ	ADJqua	_	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17650
+# text = e si cum flamm' es clar ardanz
+# timestamp = 1591544745719
+1	e	_	CCONJ	CONcoo	_	7	cc:nc	_	_
+2	si	_	ADV	ADVgen	_	4	advmod	_	_
+3	cum	_	SCONJ	CONsub	_	4	mark	_	_
+4	flamm'	_	NOUN	NOMcom	_	7	obl	_	_
+5	es	_	AUX	VERcjg	VerbForm=Fin	7	cop	_	_
+6	clar	_	ADJ	ADJqua	_	7	acl	_	_
+7	ardanz	_	VERB	VERppa	Tense=Pres|VerbForm=Part	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17651
+# text = Cil Laudeberz qual hora ·l vid torne s' als altres
+# timestamp = 1591544745719
+1	Cil	_	DET	DETdem	PronType=Dem	2	det	_	_
+2	Laudeberz	_	PROPN	NOMpro	_	7	nsubj	_	_
+3	qual	_	DET	DETrel	PronType=Rel	4	det	_	_
+4	hora	_	NOUN	NOMcom	_	6	obl	_	_
+5	·l	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	vid	_	VERB	VERcjg	VerbForm=Fin	7	advcl	_	_
+7	torne	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+8	s'	_	PRON	PROper	PronType=Prs	7	expl	_	_
+9	als	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	10	case:det	_	_
+10	altres	_	PRON	PROind	PronType=Ind	7	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17652
+# text = si ·llor dist
+# timestamp = 1591544745719
+1	si	_	ADV	ADVgen	_	3	advmod	_	_
+2	·llor	_	PRON	PROper	PronType=Prs	3	iobj	_	_
+3	dist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17653
+# text = Ciest omne tel mult aima Dieus por cui tels causa vin· de ciel
+# timestamp = 1591544745719
+1	Ciest	_	DET	DETdem	PronType=Dem	2	det	_	_
+2	omne	_	NOUN	NOMcom	_	5	obj	_	_
+3	tel	_	ADJ	ADJind	PronType=Ind	2	amod	_	_
+4	mult	_	ADV	ADVgen	_	5	advmod	_	_
+5	aima	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	Dieus	_	PROPN	NOMpro	_	5	nsubj	_	_
+7	por	_	ADP	PRE	_	8	case	_	_
+8	cui	_	PRON	PROrel	PronType=Prs,Rel	11	obl	_	_
+9	tels	_	DET	DETind	PronType=Ind	10	det	_	_
+10	causa	_	NOUN	NOMcom	_	11	nsubj	_	_
+11	vin·	_	VERB	VERcjg	VerbForm=Fin	2	acl:relcl	_	_
+12	de	_	ADP	PRE	_	13	case	_	_
+13	ciel	_	NOUN	NOMcom	_	11	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17654
+# text = Por ciels signes que vidrent tels Deu presdrent mult a conlauder
+# timestamp = 1591544745719
+1	Por	_	ADP	PRE	_	3	case	_	_
+2	ciels	_	DET	DETdem	PronType=Dem	3	det	_	_
+3	signes	_	NOUN	NOMcom	_	8	obl	_	_
+4	que	_	PRON	PROrel	PronType=Prs,Rel	5	obj	_	_
+5	vidrent	_	VERB	VERcjg	VerbForm=Fin	3	acl:relcl	_	_
+6	tels	_	PRON	PROind	PronType=Ind	5	obl	_	_
+7	Deu	_	PROPN	NOMpro	_	11	obj	_	_
+8	presdrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+9	mult	_	ADV	ADVgen	_	8	advmod	_	_
+10	a	_	ADP	PRE	_	11	mark	_	_
+11	conlauder	_	VERB	VERinf	VerbForm=Inf	8	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17655
+# text = Tuit li omne de ciel païs trestuit apresdrent a venir
+# timestamp = 1591544745719
+1	Tuit	_	DET	DETind	PronType=Ind	3	det	_	_
+2	li	_	DET	DETdef	Definite=Def|PronType=Art	3	det	_	_
+3	omne	_	NOUN	NOMcom	_	8	nsubj	_	_
+4	de	_	ADP	PRE	_	6	case	_	_
+5	ciel	_	DET	DETdem	PronType=Dem	6	det	_	_
+6	païs	_	NOUN	NOMcom	_	3	nmod	_	_
+7	trestuit	_	PRON	PROind	PronType=Ind	3	obl	_	_
+8	apresdrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+9	a	_	ADP	PRE	_	10	mark	_	_
+10	venir	_	VERB	VERinf	VerbForm=Inf	8	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17656
+# text = Et sancz Lethgiers lis predïat
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	5	cc:nc	_	_
+2	sancz	_	ADJ	ADJqua	_	3	amod	_	_
+3	Lethgiers	_	PROPN	NOMpro	_	5	nsubj	_	_
+4	lis	_	PRON	PROper	PronType=Prs	5	obj	_	_
+5	predïat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17657
+# text = Dominedeu il les lucrat
+# timestamp = 1591544745719
+1	Dominedeu	_	PROPN	NOMpro	_	4	obl	_	_
+2	il	_	PRON	PROper	PronType=Prs	4	nsubj	_	_
+3	les	_	PRON	PROper	PronType=Prs	4	obj	_	_
+4	lucrat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17658
+# text = Rendet ciel fruit espiritel quae Deus li auret per donet
+# timestamp = 1591544745719
+1	Rendet	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+2	ciel	_	DET	DETdem	PronType=Dem	3	det	_	_
+3	fruit	_	NOUN	NOMcom	_	1	obj	_	_
+4	espiritel	_	ADJ	ADJqua	_	3	amod	_	_
+5	quae	_	PRON	PROrel	PronType=Prs,Rel	10	obj	_	_
+6	Deus	_	PROPN	NOMpro	_	10	nsubj	_	_
+7	li	_	PRON	PROper	PronType=Prs	10	iobj	_	_
+8	auret	_	AUX	VERcjg	VerbForm=Fin	10	aux	_	_
+9	per	_	ADV	ADVgen	_	10	advmod	_	_
+10	donet	_	VERB	VERppe	Tense=Past|VerbForm=Part	3	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17659
+# text = cil li pesat
+# timestamp = 1591544745719
+1	cil	_	PRON	PROdem	PronType=Dem	3	nsubj	_	_
+2	li	_	PRON	PROper	PronType=Prs	3	iobj	_	_
+3	pesat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17660
+# text = occidere ·lo commandat
+# timestamp = 1591544745719
+1	occidere	_	VERB	VERinf	VerbForm=Inf	3	xcomp	_	_
+2	·lo	_	PRON	PROper	PronType=Prs	1	obj	_	_
+3	commandat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17661
+# text = Quatr' omnes i tramist armez que lui alessunt decoller
+# timestamp = 1591544745719
+1	Quatr'	_	NUM	DETcar	NumType=Card	2	nummod	_	_
+2	omnes	_	NOUN	NOMcom	_	4	obj	_	_
+3	i	_	ADV	PROadv	PronType=Dem	4	obl	_	_
+4	tramist	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+5	armez	_	VERB	VERppe	Tense=Past|VerbForm=Part	2	acl	_	_
+6	que	_	SCONJ	CONsub	_	8	mark	_	_
+7	lui	_	PRON	PROper	PronType=Prs	9	obj	_	_
+8	alessunt	_	VERB	VERcjg	VerbForm=Fin	4	advcl	_	_
+9	decoller	_	VERB	VERinf	VerbForm=Inf	8	xcomp	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17662
+# text = Li tres vindrent a sanct Lethgier
+# timestamp = 1591544745719
+1	Li	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	tres	_	PRON	PROcar	NumType=Card	3	nsubj	_	_
+3	vindrent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	a	_	ADP	PRE	_	6	case	_	_
+5	sanct	_	ADJ	ADJqua	_	6	amod	_	_
+6	Lethgier	_	PROPN	NOMpro	_	3	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17663
+# text = jus se giterent a sos piez
+# timestamp = 1591544745719
+1	jus	_	ADV	ADVgen	_	3	advmod	_	_
+2	se	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	giterent	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	a	_	ADP	PRE	_	6	case	_	_
+5	sos	_	DET	DETpos	Poss=Yes	6	det	_	_
+6	piez	_	NOUN	NOMcom	_	3	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17664
+# text = de lor pechietz que aurent faiz il lor absols
+# timestamp = 1591544745719
+1	de	_	ADP	PRE	_	3	case	_	_
+2	lor	_	DET	DETdef	Definite=Def|PronType=Art	3	det	_	_
+3	pechietz	_	NOUN	NOMcom	_	9	obl	_	_
+4	que	_	PRON	PROrel	PronType=Prs,Rel	6	obj	_	_
+5	aurent	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+6	faiz	_	VERB	VERppe	Tense=Past|VerbForm=Part	3	acl:relcl	_	_
+7	il	_	PRON	PROper	PronType=Prs	9	nsubj	_	_
+8	lor	_	PRON	PROper	PronType=Prs	9	iobj	_	_
+9	absols	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17665
+# text = et perdonat
+# timestamp = 1591544745719
+1	et	_	CCONJ	CONcoo	_	2	cc:nc	_	_
+2	perdonat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17666
+# text = Lo quarz uns fel nom a Uadart ab un inspieth lo decollat
+# timestamp = 1591544745719
+1	Lo	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	quarz	_	PRON	PROord	NumType=Ord	12	nsubj	_	_
+3	uns	_	DET	DETndf	Definite=Ind|PronType=Art	4	det	_	_
+4	fel	_	NOUN	NOMcom	_	2	appos	_	_
+5	nom	_	NOUN	NOMcom	_	6	obj	_	_
+6	a	_	VERB	VERcjg	VerbForm=Fin	12	parataxis	_	_
+7	Uadart	_	PROPN	NOMpro	_	6	xcomp	_	_
+8	ab	_	ADP	PRE	_	10	case	_	_
+9	un	_	DET	DETndf	Definite=Ind|PronType=Art	10	det	_	_
+10	inspieth	_	NOUN	NOMcom	_	12	obl	_	_
+11	lo	_	PRON	PROper	PronType=Prs	12	obj	_	_
+12	decollat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17667
+# text = Et cum ill aud tollut lo quiev lo corps estera sobre ·ls piez
+# timestamp = 1591544745719
+1	Et	_	CCONJ	CONcoo	_	10	cc:nc	_	_
+2	cum	_	SCONJ	CONsub	_	5	mark	_	_
+3	ill	_	PRON	PROper	PronType=Prs	5	nsubj	_	_
+4	aud	_	AUX	VERcjg	VerbForm=Fin	5	aux	_	_
+5	tollut	_	VERB	VERppe	Tense=Past|VerbForm=Part	10	advcl	_	_
+6	lo	_	DET	DETdef	Definite=Def|PronType=Art	7	det	_	_
+7	quiev	_	NOUN	NOMcom	_	5	obj	_	_
+8	lo	_	DET	DETdef	Definite=Def|PronType=Art	9	det	_	_
+9	corps	_	NOUN	NOMcom	_	10	nsubj	_	_
+10	estera	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+11	sobre	_	ADP	PRE	_	13	case	_	_
+12	·ls	_	DET	DETdef	Definite=Def|PronType=Art	13	det	_	_
+13	piez	_	NOUN	NOMcom	_	10	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17668
+# text = cio fud lonx dis que non cadit
+# timestamp = 1591544745719
+1	cio	_	PRON	PROdem	PronType=Dem	4	nsubj	_	_
+2	fud	_	AUX	VERcjg	VerbForm=Fin	4	cop	_	_
+3	lonx	_	ADJ	ADJqua	_	4	amod	_	_
+4	dis	_	NOUN	NOMcom	_	0	root	_	_
+5	que	_	SCONJ	CONsub	_	7	mark	_	_
+6	non	_	ADV	ADVneg	Polarity=Neg	7	advmod	_	_
+7	cadit	_	VERB	VERcjg	VerbForm=Fin	1	acl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17669
+# text = Lai s' aprosmat que lui firid
+# timestamp = 1591544745719
+1	Lai	_	ADV	ADVgen	_	3	advmod	_	_
+2	s'	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	aprosmat	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	que	_	SCONJ	CONsub	_	6	mark	_	_
+5	lui	_	PRON	PROper	PronType=Prs	6	obj	_	_
+6	firid	_	VERB	VERcjg	VerbForm=Fin	3	advcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17670
+# text = entro talia los pez dejus lo corps estera sempre sus
+# timestamp = 1591544745719
+1	entro	_	ADV	ADVgen	_	2	mark	_	_
+2	talia	_	VERB	VERcjg	VerbForm=Fin	8	advcl	_	_
+3	los	_	DET	DETdef	Definite=Def|PronType=Art	4	det	_	_
+4	pez	_	NOUN	NOMcom	_	2	obj	_	_
+5	dejus	_	ADV	ADVgen	_	2	advmod	_	_
+6	lo	_	DET	DETdef	Definite=Def|PronType=Art	7	det	_	_
+7	corps	_	NOUN	NOMcom	_	8	nsubj	_	_
+8	estera	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+9	sempre	_	ADV	ADVgen	_	8	advmod	_	_
+10	sus	_	ADV	ADVgen	_	8	advmod	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17671
+# text = Del corps asaz l' avez audit et dels flaiels que grand· sustint
+# timestamp = 1591544745719
+1	Del	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	2	case:det	_	_
+2	corps	_	NOUN	NOMcom	_	6	obl	_	_
+3	asaz	_	ADV	ADVgen	_	6	advmod	_	_
+4	l'	_	PRON	PROper	PronType=Prs	6	obj	_	_
+5	avez	_	AUX	VERcjg	VerbForm=Fin	6	aux	_	_
+6	audit	_	VERB	VERppe	Tense=Past|VerbForm=Part	0	root	_	_
+7	et	_	CCONJ	CONcoo	_	9	cc	_	_
+8	dels	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	9	case:det	_	_
+9	flaiels	_	NOUN	NOMcom	_	2	conj	_	_
+10	que	_	PRON	PROrel	PronType=Prs,Rel	12	obj	_	_
+11	grand·	_	ADJ	ADJqua	_	12	xcomp	_	_
+12	sustint	_	VERB	VERcjg	VerbForm=Fin	9	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17672
+# text = L' anima reciunt Dominedieus
+# timestamp = 1591544745719
+1	L'	_	DET	DETdef	Definite=Def|PronType=Art	2	det	_	_
+2	anima	_	NOUN	NOMcom	_	3	obj	_	_
+3	reciunt	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	Dominedieus	_	PROPN	NOMpro	_	3	nsubj	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17673
+# text = als altres sanz en vai en ciel
+# timestamp = 1591544745719
+1	als	_	ADP	PRE.DETdef	Definite=Def|PronType=Art	3	case:det	_	_
+2	altres	_	PRON	PROind	PronType=Ind	3	amod	_	_
+3	sanz	_	ADJ	ADJqua	_	5	obl	_	_
+4	en	_	ADV	PROadv	PronType=Dem	5	obl	_	_
+5	vai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+6	en	_	ADP	PRE	_	7	case	_	_
+7	ciel	_	NOUN	NOMcom	_	5	obl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = StLegier_1000_verse
+# sent_id = 17674
+# text = Il nos aiud ob ciel senior por cui sustinc tels passïons
+# timestamp = 1591544745719
+1	Il	_	PRON	PROper	PronType=Prs	3	nsubj	_	_
+2	nos	_	PRON	PROper	PronType=Prs	3	obj	_	_
+3	aiud	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+4	ob	_	ADP	PRE	_	6	case	_	_
+5	ciel	_	DET	DETdem	PronType=Dem	6	det	_	_
+6	senior	_	NOUN	NOMcom	_	3	obl	_	_
+7	por	_	ADP	PRE	_	8	case	_	_
+8	cui	_	PRON	PROrel	PronType=Prs,Rel	9	obl	_	_
+9	sustinc	_	VERB	VERcjg	VerbForm=Fin	6	acl:relcl	_	_
+10	tels	_	DET	DETind	PronType=Ind	11	det	_	_
+11	passïons	_	NOUN	NOMcom	_	9	obj	_	_</conll>
+
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div><!-- /container -->   
+</section> 
+<!-- /Section: samples -->
+</div>
+
+
+</section><!-- /main-content -->
+
+</div>
+
+
+<!-- Core JavaScript Files -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.easing.min.js"></script>  
+<script src="../js/jquery.scrollTo.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/animsition.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="../js/custom.js"></script>
+<script src="../js/clipboard.min.js"></script>
+<script src="../js/bootstrap-switch.min.js"></script>
+    <script>
+$(document).ready(function() {
+  $(".animsition").animsition({
+    inClass: 'fade-in-down',
+    outClass: 'fade-out-down',
+    inDuration: 1500,
+    outDuration: 800,
+    linkElement: '.animsition-link',
+    // e.g. linkElement: 'a:not([target="_blank"]):not([href^="#"])'
+    loading: false,
+    loadingParentElement: 'body', //animsition wrapper element
+    loadingClass: 'animsition-loading',
+    loadingInner: '', // e.g '<img src="loading.svg" />'
+    timeout: false,
+    timeoutCountdown: 5000,
+    onLoadEvent: true,
+    browser: [ 'animation-duration', '-webkit-animation-duration'],
+    // "browser" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+    // The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+    overlay : false,
+    overlayClass : 'animsition-overlay-slide',
+    overlayParentElement : 'body',
+    transition: function(url){ window.location.href = url; }
+  });
+});
+
+$("[name='my-checkbox']").bootstrapSwitch();
+
+</script>
+</body>
+
+</html>
+

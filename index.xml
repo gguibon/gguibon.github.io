@@ -73,6 +73,29 @@
     </item>
     
     <item>
+      <title>Méta-apprentissage : classification de messages en catégories émotionnelles inconnues en entraînement</title>
+      <link>/publication/metalearning-taln2021/</link>
+      <pubDate>Sun, 13 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/publication/metalearning-taln2021/</guid>
+      <description>&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/). --&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Emotion Chat Annotator</title>
       <link>/project/poc-annotator/</link>
       <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
@@ -529,6 +552,14 @@ Supplementary notes can be added here, including [code, math, and images](https:
     </item>
     
     <item>
+      <title>Arborator-Site</title>
+      <link>/project/arborator-site/</link>
+      <pubDate>Mon, 27 Feb 2017 00:00:00 +0000</pubDate>
+      <guid>/project/arborator-site/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Treebank Browser</title>
       <link>/project/treebank-browser/</link>
       <pubDate>Sat, 27 Aug 2016 00:00:00 +0000</pubDate>
@@ -678,6 +709,14 @@ Supplementary notes can be added here, including [code, math, and images](https:
 
 Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/). --&gt;
 </description>
+    </item>
+    
+    <item>
+      <title>LexiconTagger</title>
+      <link>/project/lexicontagger/</link>
+      <pubDate>Mon, 27 Apr 2015 00:00:00 +0000</pubDate>
+      <guid>/project/lexicontagger/</guid>
+      <description></description>
     </item>
     
     <item>

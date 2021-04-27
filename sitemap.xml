@@ -23,6 +23,45 @@
     <loc>/software/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
+    <loc>/publication-type/1/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/chloe-clavel/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/deep-learning/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/emotion/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/gael-guibon/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/helene-flamein/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/matthieu-labeau/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/meta-learning/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/metalearning-taln2021/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication_types/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2021-06-13T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/courses/</loc>
     <lastmod>2021-01-24T00:00:00+00:00</lastmod>
   </url><url>
@@ -32,13 +71,7 @@
     <loc>/tag/annotation/</loc>
     <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/emotion/</loc>
-    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/project/poc-annotator/</loc>
-    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/vuejs/</loc>
@@ -59,31 +92,16 @@
     <loc>/tag/old-french/</loc>
     <lastmod>2020-08-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publication-type/1/</loc>
-    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/publication/oldfrench-lrec2020/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/</loc>
-    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/author/benoit-sagot/</loc>
-    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/gael-guibon/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/lexicon-enrichment/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/morphological-lexicon/</loc>
-    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication_types/</loc>
-    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/syntactic-lexicon/</loc>
@@ -180,9 +198,6 @@
     <lastmod>2019-04-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/deception/</loc>
-    <lastmod>2019-04-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/deep-learning/</loc>
     <lastmod>2019-04-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/dependenciesrelation/</loc>
@@ -311,14 +326,20 @@
     <loc>/publication/emoji-coria2017/</loc>
     <lastmod>2017-03-22T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/project/arborator-site/</loc>
+    <lastmod>2017-02-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/javafx/</loc>
+    <lastmod>2017-02-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/visualization/</loc>
+    <lastmod>2017-02-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/courses/database-java/</loc>
     <lastmod>2017-01-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/courses/python-intro-amu/</loc>
     <lastmod>2017-01-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/javafx/</loc>
-    <lastmod>2016-08-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/project/treebank-browser/</loc>
     <lastmod>2016-08-27T00:00:00+00:00</lastmod>
@@ -382,6 +403,9 @@
   </url><url>
     <loc>/publication/oldfrench-taln2015/</loc>
     <lastmod>2015-06-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/project/lexicontagger/</loc>
+    <lastmod>2015-04-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication/oldfrench-tlt2014/</loc>
     <lastmod>2014-12-12T00:00:00+00:00</lastmod>

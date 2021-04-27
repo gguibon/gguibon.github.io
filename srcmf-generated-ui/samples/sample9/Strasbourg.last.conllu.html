@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+
+  <title>Strasbourg.last.conllu - Treebank Browser</title>
+
+  <!-- <link rel="icon" 
+  type="image/png" 
+  href=""/> -->
+  
+      <!-- Bootstrap Core CSS -->
+      <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+      <!-- Fonts -->
+      <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+      <link href="../css/animate.css" rel="stylesheet" type="text/css"/>
+      <!-- Squad theme CSS -->
+      <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+      <link href="../color/default.css" rel="stylesheet" type="text/css"/>
+      <!-- animsition.css -->
+      <link rel="stylesheet" href="../css/animsition.min.css">
+      <!-- pace style -->
+      <link rel="stylesheet" href="../css/pace.css">
+            <!-- bootstrap-switch css -->
+      <link href="../css/bootstrap-switch.min.css" rel="stylesheet">
+
+      <!-- Arborator files -->
+      <script src="../js/jquery.min.js"></script>
+      <script type='text/javascript' src='../js/modernizr.js'></script>
+      <script type="text/javascript" src="../js/pace.min.js"></script>
+      <script type="text/javascript" src="../js/raphael.js"></script>
+      <script type="text/javascript" src="../js/arborator.view.js"></script>
+      <script type="text/javascript" src="../js/justDrawConll.js"></script>
+      <script type="text/javascript" src="../js/conll2tree.js"></script>
+      <script type="text/javascript" src="../js/filesaver.min.js"></script>
+      
+      
+    </head>
+
+    <body id="page-top" data-spy="scroll" data-target=".navbar-custom" class="bg-dark">
+      <div id="loading">
+        <div id='loading-progress-bar' class='progress overlay-content' > </div>
+        <div  class='overlay-content' > <button type='button' class='btn btn-danger opacity-hover' id='loaderstop'>Stop!</button>  </div>
+      </div>
+     <div id="page-wrap">
+      
+<!-- The actual snackbar -->
+<div id="snackbar">Copied to clipboard !</div>
+
+     <header>
+      <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+       <div class="container">
+        <div class="navbar-header page-scroll">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand animsition-link" href="../../index.html">
+          <img src="../img/icons/list-orange.svg" alt="" title="Samples List" class="opacity-hover"/>
+        </a>
+        <span>Strasbourg.last.conllu</span>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+       <ul class="nav navbar-nav">
+        <li ><a href="../../project.html" class="animsition-link">Project</a></li>
+        <li ><a href="../../licence.html" class="animsition-link">Project Licence</a></li>
+        <li ><a href="../../about.html" class="animsition-link">About</a></li>
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container -->
+</nav>
+</header>
+
+<div class="arrownav">
+  <div id="divOnLeft" style="  position: fixed; left: 50px;">
+    <a class="animsition-link " href="../sample8/StLegier.last.conllu.html"><img src="../img/icons/left-arrow-key-grey.svg" class="arrownav-hover" onmouseover="this.src='../img/icons/left-arrow-key.svg';" onmouseout="$(this).addClass('shrink');   this.src='../img/icons/left-arrow-key-grey.svg'; $(this).addClass(arrownav-hover);" /></a>
+  </div>
+  <div id="divOnRight" style=" position: fixed; right: 50px;">
+    <a class="animsition-link " href="../sample10/TroyesYvain.last.conllu.html"><img src="../img/icons/right-arrow-key-grey.svg" class="arrownav-hover" onmouseover="this.src='../img/icons/right-arrow-key.svg';" onmouseout="$(this).addClass('shrink');   this.src='../img/icons/right-arrow-key-grey.svg'; $(this).addClass(arrownav-hover);" /></a>
+  </div>
+  <!-- <div id="divOnRightBottom" style=" position: fixed; right: 65px; bottom: 50px;">
+    <button type="button" class="btn btn-success opacity-hover" id="loader">Speed Up!</button>
+  </div>
+  <div id="divOnRightBottom2" style=" position: fixed; right: 200px; bottom: 50px;">
+    <input class="opacity-hover" type="checkbox" name="my-checkbox" checked data-size="normal" data-on-color="primary" data-off-color="danger" data-on-text="Timer" data-off-text="Scroll" data-label-text="Auto Load" data-handle-width="200">
+  </div> -->
+  <div class="container" style="position: fixed; top: 75px; left: 10px; width: 20%;">
+    <div class="row">
+      <div class="col-sm-3"><button type="button" class="btn btn-danger opacity-hover2" onclick="stopload()" title="Stop: stop charging further trees. Charge only on scroll" id="stop"><img src="../img/icons/stop-button.svg"/></button></div>
+      <div class="col-sm-3"><button type="button" class="btn btn-default opacity-hover2" onclick="resumeload()" title="Show: show all trees - pausing between trees (default)" id="show"><img src="../img/icons/play-arrow.svg"/></button></div>
+      <div class="col-sm-3"><button type="button" class="btn btn-info opacity-hover2" title="Fast forward: show all trees without pausing - might slow down the browser until finished" id="loader"><img src="../img/icons/fast-forward-button.svg"/></button></div>
+      <div class="col-sm-3"><button type="button" class="btn btn-success opacity-hover2" onclick="exportall();" title="Download: Save the currently loaded trees. To save them all speed up the loading using the fast forward button. Then press this button."><img src="../img/icons/download.svg"/></button></div>
+    </div>
+  </div>
+</div>
+
+<section id="main-content" style="height:100%">
+ <div id="guts" style="height:100%; padding-bottom:0;" class="animsition" data-animsition-in-class="fade-in-up"
+  data-animsition-in-duration="500"
+  data-animsition-out-class="fade-out-down"
+  data-animsition-out-duration="300">
+
+
+
+  <!-- Section: samples -->
+  <section id="samplelist" class="wide-section text-center bg-dark">
+   <div class="heading-about">
+    <div class="container">
+     <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+       <div class="wow fadeInDown" data-wow-delay="0.2s">
+        <div class="section-heading">
+         <h2 id="samplename">Strasbourg.last.conllu</h2>
+         <img src="../img/icons/arrow-down-grey.svg" />
+
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+</div>
+
+<div id="treecontainer" class="container wide">
+
+  <div class="row">
+   <div class="col-sm-12 col-md-12">
+    <div class="wow fadeInUp" data-wow-delay="0.2s">
+     <div class="service-box">
+      <div class="service-icon">
+        <a href="http://arborator.ilpga.fr/" target="_blank" alt="Arborator Website">
+       <img src="../img/icons/arboratorNano.png" alt="" title="Arborator" class="opacity-hover"/>
+     </a>
+     </div>
+     <div class="service-desc">
+       <!-- <h5>Trees</h5> -->
+       <div class="list">
+         <conll># user_id = loic.grobol
+# newdoc id = Strasbourg_842_prose
+# sent_id = 17675
+# text = Pro Deo amur et pro Christian poblo et nostro commun salvament d' ist di in avant in quant Deus savir et podir me dunat si salvarai eo cist meon fradre Karlo et in aiudha et in cadhuna cosa si cum om per dreit son fradra salvar dift in o quid il mi altresi fazet
+# timestamp = 1591544745471
+1	Pro	_	ADP	PRE	_	3	case	_	_
+2	Deo	_	PROPN	NOMpro	_	3	nmod	_	_
+3	amur	_	NOUN	NOMcom	_	26	obl	_	_
+4	et	_	CCONJ	CONcoo	_	7	cc	_	_
+5	pro	_	ADP	PRE	_	7	case	_	_
+6	Christian	_	ADJ	ADJqua	_	7	amod	_	_
+7	poblo	_	NOUN	NOMcom	_	3	conj	_	_
+8	et	_	CCONJ	CONcoo	_	11	cc	_	_
+9	nostro	_	DET	DETpos	Poss=Yes	11	det	_	_
+10	commun	_	ADJ	ADJqua	_	11	amod	_	_
+11	salvament	_	NOUN	NOMcom	_	3	conj	_	_
+12	d'	_	ADP	PRE	_	14	case	_	_
+13	ist	_	DET	DETdem	PronType=Dem	14	det	_	_
+14	di	_	NOUN	NOMcom	_	26	obl	_	_
+15	in	_	ADP	PRE	_	16	case	_	_
+16	avant	_	ADV	ADVgen	_	26	obl	_	_
+17	in	_	ADP	PRE	_	18	case	_	_
+18	quant	_	PRON	PROind	PronType=Ind	24	obl	_	_
+19	Deus	_	PROPN	NOMpro	_	24	nsubj	_	_
+20	savir	_	VERB	VERinf	VerbForm=Inf	24	obj	_	_
+21	et	_	CCONJ	CONcoo	_	22	cc	_	_
+22	podir	_	VERB	VERinf	VerbForm=Inf	20	conj	_	_
+23	me	_	PRON	PROper	PronType=Prs	24	iobj	_	_
+24	dunat	_	VERB	VERcjg	VerbForm=Fin	26	advcl	_	_
+25	si	_	ADV	ADVgen	_	26	advmod	_	_
+26	salvarai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+27	eo	_	PRON	PROper	PronType=Prs	26	nsubj	_	_
+28	cist	_	DET	DETdem	PronType=Dem	30	det	_	_
+29	meon	_	ADJ	ADJpos	Poss=Yes	30	amod	_	_
+30	fradre	_	NOUN	NOMcom	_	26	obj	_	_
+31	Karlo	_	PROPN	NOMpro	_	30	flat	_	_
+32	et	_	CCONJ	CONcoo	_	34	cc	_	_
+33	in	_	ADP	PRE	_	34	case	_	_
+34	aiudha	_	NOUN	NOMcom	_	26	obl	_	_
+35	et	_	CCONJ	CONcoo	_	38	cc	_	_
+36	in	_	ADP	PRE	_	38	case	_	_
+37	cadhuna	_	DET	DETind	PronType=Ind	38	det	_	_
+38	cosa	_	NOUN	NOMcom	_	34	conj	_	_
+39	si	_	ADV	ADVgen	_	26	advmod	_	_
+40	cum	_	SCONJ	CONsub	_	46	mark	_	_
+41	om	_	PRON	PROind	PronType=Ind	46	nsubj	_	_
+42	per	_	ADP	PRE	_	43	case	_	_
+43	dreit	_	NOUN	NOMcom	_	46	obl	_	_
+44	son	_	DET	DETpos	Poss=Yes	45	det	_	_
+45	fradra	_	NOUN	NOMcom	_	46	obj	_	_
+46	salvar	_	VERB	VERinf	VerbForm=Inf	26	advcl	_	_
+47	dift	_	AUX	VERcjg	VerbForm=Fin	46	aux	_	_
+48	in	_	ADP	PRE	_	49	case	_	_
+49	o	_	PRON	PROdem	PronType=Dem	26	obl	_	_
+50	quid	_	PRON	PROrel	PronType=Prs,Rel	54	obj	_	_
+51	il	_	PRON	PROper	PronType=Prs	54	nsubj	_	_
+52	mi	_	PRON	PROper	PronType=Prs	54	iobj	_	_
+53	altresi	_	ADV	ADVgen	_	54	advmod	_	_
+54	fazet	_	VERB	VERcjg	VerbForm=Fin	49	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = Strasbourg_842_prose
+# sent_id = 17676
+# text = Et ab Ludher nul plaid nunquam prindrai qui meon vol cist meon fradre Karle in damno sit
+# timestamp = 1591544745471
+1	Et	_	CCONJ	CONcoo	_	7	cc:nc	_	_
+2	ab	_	ADP	PRE	_	3	case	_	_
+3	Ludher	_	PROPN	NOMpro	_	7	obl	_	_
+4	nul	_	DET	DETind	PronType=Ind	5	det	_	_
+5	plaid	_	NOUN	NOMcom	_	7	obj	_	_
+6	nunquam	_	ADV	ADVgen	_	7	advmod	_	_
+7	prindrai	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_
+8	qui	_	PRON	PROrel	PronType=Prs,Rel	17	nsubj	_	_
+9	meon	_	DET	DETpos	Poss=Yes	10	det	_	_
+10	vol	_	NOUN	NOMcom	_	17	obl	_	_
+11	cist	_	DET	DETdem	PronType=Dem	13	det	_	_
+12	meon	_	ADJ	ADJpos	Poss=Yes	13	amod	_	_
+13	fradre	_	NOUN	NOMcom	_	17	obl	_	_
+14	Karle	_	PROPN	NOMpro	_	13	flat	_	_
+15	in	_	ADP	PRE	_	16	case	_	_
+16	damno	_	NOUN	NOMcom	_	17	obl	_	_
+17	sit	_	VERB	VERcjg	VerbForm=Fin	5	acl:relcl	_	_</conll>
+<conll># user_id = loic.grobol
+# newdoc id = Strasbourg_842_prose
+# sent_id = 17677
+# text = Si Lodhuvigs sagrament que son fradre Karlo jurat conservat et Karlus meos sendra de suo part non los tanit si jo returnar non l' int pois ne jo ne neuls cui eo returnar int pois in nulla aiudha contra Lodhuuig nun li ju er
+# timestamp = 1591544745471
+1	Si	_	ADV	ADVgen	_	9	mark	_	_
+2	Lodhuvigs	_	PROPN	NOMpro	_	9	nsubj	_	_
+3	sagrament	_	NOUN	NOMcom	_	9	obj	_	_
+4	que	_	PRON	PROrel	PronType=Prs,Rel	8	obj	_	_
+5	son	_	DET	DETpos	Poss=Yes	6	det	_	_
+6	fradre	_	NOUN	NOMcom	_	8	obl	_	_
+7	Karlo	_	PROPN	NOMpro	_	6	flat	_	_
+8	jurat	_	VERB	VERcjg	VerbForm=Fin	3	acl:relcl	_	_
+9	conservat	_	VERB	VERcjg	VerbForm=Fin	44	advcl	_	_
+10	et	_	CCONJ	CONcoo	_	19	cc	_	_
+11	Karlus	_	PROPN	NOMpro	_	19	nsubj	_	_
+12	meos	_	DET	DETpos	Poss=Yes	13	det	_	_
+13	sendra	_	NOUN	NOMcom	_	11	appos	_	_
+14	de	_	ADP	PRE	_	16	case	_	_
+15	suo	_	DET	DETpos	Poss=Yes	16	det	_	_
+16	part	_	NOUN	NOMcom	_	19	obl	_	_
+17	non	_	ADV	ADVneg	Polarity=Neg	19	advmod	_	_
+18	los	_	PRON	PROper.PROper	PronType=Prs	19	obj	_	_
+19	tanit	_	VERB	VERcjg	VerbForm=Fin	9	conj	_	_
+20	si	_	ADV	ADVgen	_	22	mark	_	_
+21	jo	_	PRON	PROper	PronType=Prs	22	nsubj	_	_
+22	returnar	_	VERB	VERinf	VerbForm=Inf	44	advcl	_	_
+23	non	_	ADV	ADVneg	Polarity=Neg	22	advmod	_	_
+24	l'	_	PRON	PROper	PronType=Prs	22	iobj	_	_
+25	int	_	ADV	PROadv	PronType=Dem	22	obl	_	_
+26	pois	_	AUX	VERcjg	VerbForm=Fin	22	aux	_	_
+27	ne	_	CCONJ	CONcoo	_	28	cc	_	_
+28	jo	_	PRON	PROper	PronType=Prs	21	conj	_	_
+29	ne	_	CCONJ	CONcoo	_	30	cc	_	_
+30	neuls	_	PRON	PROind	PronType=Ind	21	conj	_	_
+31	cui	_	PRON	PROrel	PronType=Prs,Rel	33	obl	_	_
+32	eo	_	PRON	PROper	PronType=Prs	33	nsubj	_	_
+33	returnar	_	VERB	VERinf	VerbForm=Inf	30	acl:relcl	_	_
+34	int	_	ADV	PROadv	PronType=Dem	33	obl	_	_
+35	pois	_	AUX	VERcjg	VerbForm=Fin	33	aux	_	_
+36	in	_	ADP	PRE	_	38	case	_	_
+37	nulla	_	DET	DETind	PronType=Ind	38	det	_	_
+38	aiudha	_	NOUN	NOMcom	_	44	obl	_	_
+39	contra	_	ADP	PRE	_	40	case	_	_
+40	Lodhuuig	_	PROPN	NOMpro	_	38	nmod	_	_
+41	nun	_	ADV	ADVneg	Polarity=Neg	44	advmod	_	_
+42	li	_	PRON	PROper	PronType=Prs	44	iobj	_	_
+43	ju	_	ADV	PROadv	PronType=Dem	44	obl:advmod	_	_
+44	er	_	VERB	VERcjg	VerbForm=Fin	0	root	_	_</conll>
+
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div><!-- /container -->   
+</section> 
+<!-- /Section: samples -->
+</div>
+
+
+</section><!-- /main-content -->
+
+</div>
+
+
+<!-- Core JavaScript Files -->
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.easing.min.js"></script>  
+<script src="../js/jquery.scrollTo.js"></script>
+<script src="../js/wow.min.js"></script>
+<script src="../js/animsition.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="../js/custom.js"></script>
+<script src="../js/clipboard.min.js"></script>
+<script src="../js/bootstrap-switch.min.js"></script>
+    <script>
+$(document).ready(function() {
+  $(".animsition").animsition({
+    inClass: 'fade-in-down',
+    outClass: 'fade-out-down',
+    inDuration: 1500,
+    outDuration: 800,
+    linkElement: '.animsition-link',
+    // e.g. linkElement: 'a:not([target="_blank"]):not([href^="#"])'
+    loading: false,
+    loadingParentElement: 'body', //animsition wrapper element
+    loadingClass: 'animsition-loading',
+    loadingInner: '', // e.g '<img src="loading.svg" />'
+    timeout: false,
+    timeoutCountdown: 5000,
+    onLoadEvent: true,
+    browser: [ 'animation-duration', '-webkit-animation-duration'],
+    // "browser" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+    // The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+    overlay : false,
+    overlayClass : 'animsition-overlay-slide',
+    overlayParentElement : 'body',
+    transition: function(url){ window.location.href = url; }
+  });
+});
+
+$("[name='my-checkbox']").bootstrapSwitch();
+
+</script>
+</body>
+
+</html>
+

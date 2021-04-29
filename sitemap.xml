@@ -92,9 +92,6 @@
     <loc>/tag/old-french/</loc>
     <lastmod>2020-08-27T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publication/oldfrench-lrec2020/</loc>
-    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/author/benoit-sagot/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
@@ -102,6 +99,9 @@
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/morphological-lexicon/</loc>
+    <lastmod>2020-05-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/oldfrench-lrec2020/</loc>
     <lastmod>2020-05-22T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/syntactic-lexicon/</loc>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Emotion | Gaël Guibon</title>
-    <link>/tag/emotion/</link>
-      <atom:link href="/tag/emotion/index.xml" rel="self" type="application/rss+xml" />
-    <description>Emotion</description>
+    <title>Luce Lefeuvre | Gaël Guibon</title>
+    <link>/author/luce-lefeuvre/</link>
+      <atom:link href="/author/luce-lefeuvre/index.xml" rel="self" type="application/rss+xml" />
+    <description>Luce Lefeuvre</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 05 Aug 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
-      <title>Emotion</title>
-      <link>/tag/emotion/</link>
+      <title>Luce Lefeuvre</title>
+      <link>/author/luce-lefeuvre/</link>
     </image>
     
     <item>
@@ -56,14 +56,6 @@ Supplementary notes can be added here, including [code, math, and images](https:
 
 Supplementary notes can be added here, including [code, math, and images](https://wowchemy.com/docs/writing-markdown-latex/). --&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Emotion Chat Annotator</title>
-      <link>/project/poc-annotator/</link>
-      <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>/project/poc-annotator/</guid>
-      <description></description>
     </item>
     
   </channel>

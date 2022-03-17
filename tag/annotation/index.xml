@@ -5,12 +5,20 @@
     <link>/tag/annotation/</link>
       <atom:link href="/tag/annotation/index.xml" rel="self" type="application/rss+xml" />
     <description>Annotation</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 27 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 20 Jan 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_2.png</url>
       <title>Annotation</title>
       <link>/tag/annotation/</link>
     </image>
+    
+    <item>
+      <title>Easy Conversation Annotation Tool</title>
+      <link>/project/ezcat/</link>
+      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
+      <guid>/project/ezcat/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Emotion Chat Annotator</title>

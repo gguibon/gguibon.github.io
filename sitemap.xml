@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/project/</loc>
-    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/talk/example-talk/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
@@ -23,55 +23,85 @@
     <loc>/software/</loc>
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publication-type/1/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+    <loc>/courses/</loc>
+    <lastmod>2022-03-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+    <loc>/courses/ml4nlp/</loc>
+    <lastmod>2022-03-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/author/chloe-clavel/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+    <loc>/tag/annotation/</loc>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/classification/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+    <loc>/tag/conversation/</loc>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/deep-learning/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+    <loc>/project/ezcat/</loc>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/emotion/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/vuejs/</loc>
+    <lastmod>2022-01-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication-type/2/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/chloe-clavel/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/classification/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/deep-learning/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/emotion-recognition-in-conversation/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/few-shot-learning/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/protoseq-software-impact2022/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/gael-guibon/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/live-chat-customer-service/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/luce-lefeuvre/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/matthieu-labeau/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication_types/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/reproducibility/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/software/</loc>
+    <lastmod>2022-01-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication-type/1/</loc>
     <lastmod>2021-11-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication/protoseq-emnlp2021/</loc>
     <lastmod>2021-11-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/author/gael-guibon/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/author/helene-flamein/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/live-chat-customer-service/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/luce-lefeuvre/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/matthieu-labeau/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication_types/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication/</loc>
-    <lastmod>2021-11-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
     <lastmod>2021-11-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/meta-learning/</loc>
@@ -83,19 +113,7 @@
     <loc>/publication/metalearning-taln2021/</loc>
     <lastmod>2021-06-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/courses/</loc>
-    <lastmod>2021-01-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/courses/ml4nlp/</loc>
-    <lastmod>2021-01-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/annotation/</loc>
-    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/project/poc-annotator/</loc>
-    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/vuejs/</loc>
     <lastmod>2020-10-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/collaborative/</loc>
@@ -153,9 +171,6 @@
     <lastmod>2020-05-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/author/marine-courtin/</loc>
-    <lastmod>2020-05-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/software/</loc>
     <lastmod>2020-05-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publication/arborator-lrec2020/</loc>

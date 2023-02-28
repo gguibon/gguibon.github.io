@@ -1,0 +1,850 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Web avancé - CM4</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white-bonnin.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/zenburn.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Web avancé</h1>
+
+					<p id="author">Geoffray Bonnin</p>
+					<p style="font-size: 28px; text-align: center">Cours mis à jour par Gaël Guibon</p>
+				</section>
+
+				<!-- Begin retrospective -->
+
+				<section>
+					<h2>Rétrospective TD05</h2>
+
+					<h3>Travaux rendus : xx%</h3>
+					
+					<p>Complétion</p>
+					<table class="stats">
+						<tr>
+							<td>Partie HTML/CSS</td>
+							<td>xx%</td>
+						</tr>
+						<tr>
+							<td>Partie AJAX (au moins une requête bien traitée)</td>
+							<td>xx%</td>
+						</tr>
+						<tr>
+							<td>Complètement réussi</td>
+							<td>xx%</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h2>Rétrospective TD06</h2>
+
+					<h3>Travaux rendus : xx%</h3>
+					
+					<p>Complétion</p>
+					<table class="stats">
+						<tr>
+							<td>Formulaire patates</td>
+							<td>xx%</td>
+						</tr>
+						<tr>
+							<td>Affichage images</td>
+							<td>xx%</td>
+						</tr>
+						<tr>
+							<td>Traduction</td>
+							<td>xx%</td>
+						</tr>
+						<tr>
+							<td>Inversion</td>
+							<td>xx%</td>
+						</tr>
+					</table>
+				</section>
+
+				<!-- End retrospective -->
+
+				<!-- Suite cours -->
+
+				<section>
+					<div class="section-title" style="margin-top: 150px;">Technologies serveur</div>
+
+					<ol>
+						<li>Serveurs Web</li>
+						<strong><li>Notions de base de PHP</li></strong>
+						<li>Interaction avec MySQL</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Programmation orientée objet en PHP</h2>
+
+					<p>Utilisation de classes</p>
+
+					<pre class="html-example"><code class="php" style="max-height: none;">// Guitar class
+class Guitar {
+
+  // enabling distortion
+  private $distortion = false;
+
+  // Switch distortion on
+  public function switchDistortionOn(){
+    $this->distortion = true;
+  }
+
+  // Switch distortion off
+  public function switchDistortionOff(){
+    $this->distortion = false;
+  }
+}</code></pre>
+				</section>
+
+				<section>
+					<h3>Classes abstraites</h3>
+
+					<pre class="html-example"><code class="php" style="max-height: none;">// Abstract class
+abstract class Instrument{
+
+  // Name of the instrument
+  public $name;
+
+  // Constructor
+  public function Instrument($name){
+    $this->name = $name;
+  }
+  
+  // Abstract method to play the instrument
+  public abstract function play();
+}</code></pre>
+				</section>
+
+				<style type="text/css">
+					.inheritence pre{
+						font-size: .45em !important;
+					}
+				</style>
+
+				<section class="inheritence">
+					<h3>Héritage</h3>
+
+					<div class="quarter">
+						<pre class="html-example"><code class="php" style="max-height: none;">// Abstract class
+abstract class Instrument{
+
+  // Name of the instrument
+  public $name;
+
+  // Constructor
+  public function Instrument($name){
+    $this->name = $name;
+  }
+  
+  // Abstract method to play the instrument
+  public abstract function play();
+}</code></pre>
+					</div>
+
+					<div class="quarter">
+						<pre class="html-example"><code class="php" style="max-height: none;">// Guitar class
+class Guitar extends Instrument{
+
+  // enabling distortion
+  private $distortion = false;
+
+  // Switch distortion on
+  public function switchDistortionOn(){
+    $this->distortion = true;
+  }
+
+  // Switch distortion off
+  public function switchDistortionOff(){
+    $this->distortion = false;
+  }
+  
+  // Play the guitar
+  public function play(){
+    if (!$this->distortion){
+      echo "&lt;p&gt;pling&lt;/p&gt;";
+    }
+    else{
+      echo "&lt;p&gt;dvvvv&lt;/p&gt;";
+    }
+  }
+}</code></pre>
+					</div>
+				</section>
+
+				<section class="inheritence">
+					<h2>Instantiation</h2>
+
+					<div class="quarter">
+						<pre class="html-example"><code class="php" style="max-height: none;">// Guitar class
+class Guitar extends Instrument{
+
+  // enabling distortion
+  private $distortion = false;
+
+  // Switch distortion on
+  public function switchDistortionOn(){
+    $this->distortion = true;
+  }
+
+  // Switch distortion off
+  public function switchDistortionOff(){
+    $this->distortion = false;
+  }
+  
+  // Play the guitar
+  public function play(){
+    if (!$this->distortion){
+      echo "&lt;p&gt;pling&lt;/p&gt;";
+    }
+    else{
+      echo "&lt;p&gt;dvvvv&lt;/p&gt;";
+    }
+  }
+}</code></pre>
+					</div>
+				
+					<div class="quarter">
+						<pre class="html-example"><code class="php" style="max-height: none;" data-noescape contenteditable="true">// Create a new guitar
+$papalardo = new Guitar("Papalardo");
+
+// Play it
+$papalardo->play(); <span class="fragment">// pling</span>
+
+// Switch distortion on
+$papalardo->switchDistortionOn();
+
+// Play the guitar again with distortion
+$papalardo->play(); <span class="fragment">//dvvvv</span></code></pre>	
+				</section>
+
+				<section>
+					<h2>Etude de cas</h2>
+					<h3>Code source d'un système de recommandation</h3>
+
+					<div class="snippet" style="margin-top: 20px;">
+						<iframe src="snippets/recommender.html" width="960px" height="550px"></iframe>
+					</div>
+				</section>
+
+				<section>
+					<h2>Importation de fichier externe</h2>
+
+					<h3>Quatre fonctions possibles</h3>
+
+					<style type="text/css">
+						#import-file{
+							margin: 0;
+						}
+						#import-file  p{
+							font-size: 28px !important;
+						}
+						#import-file  li{
+							font-size: 20px !important;
+						}
+					</style>
+
+					<table id="import-file">
+						<tr>
+							<td>
+								<p><code>require</code></p>
+								<ul>
+									<li>Engendre des erreurs et le script s'arrête</li>
+									<li>Peut-être utilisé quand l'import multiple est possible</li>
+								</ul>
+							</td>
+							<td>
+								<p><code>include</code></p>
+								<ul>
+									<li>Engendre des warnings, l'exécution du script continue</li>
+									<li>Peut-être utilisé quand l'import multiple est possible</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p><code>require_once</code></p>
+								<ul>
+									<li>Engendre des erreurs et le script s'arrête</li>
+									<li>Doit être utilisé quand l'import multiple engendre des erreurs</li>
+								</ul>
+							</td>
+							<td>
+								<p><code>include_once</code></p>
+								<ul>
+									<li>Engendre des warnings, l'exécution du script continue</li>
+									<li>Doit être utilisé quand l'import multiple engendre des erreurs</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+
+				</section>
+
+				<section>
+					<h2>Parcours de tableaux</h2>
+
+					<h3>Parcours de tableau « traditionel »</h3>
+
+					<pre class="html-example"><code class="php">$names = array("Stevie", "Edwin", "Freddie");
+
+echo '<ul>';
+for ($i = 0; $i < sizeof($names); $i++){
+  echo '<li>' . names[$i] . '</li>';
+}
+echo '</ul>';</code></pre>
+					<h3>Parcours d'association ordonnée</h3>
+
+					<pre class="html-example"><code class="php">$names = array("Stevie" => 496, "Edwin" => 28, "Freddie" => 6);
+
+echo '<ul>';
+foreach ($names as $name => $score) {
+  echo '<li>' . $name . ' - score: ' . $score . '</li>';
+}
+echo '</ul>';</code></pre>
+				</section>
+
+				<section>
+					<h2>Commentaires en PHP</h2>
+
+					<pre class="html-example"><code class="php" contentEditable="true" style="max-height: none;">/**
+ * Get name recommendations.
+ * @param string $gender The gender of the names
+ * @param int $userId The id of the user for whom to provide recommendations
+ * @param int $number The number of names to recommend
+ * @return string[] The selected names
+ */
+function getRecommendations($gender, $userId, $number){
+	// get nearest recommendations based on nearest neihgbors
+	$recommendations = knn($gender, $userId, $number);
+
+	// Get additional random names
+	$missing = $number - sizeof($recommendations);
+	$additionalRecommendations = getRandomNames($gender, $userId, $missing);
+
+	// Merge and return
+	return array_merge($recommendations, $additionalRecommendations);
+}</code></pre>
+				</section>
+
+				<section>
+					<style type="text/css">
+						#install-phpdoc p{
+							font-size: .8em;
+						}
+					</style>
+
+					<h3>Générer une documentation</h3>
+					<ol id="install-phpdoc">
+						<li>Télécharger <a href="https://pear.php.net/go-pear.phar">https://pear.php.net/go-pear.phar</a></li>
+						<li>Ouvrir l'invite de commande</li>
+						<li>Installer PEAR avec la commande<p><code>php go-pear.phar</code></p></li>
+						<li>Installer PHPDocumentor avec les commandes
+							<p><code>pear channel-discover pear.phpdoc.org</code><br>
+							<code>pear install phpdoc/phpDocumentor</code></p>
+						</li>
+						<li>Générer la documentation avec la commande<p><code>phpdoc -d path/to/file.php</code></p></li>
+					</ol>
+				</section>
+
+				<section>
+					<iframe src="phpdoc example/index.html" width="960px" height="650px"></iframe>
+				</section>
+
+				<!-- Begin sgbd -->
+
+				<section>
+					<div class="section-title" style="margin-top: 150px;">Technologies serveur</div>
+
+					<ol>
+						<li>Serveurs Web</li>
+						<li>Notions de base de PHP</li>
+						<strong><li>Interaction avec MySQL</li></strong>
+					</ol>
+				</section>
+
+				<section>
+					<h2>MySQL</h2>
+
+					<h3>Serveur de bases de données relationnelles</h3>
+					<ul>
+						<li>Données stockées dans des tables séparées</li>
+						<li>Tables liées entre elles par des relations</li>
+						<li>Accès via un langage de requête</li>
+					</ul>
+
+					<h3>L'un des plus répandus</h3>
+					<ul>
+						<li>Extrêmement simple</li>
+						<li>Utilise le langage SQL (Standard Query Language)</li>
+						<li>Très commode avec PHP</li>
+					</ul>
+				</section>
+
+				<style type="text/css">
+					.sql-table{
+						font-size: .5em !important;
+						line-height: 1em !important;
+						margin: 0 !important;
+					}
+				</style>
+
+				<section>
+					<h2>Tables</h2>
+
+					<table class="sql-table">
+						<tr>
+							<th colspan="4">Ingredients</th>
+						</tr>
+						<tr>
+							<th>Name</th>
+							<th>Alcohol</th>
+							<th>InStock</th>
+							<th>Price</th>
+						</tr>
+						<tr>
+							<td>Orange juice</td>
+							<td>0.0</td>
+							<td>12</td>
+							<td>2.99</td>
+						</tr>
+						<tr>
+							<td>Campari</td>
+							<td>25.0</td>
+							<td>5</td>
+							<td>12.95</td>
+						</tr>
+						<tr>
+							<td>Mineral water</td>
+							<td>0.0</td>
+							<td>10</td>
+							<td>1.49</td>
+						</tr>
+						<tr>
+							<td>Bacardi</td>
+							<td>37.5</td>
+							<td>3</td>
+							<td>16.98</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h2>Requêtes SQL</h2>
+
+					<h3>Clauses SELECT-FROM-WHERE</h3>
+
+					<table>
+						<tr>
+							<td><code>SELECT</code></td>
+							<td>Choix des colonnes (projection)</td>
+						</tr>
+						<tr>
+							<td><code>FROM</code></td>
+							<td>Choix des tables</td>
+						</tr>
+						<tr>
+							<td><code>WHERE</code></td>
+							<td>Conditions de sélection des lignes</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<table class="sql-table">
+						<tr>
+							<th colspan="4">Ingredients</th>
+						</tr>
+						<tr>
+							<th>Name</th>
+							<th>Alcohol</th>
+							<th>InStock</th>
+							<th>Price</th>
+						</tr>
+						<tr>
+							<td>Orange juice</td>
+							<td>0.0</td>
+							<td>12</td>
+							<td>2.99</td>
+						</tr>
+						<tr>
+							<td>Campari</td>
+							<td>25.0</td>
+							<td>5</td>
+							<td>12.95</td>
+						</tr>
+						<tr>
+							<td>Mineral water</td>
+							<td>0.0</td>
+							<td>10</td>
+							<td>1.49</td>
+						</tr>
+						<tr>
+							<td>Bacardi</td>
+							<td>37.5</td>
+							<td>3</td>
+							<td>16.98</td>
+						</tr>
+					</table>
+
+					<h4>Requête</h4>
+					<p><code>SELECT Name, Price<br/>FROM Ingredients<br/>WHERE Alcohol = 0</code></p>
+	
+					<h4>Résultat</h4>
+					<table class="sql-table">
+						<tr>
+							<th>Name</th>
+							<th>Price</th>
+						</tr>
+						<tr>
+							<td>Orange juice</td>
+							<td>2.99</td>
+						</tr>
+						<tr>
+							<td>Mineral water</td>
+							<td>1.49</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h3 style="margin-top: 0">Jointure</h3>
+
+					<table class="sql-table" style="float: left">
+						<tr>
+							<th colspan="4">Ingredients</th>
+						</tr>
+						<tr>
+							<th>Name</th>
+							<th>Alcohol</th>
+							<th>InStock</th>
+							<th>Price</th>
+						</tr>
+						<tr>
+							<td>Orange juice</td>
+							<td>0.0</td>
+							<td>12</td>
+							<td>2.99</td>
+						</tr>
+						<tr>
+							<td>Campari</td>
+							<td>25.0</td>
+							<td>5</td>
+							<td>12.95</td>
+						</tr>
+						<tr>
+							<td>Mineral water</td>
+							<td>0.0</td>
+							<td>10</td>
+							<td>1.49</td>
+						</tr>
+						<tr>
+							<td>Bacardi</td>
+							<td>37.5</td>
+							<td>3</td>
+							<td>16.98</td>
+						</tr>
+					</table>
+
+					<table class="sql-table" style="float: right">
+						<tr>
+							<th colspan="4">SoldBy</th>
+						</tr>
+						<tr>
+							<th>Ingredient</th>
+							<th>Supplier</th>
+							<th>Price</th>
+						</tr>
+						<tr>
+							<td>Orange juice</td>
+							<td>A&P Supermaket</td>
+							<td>2.49</td>
+						</tr>
+						<tr>
+							<td>Orange juice</td>
+							<td>Shop Rite</td>
+							<td>2.79</td>
+						</tr>
+						<tr>
+							<td>Campari</td>
+							<td>Joe s Liquor Store</td>
+							<td>14.95</td>
+						</tr>
+						<tr>
+							<td>Bacardi</td>
+							<td>Liquors & More</td>
+							<td>13.99</td>
+						</tr>
+						<tr>
+							<td>Mineral Water</td>
+							<td>Shop Rite</td>
+							<td>1.89</td>
+						</tr>
+						<tr>
+							<td>Bacardi</td>
+							<td>Joe s Liquor Store</td>
+							<td>14.99</td>
+						</tr>
+					</table>
+
+					<div style="clear: both; float: left;">
+						<h4 style="margin-top: 28px">Requête</h4>
+						<p><code>SELECT Name, InStock, Supplier<br/>FROM Ingredients, SoldBy<br/>Where Name=Ingredient</code></p>
+					</div>
+
+					<div style="float: right">
+						<h4 style="margin: 28px 0 18px 0">Résultat</h4>
+						<table class="sql-table">
+							<tr>
+								<th>Name</th>
+								<th>InStock</th>
+								<th>Supplier</th>
+							</tr>
+							<tr>
+								<td>Orange Juice</td>
+								<td>12</td>
+								<td>A&P Supermaket</td>
+							</tr>
+							<tr>
+								<td>Orange Juice</td>
+								<td>12</td>
+								<td>Shop Rite</td>
+							</tr>
+							<tr>
+								<td>Campari</td>
+								<td>5</td>
+								<td>Joe s Liquor Store</td>
+							</tr>
+							<tr>
+								<td>Mineral Water</td>
+								<td>10</td>
+								<td>Shop Rite</td>
+							</tr>
+							<tr>
+								<td>Bacardi</td>
+								<td>3</td>
+								<td>Liquors & More</td>
+							</tr>
+							<tr>
+								<td>Bacardi</td>
+								<td>3</td>
+								<td>Joe s Liquor Store</td>
+							</tr>
+						</table>
+					</div>
+
+				</section>
+
+				<section>
+					<h2>Modifier le contenu des tables</h2>
+
+					<h3>Insertion</h3>
+					<p><code>INSERT INTO Ingredients (Name, Alcohol, InStock, Price)<br/>VALUES ('Kahlua', 20.0, 28, 18.35)</code></p>
+
+					<h3>Suppression</h3>
+					<p><code>DELETE FROM Ingredients<br/>WHERE Name='Kahlua'</code></p>
+
+					<h3>Modification</h3>
+					<p><code>UPDATE Ingredients<br/>SET Price = 18<br/>WHERE Name = 'Kahlua'</code></p>
+				</section>
+
+				<section>
+					<h2>Utilser MySQL avec PHP</h2>
+
+					<h3>Deux possibiltiés</h3>
+
+					<h4>MySQLi (MySQL improved)</h4>
+					<ul>
+						<li>Extension de PHP pour interagir avec MySQL</li>
+						<li>Deux API : une procédurale et une OO</li>
+					</ul>
+
+					<h4>PDO (PHP Data Objects) – recommandé</h4>
+					<ul>
+						<li>Interaction avec 12 SGBD différents, dont MySQL</li>
+						<li>Uniquement OO</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Avec des PDO</h2>
+
+					<pre class="html-example"><code class="php" style="max-height: 530px;">try {
+  // Open connection
+  $connection = new PDO(
+    "mysql:host=localhost;dbname=myDatabase",
+    "username",
+    "password"
+  );
+
+  // Make the query
+  $query = "SELECT * FROM Ingredients WHERE Name = 'Kahlua'";
+  $results = $connection->query($query);
+
+  // Browse the results
+  foreach ($results as $row) {
+    echo $row['Price'] . "\n";
+  }
+
+  // Close connection
+  $connection = null;
+} catch(PDOException $e){
+  echo $e->getMessage();
+}</code></pre>
+				</section>
+
+				<section>
+					<h3>Création dynamique de requête</h3>
+					<ul>
+						<li>
+							Ajout de valeurs directement dans la requête
+							<pre class="html-example"><code class="php">$name = "Kahlua";
+$query = "SELECT * FROM Ingredients WHERE Name = '$name'";
+$conn->query($query);
+</code></pre>
+						</li>
+						<li>
+							Utilisation de marqueurs (requête préparée)
+							<pre class="html-example"><code class="php">// Prepare statement
+$query = "SELECT * FROM Ingredients WHERE Name = :name";
+$statement = $conn->prepare($query);
+
+// Bind value and execute query
+$statement->bindValue(":name", $name, PDO::PARAM_STR);
+$statement->execute();
+</code></pre>
+						</li>
+					</ul>
+
+					<h3>Avantages de l'utilisation de marqueurs :</h3>
+					<ul>
+						<li>Évite l'injection de requêtes</li>
+						<li>Préparation de l'analyse, de la compilation et de l'optimisation</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Deux types de marqueurs</h3>
+
+					<h4>Marqueurs nommés</h4>
+					<pre class="html-example"><code class="php">// Prepare statement
+$query = "SELECT * FROM Ingredients WHERE Name = :name";
+$statement = $conn->prepare($query);
+
+// Bind value and execute query
+$statement->bindValue(":name", "Kahlua", PDO::PARAM_STR);
+$statement->execute();</code></pre>
+ 
+					<h4>Marqueurs anonymes</h4>
+					<pre class="html-example"><code class="php">// Prepare statement
+$query = "SELECT * FROM Ingredients WHERE Name = ?";
+$statement = $conn->prepare($query);
+
+// Bind value and execute query
+$statement->bindValue(1, "Kahlua", PDO::PARAM_STR);
+$statement->execute();</code></pre>
+				</section>
+
+				<section>
+					<h2>Autres SGBD</h2>
+
+					<h3>Maria DB</h3>
+					<ul>
+						<li>Fork the MySQL</li>
+						<li>Créé en réaction à l'acquisition de MySQL par Oracle en 2010</li>
+						<li>But : rester gratuit et sous licence GNU GPL</li>
+						<li>Aussi : meilleures performances</li>
+						<li>Toujours beaucoup moins utilisé que MySQL</li>
+					</ul>
+
+					<h3>PostgreSQL</h3>
+					<ul>
+						<li>Inclut des fonctionnalités plus avancées de SQL</li>
+						<li>Troisième en termes de part de marché (après MS SQL Server)</li>
+					</ul>
+				</section>
+
+				<section>
+					<img src="img/database-usage.png">
+
+					<p>(Source : <a href="https://db-engines.com/en/ranking_trend">db-engines.com</a>)</p>
+				</section>
+
+				<!-- End sgbd -->
+
+				<section>
+					<h2>Ressources externes</h2>
+
+					<h3>Sur le Web</h3>
+					<ul>
+						<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML">Mozilla Developer Network (MDN)</a></li>
+						<li><a href="https://www.w3schools.com/default.asp">w3schools.com</a></li>
+					</ul>
+
+					<h3>Cours en ligne et MOOC</h3>
+					<ul>
+						<li><a href="https://openclassrooms.com/courses/apprenez-a-creer-votre-site-web-avec-html5-et-css3">Cours en ligne d'OpenClassrooms</a></li>
+						<li><a href="https://www.codecademy.com/learn/learn-html">Cours en ligne de Codecademy</a></li>
+						<li><a href="https://www.coursera.org/learn/web-development">Introduction to Web Development</a>, MOOC de Daniel Randall</li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+		<script>
+			// Skip 10 slides at a time when hitting "page up" and "page down"
+			Reveal.configure({
+				keyboard: {
+					33: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.prev();
+    					}
+    				},
+    				34: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.next();
+    					}
+    				}
+				}
+			});
+
+		</script>
+	</body>
+</html>
+

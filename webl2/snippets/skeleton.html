@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="lib/codemirror.css">
+
+	<style>
+		.CodeMirror pre{
+			font-size: 15px;
+		}
+	</style>
+</head>
+<body>
+
+<textarea id="skeleton">
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+</body>
+</html></textarea>
+
+<script src="lib/codemirror.js"></script>
+<script src="mode/xml/xml.js"></script>
+<script type="text/javascript">
+	var editor = CodeMirror.fromTextArea(document.getElementById('skeleton'));
+	editor.setSize("100%", "440px");
+	var initialContent = editor.getValue();
+	var beforeTitle = initialContent.substr(0, initialContent.indexOf("</title>"));
+	var afterTitleBeforeBody = initialContent.substr(initialContent.indexOf("</title>"), initialContent.indexOf("</body>") - initialContent.indexOf("</title>") - 1);
+	var afterBody = initialContent.substr(initialContent.indexOf("</body>") - 1, initialContent.length - initialContent.indexOf("</body>") + 1);
+	var title = "Road Trip 101";
+
+	var body = "\n\
+  <h1>Road Trip 101</h1>\n\
+\n\
+  <img src=\"road-trip.jpg\" alt=\"Road Trip Image\" />\n\
+\n\
+  <p>This is a playlist for a road trip.</p>\n\
+\n\
+  <ol>\n\
+    <li>Queen - Bohemian Rhapsody</li>\n\
+    <li>Led Zeppelin - Immigrant Song</li>\n\
+    <li>Edwin Starr - War</li>\n\
+    <li>Stevie Wonder - Superstition</li>\n\
+    <li>Sting - Englishman In New York</li>\n\
+    <li>Björk - It's Oh So Quiet</li>\n\
+  </ol>\n";
+
+	var index = 0;
+
+	editor.on("keydown", function(instance, event){
+		if (event.keyCode == 32){
+			if (index == 0){
+				addTitle(event);
+			}
+			else{
+				index = 0;
+				addBody();
+		   		editor.getInputField().blur();
+			}
+		}
+	});
+	
+	function addTitle(event){
+	    if (index <= title.length) {
+	        editor.setValue(beforeTitle + title.substr(0, index++) + afterTitleBeforeBody + afterBody);
+	        setTimeout("addTitle()", 2);
+	    }
+	}
+	function addBody(){
+	    if (index <= body.length) {
+	        editor.setValue(beforeTitle + title + afterTitleBeforeBody + body.substr(0, index) + afterBody);
+	        setTimeout("addBody()", 0);
+	        index += 2;
+	    }
+	    else{
+    		editor.off("focus", addTitle);
+	    }
+	}
+</script>
+
+</body>
+</html>

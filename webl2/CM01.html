@@ -1,0 +1,765 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Web avancé - CM1</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white-bonnin.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/zenburn.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Web avancé</h1>
+
+					<p id="author">Geoffray Bonnin</p>
+					<p style="font-size: 28px; text-align: center">Cours mis à jour par Gaël Guibon</p>
+				</section>
+
+				<section>
+					<h2>Quelques mots sur le cours</h2>
+
+					<h3>Pré-requis</h3>
+					<ol>
+						<li>Bases de HTML, CSS et javascript</li>
+					</ol>
+
+					<h3>Contenu</h3>
+					<ol>
+						<li>Rappel des technologies client (HTML CSS Javascript)</li>
+						<li>Approfondissement des technologies client (Javascript et AJAX)</li>
+						<li>Technologies serveur (PHP principalement)</li>
+					</ol>
+
+					<h3>Organisation</h3>
+					<ul>						<li>4 séances de CM de 1h30</li>
+						<li>12 séances de TD de 2h</li>
+						<li><strong>CM</strong>, TD, TD, <strong>CM</strong>, TD, TD, TD, <strong>CM</strong>, TD, <strong>CM</strong>, TD, TD, TD, TD, TD, TD</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Cours magistraux</h3>
+					<ul>
+						<li>Présentation « traditionnelle » : concepts généraux + syntaxe de base</li>
+						<li>Démonstrations</li>
+						<li>Erreurs fréquentes dans les TD remis</li>
+						<li>Correction générale des TD</li>
+					</ul>
+
+					<h3>Travaux dirigés</h3>
+					<ul>
+						<li>Découverte approfondie de la syntaxe</li>
+						<li>Réalisations plus poussées</li>
+					</ul>
+				</section>
+
+				<section>
+
+					<h2>Enseignants de TD</h2>
+					<table style="margin-left: 0px;">
+						<tr>
+							<th style="font-size: .5em;">Groupe</th>
+							<th></th>
+							<th></th>
+						</tr>
+						<tr>
+							<td style="text-align: center;">1</td>
+							<td>Gaël Guibon</td>
+							<td>gael.guibon@univ-lorraine.fr</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;">2</td>
+							<td>Oriane Dermy</td>
+							<td>oriane.dermy@univ-lorraine.fr</td>
+						</tr>
+						<tr>
+							<td style="text-align: center;">3</td>
+							<td>Quentin Parmentier</td>
+							<td>quentin.parmentier@univ-lorraine.fr</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h2>Modalités d'évaluation</h2>
+
+					<h3>Quiz</h3>
+					<ul>
+						<li>En début de CM (donc 3 quiz)</li>
+						<li>À l'aide de Wooclap</li>
+					</ul>
+
+					<h3>Examen sur ordinateur</h3>
+					<ul>
+						<!-- <li>Durée : </li> -->
+						<li>Exercices de code</li>
+						<li>Supports autorisés</li>
+						<li>Communication interdite</li>
+					</ul>
+
+					<h3>Note finale</h3>
+					<ul>
+						<li>80% examen, 20% moyenne des quiz</li>
+					</ul>
+
+					<h3>Points bonus</h3>
+					<p>Proportion de TD déposés sur Arche</p>
+				</section>
+
+				<!-- HTML -->
+
+				<section>
+					<div class="section-title">Technologies client : rappels</div>
+
+					<ol>
+						<strong><li>HTML et CSS</li></strong>
+						<li>JavaScript</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Démo Covid (HTML + CSS)</h2>
+
+					<video width="800" controls="" data-paused-by-reveal="">
+						<source src="videos/Démo DM 19-20 - HTML et CSS.mp4" type="video/mp4">
+					</video>
+					
+				</section>
+
+				<!-- JavaScript -->
+
+				<section>
+					<div class="section-title">Technologies client : rappels</div>
+
+					<ol>
+						<li>HTML et CSS</li>
+						<strong><li>JavaScript</li></strong>
+					</ol>
+				</section>
+
+				<section>
+					<h2>
+						<img src="img/js.svg" style="width: 200px; float: right;"/>
+						Qu'est-ce que JavaScript ?
+					</h2>
+
+					<h3>Langage de script</h3>
+					<ul>
+						<li>Executé côté client (historiquement)</li>
+						<li>Par le navigateur</li>
+						<li>Seul langage natif du navigateur</li>
+					</ul>
+
+					<h3>Permet</h3>
+					<ul>
+						<li>De gérer les évènements</li>
+						<li>De modifier la mise en forme des éléments de la page</li>
+						<li>De modifier le contenu de la page</li>
+						<li>De modifier la disposition des élements de la page</li>
+						<li>D'inclure des animations</li>
+						<li>De traiter les données saisies par l'utilisateur</li>
+						<li>...</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Histoire</h2>
+
+					<img src="img/js-history.svg">
+				</section>
+
+				<section>
+					<h2>ECMAScript et JavaScript</h2>
+
+					<h3>ECMAScript est une spécification standard</h3>
+					<ul>
+						<li>Pour obtenir le même résultat quel que soit le navigateur</li>
+						<li>Chaque navigateur implémente son <strong>moteur</strong> en fonction du standard</li>
+					</ul>
+
+					<h3>JavaScript est un dialecte d'ECMAScript</h3>
+
+					<table>
+						<tr>
+							<th>Navigateur</th>
+							<th>Moteur JavaScript</th>
+							<th>ES5</th>
+							<th>ES6</th>
+						</tr>
+						<tr>
+							<td>Chrome</td>
+							<td>V8</td>
+							<td>100%</td>
+							<td>98%</td>
+						</tr>
+						<tr>
+							<td>Firefox</td>
+							<td>SpiderMonkey</td>
+							<td>100%</td>
+							<td>98%</td>
+						</tr>
+						<tr>
+							<td>Internet Explorer</td>
+							<td>Chakra</td>
+							<td>99%</td>
+							<td>11%</td>
+						</tr>
+						<tr>
+							<td>Edge</td>
+							<td>Chakra</td>
+							<td>100%</td>
+							<td>96%</td>
+						</tr>
+						<tr>
+							<td>Safari</td>
+							<td>JavaScriptCore</td>
+							<td>99%</td>
+							<td>99%</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h2>Fonctionnement</h2>
+
+					<style type="text/css">
+						#hjsw{
+							position: relative;
+						}
+						#hjsw div{
+							position: absolute;
+							left: 0;
+							top: 0;
+						}
+					</style>
+
+					<div id="hjsw">
+						<div><img src="img/how js works 0.svg"></div>
+						<div class="fragment"><img src="img/how js works 1.svg"></div>
+						<div class="fragment"><img src="img/how js works 2.svg"></div>
+					</div>
+				</section>
+
+				<section>
+					<div class="section-title">Quelques éléments de syntaxe</div>
+				</section>
+
+				<section>
+					<h2>Variables</h2>
+
+					<h3>Quatre types de variables</h3>
+
+					<pre class="js-example"><code class="javascript">//Variable numérique
+var parfait = 28;
+
+// Chaînes de caractères
+var war = 'War, huh, yeah';
+var superstition = "Ladders 'bout to fall";
+
+// Booléen
+var superstitious = true;
+
+// Objet (en utilisant un initialisateur d'objet)
+var edwin = { name: "Starr", born: 1942 };
+console.log(edwin.name); // Affiche "Starr"</code></pre>
+				</section>
+
+				<section>
+					<h2>Portée des variables</h2>
+
+					<p>Variable globale</p>
+					<pre class="js-example"><code class="javascript">parfait = 28;</code></pre>
+
+					<p>Variable locale à la fonction dans laquelle elle se trouve</p>
+					<pre class="js-example"><code class="javascript">var parfait = 28;</code></pre>
+
+					<p>Variable locale au bloc dans lequel elle se trouve (ES6)</p>
+					<pre class="js-example"><code class="javascript">let parfait = 28;</code></pre>
+
+					<div style="width: 65%; text-align: left;">
+						<img src="img/let.png" style="width: 100%;">
+						<div class="source">Source image : MDN</div>
+					</div>
+				</section>
+
+				<section>
+					<h2>« En JavaScript, tout est objet »</h2>
+					<ul>
+						<li>Les variables primitives (valeurs numériques, chaînes de caractères et booléens) ne sont pas des objets</li>
+						<li>Tout le reste est objet, y compris les tableaux et les fonctions</li>
+						<li style="margin-bottom: 20px;">
+							Version objet des variables primitives
+							<table>
+								<tr>
+									<th>Variables primitives</th>
+									<th>Equivalent objet</th>
+								</tr>
+								<tr>
+									<td><code>var s = "lala"</code></td>
+									<td><code>var s = new String("lala")</code></td>
+								</tr>
+								<tr>
+									<td><code>var i = 28</code></td>
+									<td><code>var i = new Number(28)</code></td>
+								</tr>
+								<tr>
+									<td><code>var b = true</code></td>
+									<td><code>var b = new Boolean(true)</code></td>
+								</tr>
+							</table>
+						<li>Les variables primitives peuvent être recouvertes...</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Tableaux</h2>
+
+					<p>Les trois syntaxes suivantes sont équivalentes :</p>
+					<pre class="js-example"><code class="javascript">var soulArtists = [ "edwin", "stevie" ];
+
+var rockArtists = new Array("queen", "led zeppelin");
+
+var otherArtists = new Array(2);
+otherArtists[0] = "björk";
+otherArtists[1] = "sting";</code></pre>
+				</section>
+
+				<section>
+
+					<h2>Fonctions</h2>
+
+					<h3>Fonctions locales</h3>
+					<pre class="js-example"><code class="javascript">var sing = function(artist){
+  // ...
+}</code></pre>
+
+					<h3>Fonctions globales</h3>
+					<pre class="js-example"><code class="javascript">sing = function(artist){
+  // ...
+}
+
+function dance(artist){
+  // ...
+}</code></pre>
+
+				</section>
+
+				<section>
+					<h2>Objets prédéfinis</h2>
+
+					<style type="text/css">
+						#build-in-objects{
+							font-size: .6em;
+							margin: 0;
+						}
+
+						#build-in-objects tr:nth-child(even){
+							background-color: rgba(220,220,220,.5);
+						}
+
+					</style>
+
+					<table id="build-in-objects">
+						<tr>
+							<th>Nom</th>
+							<th>Description</th>
+							<th>Attributs</th>
+							<th>Fonctions</th>
+						</tr>
+						<tr>
+							<td><code>window</code></td>
+							<td>Objet le plus élevé dans la hiérarchie<br/>Contient toutes les variables globales.</td>
+							<td><code>document</code>, <code>history</code>, <code>location</code>...</td>
+							<td><code>alert()</code>, <code>setTimeout()</code>, <code>setInterval</code>...</td>
+						</tr>
+						<tr>
+							<td><code>document</code></td>
+							<td>Contient tous les éléments de l'arbre DOM de la page HTML</td>
+							<td><code>title</code>, <code>body</code>, <code>cookie</code>...</td>
+							<td><code>getElementById()</code>, <code>getElementsByTagName()</code>...</td>
+						</tr>
+						<tr>
+							<td><code>Math</code></td>
+							<td>Opérations et constantes mathématiques</td>
+							<td><code>PI</code>, <code>E</code>...</td>
+							<td><code>random()</code>, <code>min()</code>, <code>max()</code>, <code>log()</code>...</td>
+						</tr>
+						<tr>
+							<td><code>Date</code></td>
+							<td>Gestion des dates</td>
+							<td>-</td>
+							<td><code>now()</code>, <code>getHours()</code>, <code>getFullYear()</code>...</td>
+						</tr>
+
+					</table>
+				</section>
+
+				<!-- Scope of variables - question 1 -->
+
+				<section>
+					<pre class="js-example"><code class="javascript" data-noescape contentEditable="true">var n = 3; // Variable globale
+
+function start(){
+  prenom = "Jimi"; // Variable globale
+  var n = 2; // Variable locale
+  console.log(prenom); <span class="fragment">// Jimi</span>
+  console.log(window.prenom); <span class="fragment">// Jimi</span>
+  console.log(n); <span class="fragment">// 2</span>
+  console.log(window.n); <span class="fragment">// 3</span>
+}
+
+start();
+console.log(n); <span class="fragment">// 3</span>
+console.log(window.n); <span class="fragment">// 3</span></code></pre>
+				</section>
+
+				<!-- Scope of variables - question 2 -->
+
+				<section>
+					<pre class="js-example"><code class="javascript" data-noescape contentEditable="true">var lyrics = "A gentleman will walk but never run";
+
+function sing(song){
+  var lyrics = "Is this the real life";
+  if (song == "War"){
+    var lyrics = "War, huh, yeah";
+  }
+  else if (song == "Superstition"){
+    let lyrics = "Ladders 'bout to fall";
+  }
+  console.log(lyrics);
+}
+
+sing("War"); <span class="fragment">// War, huh, yeah</span>
+sing("Superstition"); <span class="fragment">// Is this the real life</span>
+console.log(lyrics); <span class="fragment">// A gentleman will walk but never run</span></code></pre>
+				</section>
+
+				<section>
+					<h2>Évènements - avec listeners</h2>
+
+					<div class="quarter" style="width: 58%;">
+						<p>HTML</p>
+						<pre class="html-example" style="font-size: .4em;"><code class="html" contentEditable="true">&lt;ol id="playlist"&gt;
+  &lt;li&gt;Queen - Bohemian Rhapsody&lt;/li&gt;
+  &lt;li&gt;Led Zeppelin - Immigrant Song&lt;/li&gt;
+  &lt;li&gt;Edwin Starr - War&lt;/li&gt;
+  &lt;li&gt;Stevie Wonder - Superstition&lt;/li&gt;
+  &lt;li&gt;Sting - Englishman In New York&lt;/li&gt;
+  &lt;li&gt;Björk - It's Oh So Quiet&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;button id="blue"&gt;Bleu&lt;/button&gt;
+
+&lt;script type="text/javascript" src="playlist.js"&gt;&lt;/script&gt;</code></pre>
+
+						<p>JavaScript (« playlist.js »)</p>
+						<pre class="js-example" style="font-size: .4em;"><code class="javascript" contentEditable="true">var blue = document.getElementById("blue");
+blue.addEventListener("click", toBlue);
+
+function toBlue(){
+  var playlist = document.getElementById("playlist");
+  playlist.style.color = "blue";
+}</code></pre>
+
+					</div>
+
+					<div class="quarter" style="width: 38%;">
+						<p>Résultat</p>
+
+						<style type="text/css">
+							#playlist3 li{
+								padding-left: 0;
+								margin-left: -5px;
+							}
+						</style>
+
+						<div class="html-result" style="margin-top: 20px;">
+							<ol id="playlist3" style="font-size: .5em;">
+							  <li>Queen - Bohemian Rhapsody</li>
+							  <li>Led Zeppelin - Immigrant Song</li>
+							  <li>Edwin Starr - War</li>
+							  <li>Stevie Wonder - Superstition</li>
+							  <li>Sting - Englishman In New York</li>
+							  <li>Björk - It's Oh So Quiet</li>
+							</ol>
+
+							<button id="blue3">Bleu</button>
+
+							<script type="text/javascript">
+							  var blue = document.getElementById("blue3");
+							  blue.addEventListener("click", toBlue);
+
+							  function toBlue(){
+							    var playlist = document.getElementById("playlist3");
+							    playlist.style.color = "blue";
+							  }
+							</script>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h2>Évènements - sans listener</h2>
+
+					<div class="quarter" style="width: 58%;">
+						<p>HTML</p>
+						<pre class="html-example" style="font-size: .4em;"><code class="html" contentEditable="true">&lt;ol id="playlist"&gt;
+  &lt;li&gt;Queen - Bohemian Rhapsody&lt;/li&gt;
+  &lt;li&gt;Led Zeppelin - Immigrant Song&lt;/li&gt;
+  &lt;li&gt;Edwin Starr - War&lt;/li&gt;
+  &lt;li&gt;Stevie Wonder - Superstition&lt;/li&gt;
+  &lt;li&gt;Sting - Englishman In New York&lt;/li&gt;
+  &lt;li&gt;Björk - It's Oh So Quiet&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;button onclick="toBlue()"&gt;Bleu&lt;/button&gt;
+
+&lt;script type="text/javascript" src="playlist.js"&gt;&lt;/script&gt;</code></pre>
+
+						<p>JavaScript (« playlist.js »)</p>
+						<pre class="js-example" style="font-size: .4em;"><code class="javascript" contentEditable="true">function toBlue(){
+  var playlist = document.getElementById("playlist");
+  playlist.style.color = "blue";
+}</code></pre>
+
+					</div>
+
+					<div class="quarter" style="width: 38%;">
+						<p>Résultat</p>
+
+						<style type="text/css">
+							#playlist4 li{
+								padding-left: 0;
+								margin-left: -5px;
+							}
+						</style>
+
+						<div class="html-result" style="margin-top: 20px;">
+							<ol id="playlist4" style="font-size: .5em;">
+							  <li>Queen - Bohemian Rhapsody</li>
+							  <li>Led Zeppelin - Immigrant Song</li>
+							  <li>Edwin Starr - War</li>
+							  <li>Stevie Wonder - Superstition</li>
+							  <li>Sting - Englishman In New York</li>
+							  <li>Björk - It's Oh So Quiet</li>
+							</ol>
+
+							<button id="blue4">Bleu</button>
+
+							<script type="text/javascript">
+							  var blue = document.getElementById("blue4");
+							  blue.addEventListener("click", toBlue);
+
+							  function toBlue(){
+							    var playlist = document.getElementById("playlist4");
+							    playlist.style.color = "blue";
+							  }
+							</script>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h2>Évènements</h2>
+
+					<h3>Sans listener</h3>
+					<ul>
+						<li>Simple et direct</li>
+						<li>Fonctionne sur tous les navigateurs</li>
+						<li>Mais mélange le JavaScript et le HTML</li>
+					</ul>
+
+					<h3>Avec des listeners</h3>
+					<ul>
+						<li>Permet :
+							<ul>
+								<li>de séparer le JavaScript du HTML</li>
+								<li>d'associer plusieurs évènements à un même élément</li>
+								<li>de désassocier facilement des évènements à des éléments</li>
+								<li>d'ordonner les évènements déclenchés simultanément pour des éléments différents</li>
+							</ul>
+						</li>
+						<li>Mais ne fonctionne pas sur tous les navigateurs<br/>
+						(Mais problème relativement facile à contourner)</li>
+					</ul>
+				</section>
+
+				<!-- DOM -->
+
+				<section>
+					<div class="section-title">Document Object Model (DOM)</div>
+				</section>
+
+				<section>
+					<h2>Document Object Model (DOM)</h2>
+
+					<h3>Convention du World Wide Web Consortium (W3C)</h3>
+					<ul>
+						<li>Pour représenter des documents HTML et XML</li>
+						<li>Représentation indépendante de tout langage</li>
+					</ul>
+
+					<h3>Modélisation objet de l'arborescence du document</h3>
+					<ul>
+						<li>Chaque balise HTML ou XML est un nœud de l'arbre</li>
+						<li>L'arbre peut ensuite être modifié à l'aide d'un script</li>
+					</ul>
+
+					<h3>Cas du Web</h3>
+					<ul>
+						<li>Le navigateur construit l'arbre DOM</li>
+						<li>L'arbre peut ensuite être manipulé (par exemple avec JavaScript)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Un exemple</h2>
+
+					<style type="text/css">
+						.left-dom-example{
+							position: absolute;
+							width: 500px;
+						}
+
+						.left-dom-example code{
+							max-height: none !important;
+						}
+
+						.left-dom-example pre{
+							font-size: .4em !important;
+						}
+
+						.right-dom-example{
+							position: absolute;
+							left: 500px;
+							width: 465px;
+							max-height: none !important;
+						}
+
+					</style>
+
+					<div class="left-dom-example">
+						<pre class="html-example"><code class="html" data-noescape>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Road Trip 101&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;ol&gt;
+  &lt;li id="track1"&gt;Queen - Bohemian Rhapsody&lt;/li&gt;
+  &lt;li id="track2"&gt;Led Zeppelin - Immigrant Song&lt;/li&gt;
+  &lt;li id="track3"&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+<div class="fragment">&lt;script type="text/javascript"&gt;
+  var track3 = document.getElementById("track3");
+  track3.innerHTML = "Edwin Starr - War";
+&lt;/script&gt;</div>
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+					</div>
+
+					<img src="img/dom1.svg" class="right-dom-example">
+					<img src="img/dom2.svg" class="right-dom-example fragment">
+				</section>
+
+				<section>
+					<h2>Manipulation d'arbres DOM</h2>
+
+					<h4>Avec les méthodes DOM</h4>
+					<pre class="js-example"><code class="javascript">var container = document.getElementById("container");
+var newParagraph = document.createElement('p');
+var newText = document.createTextNode("tralala");
+container.appendChild(newParagraph);
+newParagraph.appendChild(newText);</code></pre>
+
+					<h4>Avec l'attribut <code>innerHTML</code></h4>
+					<pre class="js-example"><code class="javascript">var container = document.getElementById("container");
+container.innerHTML = "&lt;p&gt;tralala&lt;/p&gt;";</code></pre>
+
+					<h3 style="margin-top: 50px;">Quelle façon de faire est la meilleure ?</h3>
+					<ul>
+						<li>Performances comparables</li>
+						<li><code>innerHTML</code> induit plus d'erreurs</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Démo Covid (JS)</h2>
+
+					<video width="800" controls="" data-paused-by-reveal="">
+						<source src="videos/Démo DM 19-20 - JS.mp4" type="video/mp4">
+					</video>
+					
+				</section>
+
+				<section>
+					<h2>Ressources externes</h2>
+
+					<h3>Sur le Web</h3>
+					<ul>
+						<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML">Mozilla Developer Network (MDN)</a></li>
+						<li><a href="https://www.w3schools.com/default.asp">w3schools.com</a></li>
+					</ul>
+
+					<h3>Cours en ligne et MOOC</h3>
+					<ul>
+						<li><a href="https://openclassrooms.com/courses/apprenez-a-creer-votre-site-web-avec-html5-et-css3">Cours en ligne d'OpenClassrooms</a></li>
+						<li><a href="https://www.codecademy.com/learn/learn-html">Cours en ligne de Codecademy</a></li>
+						<li><a href="https://www.coursera.org/learn/web-development">Introduction to Web Development</a>, MOOC de Daniel Randall</li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+		<script>
+			// Skip 10 slides at a time when hitting "page up" and "page down"
+			Reveal.configure({
+				keyboard: {
+					33: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.prev();
+    					}
+    				},
+    				34: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.next();
+    					}
+    				}
+				}
+			});
+
+		</script>
+	</body>
+</html>
+

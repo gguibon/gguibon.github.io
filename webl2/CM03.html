@@ -1,0 +1,845 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Web avancé - CM3</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white-bonnin.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/zenburn.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Web avancé</h1>
+
+					<p id="author">Geoffray Bonnin</p>
+					<p style="font-size: 28px; text-align: center">Cours mis à jour par Gaël Guibon</p>
+				</section>
+
+				<!-- Begin retrospective -->
+
+				<section>
+					<h2>Rétrospective TD03 (Snake)</h2>
+
+					<h3>Travaux rendus : xx%</h3>
+					
+					<p>Complétion</p>
+					<table class="stats">
+						<tr>
+							<td>Ex1</td>
+							<td>xx%</td>
+						</tr>
+						<tr>
+							<td>Ex2 (serpent du joueur)</td>
+							<td>xx% (xx% fait en partie)</td>
+						</tr>
+						<tr>
+							<td>Ex3 (bad snakes)</td>
+							<td>xx%</td>
+						</tr>
+					</table>
+				</section>
+				<!-- End retrospective -->
+
+
+				<!-- Begin web servers -->
+
+				<section>
+					<div class="section-title" style="margin-top: 150px;">Technologies serveur</div>
+
+					<ol>
+						<strong><li>Serveurs Web</li></strong>
+						<li>Notions de base de PHP</li>
+						<li>Interaction avec MySQL</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Serveur Web</h2>
+
+					<h3>Peut désigner</h3>
+					<ul>
+						<li>Un serveur HTTP lui-même</li>
+						<li>La machine sur laquelle tourne un serveur HTTP</li>
+					</ul>
+
+					<h3>Un serveur HTTP permet</h3>
+					<ul>
+						<li>Le transfert de données via le protocole HTTP</li>
+						<li>L'exécution de code (par exemple PHP)</li>
+						<li>L'interaction avec un serveur de bases de données</li>
+					</ul>
+
+					<h3>La machine sur laquelle tourne un serveur HTTP permet</h3>
+					<ul>
+						<li>De faire tourner le serveur HTTP</li>
+						<li>De faire tourner le serveur de bases de données</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Scénario type</h2>
+
+					<style type="text/css">
+						.typical-scenario{
+							position: relative;
+							min-height: 550px;
+						}
+
+						.typical-scenario img{
+							position: absolute;
+							top: 0;
+							left:0;
+						}
+					</style>
+
+					<div class="typical-scenario">
+						<img src="img/typical-scenario.svg">
+					</div>
+				</section>
+
+				<section>
+					<h2>Principaux serveurs HTTP actuels</h2>
+
+					<img src="img/web-servers-share.png">
+				</section>
+
+				<section>
+					<h2>Principaux serveurs HTTP actuels</h2>
+
+					<style type="text/css">
+						#main-servers{
+							margin: 0;
+						}
+
+						#main-servers img{
+							width: 150px;
+						}
+
+						#main-servers td{
+						    vertical-align: middle;
+						}
+					</style>
+
+					<table id="main-servers">
+						<tr>
+							<th></th>
+							<th>Serveur</th>
+							<th>Développeur</th>
+						</tr>
+						<tr>
+							<td><img src="img/Apache_HTTP_server_logo_(2016).svg"></td>
+							<td>Apache HTTP Server</td>
+							<td>Apache Software Foundation</td>
+						</tr>
+						<tr>
+							<td><img src="img/Nginx_logo.svg"></td>
+							<td>Nginx</td>
+							<td>Nginx, Inc.</td>
+						</tr>
+					</table>					
+				</section>
+
+				<section>
+					<h2>Principaux langages côté serveur</h2>
+
+					<img src="img/stats-server-side.png" style="height: 500px;">
+				</section>
+
+
+				<section>
+					<h2>Scénario type</h2>
+
+					<div class="typical-scenario">
+						<img src="img/typical-scenario.svg">
+						<img src="img/typical-scenario-2.svg" class="fragment">
+					</div>
+				</section>
+
+				<section>
+					<h2>Architectures LAMP, WAMP et MAMP</h2>
+
+					<div style="margin-top: 60px;">
+						<img src="img/lamp-wamp-mamp.svg">
+					</div>
+				</section>
+
+				<section>
+					<h2>World Wide Web ≈ HTML + HTTP + URL</h2>
+
+					<h3>HTTP (HyperText Transfer Protocol)</h3>
+					<div style="text-align: left;">
+						<img src="img/http-request.svg">
+					</div>
+
+					<h3>URL (Uniform Resource Locator)</h3>
+					<div style="text-align: left;">
+						<img src="img/url.svg">
+					</div>
+				</section>
+
+				<section>
+					<h2>Où installer un serveur Web ?</h2>
+
+					<style type="text/css">
+						.pros-cons{
+							list-style: none!important;
+							margin: 0 0 0 1em !important;
+						}
+
+						.pros:before, .cons:before {
+							display: inline-block;
+							width: 28px;
+						    font-weight: bold;
+						}
+
+						.pros:before {
+						    content: "+";
+						    color: green;
+						}
+
+						.cons:before {
+						    content: "–";
+						    color: red;
+						}
+					</style>
+
+					<h3>Sur sa propre machine</h3>
+					<ul class="pros-cons">
+						<li class="pros">Contrôle total</li>
+						<li class="cons">Besoin d'investir dans du matériel approprié</li>
+						<li class="cons">Responsable de tout (sécurité, qualité de service, etc.)</li>
+					</ul>
+
+					<h3>Sur la machine d'un hébergeur</h3>
+					<ul class="pros-cons">
+						<li class="cons">Contrôle limité</li>
+						<li class="pros">Pas besoin de se préoccuper du matériel</li>
+						<li class="pros">Responsabilités données à l'hébergeur</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Hébergeurs</h2>
+
+					<h3>Rôles</h3>
+					<ul>
+						<li>Installation et mise à disposition de serveurs Web</li>
+						<li>Sécurisation matérielle (chaleur, incendies, etc.)</li>
+						<li>Sécurisation réseau (attaques, pannes, etc.)</li>
+					</ul>
+
+					<h3>Trois types principaux d'hébergeurs</h3>
+					<ul>
+						<li>Hébergeurs gratuits</li>
+						<li>Serveurs dédiés</li>
+						<li>Hébergement mutualisé</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Hébergeurs gratuits</h2>
+
+					<h3>Intéressants pour</h3>
+					<ul>
+						<li>Pages personnelles</li>
+						<li>Petits sites</li>
+					</ul>
+
+					<h3>Problèmes principaux</h3>
+					<ul>
+						<li>Instabilité</li>
+						<li>Changements fréquents dans les offres</li>
+					</ul>
+
+					<style type="text/css">
+						.reveal .webhosts img{
+							height: 70px;
+							margin: 60px 15px 0 15px;
+						}
+					</style>
+
+					<div class="webhosts">
+						<img src="img/free-webhosts-wix.jpg">
+						<img src="img/free-webhosts-weebly.jpg">
+						<img src="img/free-webhosts-byet.jpg">
+						<img src="img/free-webhosts-000webhost.jpg">
+						<img src="img/free-webhosts-free.jpg">
+					</div>
+				</section>
+
+				<section>
+					<h2>Hébergeurs payants</h2>
+
+					<h3>Serveurs dédiés</h3>
+					<ul>
+						<li>Destinés aux sites nécessitant beaucoup de ressources</li>
+						<li>Coût très élevé</li>
+						<li>Gestion complexe</li>
+					</ul>
+
+					<h3>Hébergements mutualisés</h3>					
+					<ul>
+						<li>Espace disque réservé sur un serveur</li>
+						<li>Coût moins élevé que celui des serveurs dédiés (≈ 20€ par an)</li>
+						<li>Gestion simplifiée</li>
+					</ul>
+
+					<div class="webhosts">
+						<img src="img/o2switch.png">
+						<img src="img/webhosts-ovh.jpg">
+						<img src="img/webhosts-1und1.jpg">
+					</div>
+				</section>
+
+				<section>
+					<h2>Noms de domaine</h2>
+
+					<h3>Hébergement payant</h3>
+
+					<style type="text/css">
+						.paco{
+							margin-left: 1.2em !important
+						}
+					</style>
+
+					<p class="paco">Obligation de réserver un nom de domaine</p>
+					<p class="paco">Exemple : www.bonnin.edu</p>
+
+					<h3>Hébergement gratuit</h3>
+					<p class="paco">En général, conservation de l'adresse fournie par l'hébergeur</p>
+					<p class="paco">Exemple : geoffray.bonnin.free.fr</p>
+					<p class="paco">Réservation d'un nom de domaine possible aussi</p>
+				</section>
+
+				<section>
+					<img src="img/price-dns.png" style="width:800px">
+				</section>
+
+				<section>
+					<img src="img/ovh-fr-order-domain.jpg" style="width:650px">
+				</section>
+
+				<section>
+					<h2>Publication</h2>
+
+					<p>Clients FTP (File Transfer Protocal)</p>
+
+					<table>
+						<tr>
+							<th>Nom</th>
+							<th>Gratuit</th>
+							<th>Plateformes</th>
+						</tr>
+						<tr>
+							<td>FileZilla</td>
+							<td>Oui</td>
+							<td>Toutes</td>
+						</tr>
+						<tr>
+							<td>CyberDuck</td>
+							<td>Oui</td>
+							<td>Linux et Mac</td>
+						</tr>
+						<tr>
+							<td>WinSCP</td>
+							<td>Oui</td>
+							<td>Windows</td>
+						</tr>
+						<tr>
+							<td>CuteFTP</td>
+							<td>Non</td>
+							<td>Windows et Mac</td>
+						</tr>
+						<tr>
+							<td>Transmit</td>
+							<td>Non</td>
+							<td>Mac</td>
+						</tr>
+					</table>
+				</section>
+
+				<!-- End web servers -->
+
+
+				<!-- Begin PHP -->
+
+				<section>
+					<div class="section-title" style="margin-top: 150px;">Technologies serveur</div>
+
+					<ol>
+						<li>Serveurs Web</li>
+						<strong><li>Notions de base de PHP</li></strong>
+						<li>Interaction avec MySQL</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Qu'est-ce que PHP ?</h2>
+
+					<h3>PHP Hypertext Preprocessor</h3>
+					<ul>
+						<li>Langage de scripts</li>
+						<li>Exécuté côté serveur</li>
+						<li>Par un serveur Web</li>
+					</ul>
+
+					<h3>Permet</h3>
+					<ul>
+						<li>De générer du code (X)HTML, XML, JSON…</li>
+						<li>De manipuler des données utilisateur</li>
+						<li>D'interagir avec une base de données</li>
+						<li>De manipuler des fichiers sur le serveur</li>
+						<li>...</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Un exemple</h2>
+
+					<div class="quarter">
+						<p>Fichier « superstition.php »</p>
+						<pre class="html-example"><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Superstition&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;?php
+  echo "&lt;p&gt;Very superstitious&lt;/p&gt;";
+  ?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+					</div>
+
+					<div class="quarter">
+						<p>Contenu transmis par le serveur</p>
+						<pre class="html-example"><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Superstition&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;p&gt;Very superstitious&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<div class="typical-scenario" style="height: 650px !important">
+						<img src="img/typical-scenario.svg">
+						<img src="img/php-example-1.svg" class="fragment current-visible">
+						<img src="img/php-example-2.svg" class="fragment current-visible">
+						<img src="img/php-example-3.svg" class="fragment current-visible">
+					</div>
+				</section>
+
+				<section>
+					<img src="img/php-history.svg">
+				</section>
+
+				<section>
+					<img src="img/ElePHPant.svg" width="100%">
+				</section>
+
+				<section>
+					<h2>L'éléPHPant</h2>
+
+					<img src="img/elePHPant steps.jpg">
+
+					<p>Créé par Vincent Pontier aka « elroubio » en 1998</p>
+				</section>
+
+				<section>
+					<div class="section-title">Quelques éléments de syntaxe</div>
+				</section>
+
+				<section>
+					<h2>Huit types de variables</h2>
+
+					<pre class="html-example"><code class="php" style="max-height: none;">//1. Booléens
+$superstitious = true;
+
+//2. Entiers
+$parfait = 28;
+
+//3. Décimaux (float)
+$pi = 3.141592653;
+
+//4. Chaînes de caractères
+$war = 'War, huh, yeah';
+$superstition = "Ladders 'bout to fall";
+
+//5. Tableaux
+$tracks = array("Superstition", "War", "Bohemian Rhapshody");
+
+//6. Objets
+$papalardo = new Guitar("Papalardo");
+
+//7. Type "resource" (fichier ouvert, connexion à une base de données, etc.)
+$pdf = pdf_new();
+
+//8. NULL
+$jisonne = NULL;</code></pre>
+
+				</section>
+
+				<section>
+					<h3>Chaînes de caractères</h3>
+
+					<pre class="html-example"><code class="php" style="max-height: none" contentEditable="true">echo 'Arnold said: "I\'ll be back"';
+// Arnold said: "I'll be back"
+
+echo "Arnold said: \"I'll be back\"";
+// Arnold said: "I'll be back"
+
+echo 'Ceci n\'affichera pas \n de nouvelle ligne';
+// Ceci n'affichera pas \n de nouvelle ligne
+
+echo "Ceci affichera \n une nouvelle ligne";
+// Ceci affichera
+// une nouvelle ligne
+
+echo 'The artist $name plays the $instrument';
+// The artist $nom plays the $instrument
+
+echo "The artist $name plays the $instrument";
+// The artist Jimi plays the guitar</code></pre>
+				</section>
+
+				<section>
+					<h3>Concaténation de chaînes de caractères</h3>
+
+					<pre class="html-example"><code class="php">$a = "lala";
+$b = "tralala";
+
+echo $a + " " + $b; // 0
+echo $a . " " . $b; // lala tralala</code></pre>
+				</section>
+
+				<section>
+					<h3>Tableaux</h3>
+
+					<h4>Associations ordonnées (clé, valeur)</h4>
+					<p>Clé : entier ou chaîne de caractères<br/>
+					Valeur : n'importe lequel des 8 types</p>
+
+					<pre class="html-example"><code class="php">$jimi = array("name" => "Jimi", "instrument" => "guitar");
+echo $tableau["name"];</code></pre>
+
+
+					<p>ou</p>
+
+					<pre class="html-example"><code class="php">$tracks = array("Superstition", "War", "Bohemian Rhapshody");
+echo $tracks[0];</code></pre>
+				</section>
+
+				<section>
+					<h3>Variables prédéfinies</h3>
+
+					<p>Nombreuses variables prédéfinies, dont les tableaux :</p>
+					<ul>
+						<li><code>$_SERVER</code> : variables du serveur</li>
+						<li><code>$_GET</code> : variables fournies via la méthode GET</li>
+						<li><code>$_POST</code> : variables fournies via la méthode POST</li>
+						<li><code>$_SESSIONS</code>: variables de la session</li>
+						<li><code>$_COOKIE</code> : variables des cookies</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>PHP et formulaires (GET)</h2>
+
+					<div class="quarter">
+						<p>Code HTML du formulaire</p>
+
+						<pre class="html-example"><code class="html">&lt;form action="result.php" method="get"&gt;
+  &lt;label&gt;Nom&lt;/label&gt;
+  &lt;input type="text" name="name"&gt;
+  &lt;label&gt;Email&lt;/label&gt;
+  &lt;input type="text" name="email"&gt;
+  &lt;input type="submit" value="S'inscrire"&gt;
+&lt;/form&gt;</code></pre>
+					</div>
+
+					<div class="quarter">
+						<p>Résultat</p>
+
+						<div class="html-result">
+							<form action="#">
+								<div>
+									<label>Nom</label>
+									<input type="text" name="name" />
+									<label>Email</label>
+									<input type="text" name="email" />
+								</div>
+								<div>
+									<input type="submit" value="S'inscrire" />
+								</div>
+							</form>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+
+					<div class="quarter">
+						<p>Code PHP</p>
+
+						<pre class="html-example"><code class="html">&lt;p&gt;
+  Bonjour &lt;?php echo $_GET["name"]; ?&gt;.
+&lt;/p&gt;
+	
+&lt;p&gt;
+  Votre adresse email est :
+  &lt;?php echo $_GET["email"]; ?&gt;
+&lt;/p&gt;</code></pre>
+					</div>
+
+					<div class="quarter">
+						<p>Résultat</p>
+
+						<div class="html-result">
+							<p>Bonjour jimi.</p>
+
+							<p>Votre adresse email est : jimi@club27.com</p>
+						</div>
+					</div>
+
+				</section>
+
+				<section>
+					<h2>PHP et formulaires (POST)</h2>
+
+					<div class="quarter">
+						<p>Code HTML du formulaire</p>
+
+						<pre class="html-example"><code class="html">&lt;form action="result.php" method="post"&gt;
+  &lt;label&gt;Nom&lt;/label&gt;
+  &lt;input type="text" name="name"&gt;
+  &lt;label&gt;Email&lt;/label&gt;
+  &lt;input type="text" name="email"&gt;
+  &lt;input type="submit" value="S'inscrire"&gt;
+&lt;/form&gt;</code></pre>
+					</div>
+
+					<div class="quarter">
+						<p>Résultat</p>
+
+						<div class="html-result">
+							<form action="#">
+								<div>
+									<label>Nom</label>
+									<input type="text" name="name" />
+									<label>Email</label>
+									<input type="text" name="email" />
+								</div>
+								<div>
+									<input type="submit" value="S'inscrire" />
+								</div>
+							</form>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+
+					<div class="quarter">
+						<p>Code PHP</p>
+
+						<pre class="html-example"><code class="html">&lt;p&gt;
+  Bonjour &lt;?php echo $_POST["name"]; ?&gt;.
+&lt;/p&gt;
+	
+&lt;p&gt;
+  Votre adresse email est :
+  &lt;?php echo $_POST["email"]; ?&gt;
+&lt;/p&gt;</code></pre>
+					</div>
+
+					<div class="quarter">
+						<p>Résultat</p>
+
+						<div class="html-result">
+							<p>Bonjour jimi.</p>
+
+							<p>Votre adresse email est : jimi@club27.com</p>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h2>Fonctions</h2>
+
+					<p>Syntaxe similaire à JavaScript</p>
+
+					<pre class="html-example"><code class="php">function add($a, $b) {
+  return $a + $b;
+}</code></pre>
+
+					<p>Possibilité de déclarer les types (depuis PHP 7)</p>
+
+					<pre class="html-example"><code class="php">function add(int $a, int $b) : int {
+  return $a + $b;
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>Portée des variables</h2>
+
+					<pre class="html-example"><code class="php" data-noescape contentEditable="true">$a = 15;
+$b = 10;
+
+function calcul(){
+  <span class="fragment" data-fragment-index="3">global $a, $b;</span>
+  $b = $a + $b; <span class="fragment current-visible" data-fragment-index="2">// Notice: Undefined variable: b, Notice: Undefined variable: a</span>
+}
+
+calcul();
+echo $b; <span class="fragment current-visible" data-fragment-index="2">// 10</span><span class="fragment current-visible" data-fragment-index="4" style="margin-left: -55px">// 25</span>
+</code></pre>
+				</section>
+
+				<section>
+					<h2>Rappel : fonctionnement d'AJAX</h2>
+
+					<video width="650" controls>
+						<source src="videos/ajax.webm" type="video/webm">
+					</video>
+				</section>
+
+				<section>
+					<h2>PHP et AJAX</h2>
+
+					<style type="text/css">
+						#php-ajax{
+							position: relative;
+						}
+
+						#php-ajax img{
+							position: absolute;
+							min-height: 200px;
+							left:0;
+							top: 100px;
+						}
+
+						#php-ajax pre{
+							font-size: .4em;
+							width: 450px;
+							position: absolute;
+						}
+
+					</style>
+
+					<div id="php-ajax">
+						<img src="img/http-request.svg">
+
+						<pre class="js-example fragment" style="top: 0px; left: 120px;"><code class="javascript">// Prepare and send request
+xmlhttp.open("GET", "images.php?format=json");
+xmlhttp.send();</code></pre>
+					
+						<pre class="js-example fragment" style="top: 270px; left: 120px;"><code class="javascript">[
+  {"id":"330","location":"images/330.jpg"},
+  {"id":"104","location":"images/104.jpg"},
+  {"id":"579","location":"images/579.jpg"},
+  {"id":"601","location":"images/601.jpg"},
+  …
+]</code></pre>
+
+					</div>
+				</section>
+
+				<section>
+					<h2>Générer du JSON avec PHP</h2>
+
+					<pre class="html-example"><code class="php" style="max-height: none;">&lt;?php
+  // Say to the browser that the returned content is a JSON content in UTF-8
+  header('content-type: application/json; charset=utf-8');
+
+  // Image locations
+  $images = array(
+    array('id' => '7542108','location' => 'images/7542108.jpg'),
+    array('id' => '8438040','location' => 'images/8438040.jpg'),
+    array('id' => '8439651','location' => 'images/8439651.jpg'),
+    array('id' => '8565430','location' => 'images/8565430.jpg'),
+    array('id' => '9531771','location' => 'images/9531771.jpg'),
+    …
+  );
+
+  // To JSON
+  echo json_encode($images, JSON_UNESCAPED_SLASHES);
+?&gt;</code></pre>
+
+				</section>
+
+				<section>
+					<h2>Ressources externes</h2>
+
+					<h3>Sur le Web</h3>
+					<ul>
+						<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML">Mozilla Developer Network (MDN)</a></li>
+						<li><a href="https://www.w3schools.com/default.asp">w3schools.com</a></li>
+					</ul>
+
+					<h3>Cours en ligne et MOOC</h3>
+					<ul>
+						<li><a href="https://openclassrooms.com/courses/apprenez-a-creer-votre-site-web-avec-html5-et-css3">Cours en ligne d'OpenClassrooms</a></li>
+						<li><a href="https://www.codecademy.com/learn/learn-html">Cours en ligne de Codecademy</a></li>
+						<li><a href="https://www.coursera.org/learn/web-development">Introduction to Web Development</a>, MOOC de Daniel Randall</li>
+					</ul>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+		<script>
+			// Skip 10 slides at a time when hitting "page up" and "page down"
+			Reveal.configure({
+				keyboard: {
+					33: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.prev();
+    					}
+    				},
+    				34: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.next();
+    					}
+    				}
+				}
+			});
+
+		</script>
+	</body>
+</html>
+

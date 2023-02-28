@@ -1,0 +1,346 @@
+<?php
+require_once("base.php");
+
+/**
+ * Get name recommendations.
+ * @param string $gender The gender of the names
+ * @param int $userId The id of the user for whom to provide recommendations
+ * @param int $number The number of names to recommend
+ * @return string[] The selected names
+ */
+function getRecommendations($gender, $userId, $number){
+	// get nearest recommendations based on nearest neihgbors
+	$recommendations = knn($gender, $userId, $number);
+
+	// Get additional random names
+	$missing = $number - sizeof($recommendations);
+	$additionalRecommendations = getRandomNames($gender, $userId, $missing);
+
+	// Merge and return
+	return array_merge($recommendations, $additionalRecommendations);
+}
+
+/**
+ * Get name recommendations based on the nearest neighbors.
+ * @param string $gender the gender of the names
+ * @param int $userId the id of the user for whom to provide recommendations
+ * @param int $number the number of names to recommend
+ * @return string[] the selected names
+ */
+function knn($gender, $userId, $number){
+	// Maximum number of neighbors
+	$k = 10;
+
+	// Find similar users
+	$neighbors = getNeighbors($userId, $k);
+
+	// An array to store the scores of the candidate names
+	$candidates = array();
+
+	// Browse the similar users to add the names
+	foreach ($neighbors as $neighbor => $similarity) {
+	
+		// Score of the names from this neighbor
+		$neighborCandidates = computeNeighborCandidates($neighbor);
+
+		// Incorporation into the final list
+		foreach ($neighborCandidates as $name => $count){
+			if (isset($candidates[$name])){
+				$previousScore = $candidates[$name];
+				$candidates[$name] = $previousScore + $similarity * $count;
+			}
+			else{
+				$candidates[$name] = $similarity * $count;
+			}
+		}
+	}
+
+	// Pick the indicated number of names at random
+	$recommendations = array();
+	while(sizeof($recommendations) < $number && sizeof($candidates) > 0){
+
+		// Pick a name
+		do{
+			$nameId = selectRandomName($candidates);
+			$name = getName($nameId);
+		} while (in_array($name, $recommendations));
+
+		// Check the name has not been compared yet and has the proper gender
+		if (!hasBeenCompared($userId, $nameId) && gender($nameId) == $gender){
+			$recommendations[] = $name;
+		}
+
+		// Remove from the candidates
+		unset($candidates[$nameId]);
+	}
+	return $recommendations;
+}
+
+/**
+ * A method to compute candidate names from a given neighbor.
+ * The set of names are first extracted (local candidates), and 
+ * for each of these names the score is updated.
+ * The score of a name is computed based on the number of times it was prefered.
+ * @param int $neighbor the neighbor
+ * @return array The local candidates. key => value pairs, where key is a name id and value is the score for the name.
+ */
+function computeNeighborCandidates($neighbor){
+	global $connection;
+
+	// The array of candidate names to return
+	$candidates = array();
+
+	// Preferences of the neighbor
+	$query = "SELECT * FROM userspreferences WHERE user_id=$neighbor";
+	$result = $connection->query($query);
+	if ($result){
+		$preferences = $result->fetchAll(PDO::FETCH_OBJ);
+
+		// Count the number of times each name was preferred
+		for ($i = 0; $i < sizeof($preferences); $i++){
+			$name = $preferences[$i]->first_name;
+			if (isset($candidates[$name])){
+				$candidates[$name] = $candidates[$name] + 1;
+			}
+			else{
+				$candidates[$name] = 1;
+			}
+		}
+	}
+	return $candidates;
+}
+
+/**
+ * Get similar users (based on their preferences)
+ * @param int $userId the id of the user for whom to find similar users
+ * @param int $k the number of neighbors
+ * @return array the neighbors. key => value pairs, where key is user_id and value is the similarity.
+ */
+function getNeighbors($userId, $k){
+	global $connection;
+
+	// The array of neighbors to return
+	$neighbors = array();
+
+	// Preferences of the user
+	$queryPrefUser = "SELECT * FROM userspreferences WHERE user_id=:user_id";
+	$statementPrefUser = $connection->prepare($queryPrefUser);
+	$statementPrefUser->bindValue(":user_id", $userId, PDO::PARAM_INT);
+	$statementPrefUser->execute();
+	$prefUser = $statementPrefUser->fetchAll(PDO::FETCH_ASSOC);
+
+	// Get other users
+	$otherUsers = array();
+	$queryotherUsers = "SELECT id FROM users WHERE id <> :user_id";
+	$statementOtherUsers = $connection->prepare($queryotherUsers);
+	$statementOtherUsers->bindValue(":user_id", $userId, PDO::PARAM_INT);
+	$statementOtherUsers->execute();
+	$otherUsers = $statementOtherUsers->fetchAll(PDO::FETCH_ASSOC);
+	
+	// Preferences of the other users
+	$queryPrefOtherUser = "SELECT * FROM userspreferences WHERE user_id=:user_id";
+	$statementPrefOtherUser = $connection->prepare($queryPrefOtherUser);
+	for($i = 0; $i < sizeof($otherUsers); $i++){
+		$otherUserId = $otherUsers[$i]["id"];
+		$statementPrefOtherUser->bindValue(":user_id", $otherUserId, PDO::PARAM_INT);
+		$statementPrefOtherUser->execute();
+		$prefOtherUser = $statementPrefOtherUser->fetchAll(PDO::FETCH_ASSOC);
+		
+		// Compute similarity and add the neighbor to the array
+		$similarity = similarity($prefUser, $prefOtherUser);
+		if ($similarity > 0){
+			$neighbors[$otherUserId] = $similarity;
+		}
+	}
+
+	// return the k top elements
+	return topElements($neighbors, $k);
+}
+
+/**
+ * Get the elements with the highest values
+ * @param array $array An associative array of elements with numerical values.
+ * @param int $k The number of elements to get.
+ * @return array The resulting associative array.
+ */
+function topElements($array, $k){
+	$result = array();
+	do{
+		$maxKey = NULL;
+		$maxValue = -1;
+		foreach ($array as $key => $value){
+			if ($value > $maxValue){
+				$maxKey = $key;
+				$maxValue = $value;
+			}
+		}
+		$result[$maxKey] = $maxValue;
+		unset($array[$maxKey]);
+		if (sizeof($array) == 0){
+			return $result;
+		}
+	} while (sizeof($result < $k));
+	return $result;
+}
+
+/**
+ * Binary cosine between two user preference vectors (arrays)
+ * @param array $prefUser the preferences of the first user
+ * @param array $prefOtherUser the preferences of the other user
+ * @return float the similarity
+ */
+function similarity($prefUser, $prefOtherUser){
+	// Skip if one of the arrays is empty
+	if (sizeof($prefUser) == 0 || sizeof($prefOtherUser) == 0){
+		return 0;
+	}
+
+	// Count the number of common preferences
+	$count = 0;
+	for ($i = 0; $i < sizeof($prefUser); $i++){
+		for ($j = 0; $j < sizeof($prefOtherUser); $j++){
+			if ($prefUser[$i]["first_name"] == $prefOtherUser[$j]["first_name"]
+				&& $prefUser[$i]["second_name"] == $prefOtherUser[$j]["second_name"]){
+				$count++;
+			}
+		}
+	}
+
+	// Compute de binary cosine similarity from that
+	$denominator = sqrt(sizeof($prefUser)) * sqrt(sizeof($prefOtherUser));
+	return $count / $denominator;
+}
+
+/**
+ * Pick names at random with a probability that is dependent on the popularity of the name. The names must have been not yet compared by the user.
+ * @param string $gender the gender of the names
+ * @param int $userId the id of the user
+ * @param int $number the number of names to pick
+ * @return string[] the selected names
+ */
+function getRandomNames($gender, $userId, $number){
+	// Fetch monstruous global variables at the end of the code
+	global $topFemaleNames;
+	global $femaleSum;
+	global $topMaleNames;
+	global $maleSum;
+
+	// Process gender
+	$names = null;
+	$sum = null;
+	if ($gender == 'm'){
+		$names = $topMaleNames;
+		$sum = $maleSum;
+	}
+	else{
+		$names = $topFemaleNames;
+		$sum = $femaleSum;
+	}
+
+	// The array of recommendations to return
+	$recommendations = array();
+
+	// Pick the names
+	while(sizeof($recommendations) < $number){
+		do{
+			$name = selectRandomName($names);
+		} while (hasBeenCompared($name, $userId) || in_array($name, $recommendations));
+		$recommendations[] = $name;
+	}
+	return $recommendations;
+}
+
+/**
+ * Check if a name has already been compared to some other name by a user
+ * @param int|string $name the name
+ * @param int $userId the user id
+ * @return int the id of the name 
+ */
+function hasBeenCompared($name, $userId){
+	global $connection;
+
+	// $name may be a string, in which case the corresponding id is retrieved
+	if (is_string($name)){
+		$name = getNameId($name);
+
+		// If not in database, then return true (skip it)
+		if ($name == NULL){
+			return true;
+		}
+	}
+
+	// Make the query
+	$query = "SELECT * FROM userspreferences WHERE user_id = $userId AND (first_name = $name OR second_name = $name)";
+	$result = $connection->query($query)->fetch(PDO::FETCH_OBJ);
+	return $result;
+}
+
+/**
+ * Get the gender of a name
+ * @param int $nameId The name id
+ * @return string The gender ('m' or 'f')
+ */
+function gender($nameId){
+	global $connection;
+	$query = "SELECT * FROM names WHERE id = $nameId";
+	$result = $connection->query($query)->fetch(PDO::FETCH_OBJ);
+	return $result->gender;
+}
+
+/**
+ * Get the id of a name
+ * @param string $name The name
+ * @return int The id of the name 
+ */
+function getNameId($name){
+	global $connection;
+	$query = "SELECT id FROM names WHERE name = '$name'";
+	$result = $connection->query($query)->fetch(PDO::FETCH_OBJ);
+	if ($result){
+		return $result->id;
+	}
+	else return NULL;
+}
+
+/**
+ * Get a name from its id
+ * @param int $id The name id
+ * @return string The name 
+ */
+function getName($id){
+	global $connection;
+	$query = "SELECT name FROM names WHERE id = $id";
+	$result = $connection->query($query)->fetch(PDO::FETCH_OBJ);
+	if ($result){
+		return $result->name;
+	}
+	else return NULL;
+}
+
+/**
+ * Pick a name at random with a probability that is dependent on its popularity.
+ * @param array $names An array containing the names and their popularities
+ * @return string The selected name
+ */
+function selectRandomName($names){
+	// Sum of values
+	$sum = 0;
+	foreach ($names as $key => $value) {
+		$sum += $value;
+	}
+
+	// Pick an element
+	$r = rand(0, $sum);
+	$otherSum = 0;
+	foreach ($names as $key => $value){
+		$otherSum += $value;
+		if ($otherSum > $r){
+			return $key;
+		}
+	}
+}
+
+// Name popularities (1000 most popular male and female names)
+// The score of each name corresponds to the number of people with that name in France since 1900
+$topMaleNames = array("jean" => 1919291, "pierre" => 890019, "michel" => 820157, "andré" => 711847, "philippe" => 538222, "rené" => 516494, "louis" => 509010, "alain" => 506797, "jacques" => 482451, "bernard" => 469285, "marcel" => 466940, "daniel" => 433993, "roger" => 423723, "robert" => 419133, "claude" => 411731, "paul" => 410198, "christian" => 405249, "henri" => 404673, "georges" => 404304, "nicolas" => 403570, "françois" => 398342, "patrick" => 394987, "gérard" => 379458, "christophe" => 375907, "joseph" => 373481, "julien" => 343540, "maurice" => 337176, "laurent" => 328384, "frédéric" => 327785, "eric" => 317879, "david" => 311086, "stéphane" => 308257, "pascal" => 307791, "sébastien" => 303694, "alexandre" => 297135, "thierry" => 289517, "olivier" => 279701, "thomas" => 274788, "raymond" => 272845, "antoine" => 272232, "guy" => 265741, "dominique" => 241858, "charles" => 238876, "didier" => 237171, "marc" => 236861, "vincent" => 231882, "yves" => 229371, "guillaume" => 222220, "bruno" => 220449, "serge" => 219092, "maxime" => 215729, "lucien" => 213972, "jean-pierre" => 213365, "albert" => 204040, "romain" => 191063, "jerome" => 182946, "gilbert" => 180114, "franck" => 177746, "gilles" => 175528, "anthony" => 172686, "jean-claude" => 172345, "gabriel" => 167877, "clément" => 166258, "francis" => 166081, "emile" => 165293, "lucas" => 160713, "denis" => 152717, "kevin" => 152534, "mathieu" => 151041, "benjamin" => 148154, "joël" => 146320, "alexis" => 145727, "jules" => 145013, "hervé" => 139510, "patrice" => 138083, "sylvain" => 135683, "emmanuel" => 134762, "fabrice" => 134456, "arnaud" => 134229, "adrien" => 134206, "cedric" => 134112, "roland" => 132398, "hugo" => 131751, "florian" => 127091, "ludovic" => 126980, "quentin" => 126860, "raphaël" => 126109, "damien" => 125628, "benoît" => 125459, "victor" => 121432, "fernand" => 118603, "jeremy" => 117751, "jean-luc" => 116800, "léon" => 116238, "xavier" => 112349, "théo" => 111875, "fabien" => 110765, "arthur" => 110442, "mickael" => 109080, "enzo" => 107319, "eugène" => 105821, "loïc" => 105026, "jonathan" => 104749, "valentin" => 104563, "nathan" => 103303, "jean-françois" => 99100, "baptiste" => 98876, "lionel" => 92153, "gaston" => 92153, "jean-marc" => 90252, "rémi" => 89547, "léo" => 89370, "cyril" => 88213, "jean-paul" => 86947, "yannick" => 86365, "jean-marie" => 86310, "jean-michel" => 86076, "samuel" => 85713, "yann" => 85231, "simon" => 84763, "etienne" => 84183, "richard" => 83757, "mohamed" => 81921, "michael" => 81569, "auguste" => 81163, "matthieu" => 80802, "gregory" => 80360, "jean-louis" => 79918, "aurélien" => 78895, "edouard" => 77265, "tom" => 76940, "marius" => 76615, "axel" => 76163, "mathis" => 75606, "william" => 73979, "rémy" => 73912, "camille" => 73416, "florent" => 69391, "jacky" => 69101, "bertrand" => 67363, "dylan" => 66264, "alfred" => 65738, "hubert" => 65710, "luc" => 64760, "armand" => 64237, "regis" => 60832, "martin" => 58061, "corentin" => 57261, "josé" => 57074, "yanis" => 55938, "maxence" => 55573, "adam" => 54731, "edmond" => 54455, "jordan" => 53962, "jean-jacques" => 53483, "ethan" => 53328, "bastien" => 52902, "thibault" => 52735, "ernest" => 52616, "gaëtan" => 51768, "noël" => 51586, "tony" => 50798, "jean-baptiste" => 48647, "félix" => 47945, "noah" => 47595, "robin" => 46333, "mathéo" => 45914, "jean-philippe" => 45730, "mehdi" => 43746, "alphonse" => 43103, "sacha" => 42857, "elie" => 42561, "yoann" => 42226, "yvon" => 40553, "tristan" => 40391, "nolan" => 39711, "aime" => 38764, "max" => 38723, "evan" => 38720, "erwan" => 38192, "christopher" => 38181, "dimitri" => 37894, "karim" => 37889, "antonin" => 37587, "jean-yves" => 37273, "cyrille" => 36848, "mathias" => 36663, "martial" => 36550, "augustin" => 36423, "manuel" => 36317, "thibaut" => 36162, "jimmy" => 35460, "gustave" => 34604, "johan" => 33443, "steven" => 33174, "rayan" => 33142, "dorian" => 32730, "germain" => 32637, "mattéo" => 32098, "gérald" => 32096, "gabin" => 32011, "jean-christophe" => 31869, "mael" => 31547, "raoul" => 30957, "morgan" => 29562, "alex" => 29529, "brice" => 28201, "geoffrey" => 27793, "gael" => 27470, "yvan" => 27064, "marie" => 26992, "noa" => 26920, "jeremie" => 26801, "norbert" => 26739, "esteban" => 25813, "grégoire" => 25717, "kylian" => 25623, "alban" => 25602, "hugues" => 25542, "lilian" => 25265, "eddy" => 24512, "james" => 24489, "ali" => 24488, "renaud" => 24423, "yohan" => 24201, "liam" => 24075, "lorenzo" => 23954, "abel" => 23806, "mathys" => 23737, "bryan" => 23698, "emilien" => 23696, "rodolphe" => 23377, "teddy" => 23336, "sofiane" => 22718, "yohann" => 22696, "noe" => 22150, "jérôme" => 22082, "steve" => 21788, "killian" => 21679, "aymeric" => 21656, "lenny" => 21583, "amine" => 21169, "marceau" => 21098, "justin" => 20689, "stanislas" => 20397, "jason" => 20255, "rudy" => 20164, "antonio" => 19993, "romuald" => 19901, "alan" => 19806, "aaron" => 19749, "oscar" => 19645, "titouan" => 19639, "ahmed" => 19311, "jean-charles" => 19291, "timéo" => 18924, "johann" => 18880, "désiré" => 18820, "charly" => 18602, "rachid" => 18512, "willy" => 18502, "pierrick" => 18499, "cédric" => 18402, "yassine" => 18141, "jackie" => 18063, "tanguy" => 18013, "farid" => 18012, "maël" => 17959, "timothée" => 17928, "dany" => 17648, "amaury" => 17560, "mikael" => 17482, "ange" => 17479, "antony" => 17476, "ryan" => 17465, "gaspard" => 17273, "allan" => 17253, "eliott" => 17197, "freddy" => 16525, "samir" => 16485, "adolphe" => 16452, "youssef" => 16370, "mario" => 16363, "matéo" => 16278, "samy" => 16146, "gauthier" => 16034, "timeo" => 16024, "yoan" => 15959, "ronan" => 15871, "ferdinand" => 15845, "jérémy" => 15808, "boris" => 15714, "joris" => 15691, "diego" => 15456, "johnny" => 15351, "julian" => 15319, "ilyes" => 14982, "thibaud" => 14884, "matthias" => 14863, "jean-noël" => 14819, "constant" => 14726, "leopold" => 14483, "flavien" => 14451, "yacine" => 14399, "theophile" => 14262, "nassim" => 14215, "ibrahim" => 14116, "arsene" => 14017, "john" => 13946, "malo" => 13889, "jack" => 13823, "yannis" => 13793, "miguel" => 13793, "luca" => 13730, "loris" => 13719, "kamel" => 13640, "younes" => 13625, "ayoub" => 13571, "achille" => 13480, "kévin" => 13372, "noam" => 13278, "joachim" => 13267, "rafael" => 13242, "ruben" => 13119, "mickaël" => 12914, "wilfried" => 12898, "bilal" => 12869, "sami" => 12864, "stephan" => 12850, "noé" => 12699, "jocelyn" => 12562, "jessy" => 12539, "hamza" => 12389, "ismael" => 12309, "ghislain" => 12221, "nino" => 12216, "nabil" => 12195, "logan" => 12187, "tiago" => 11890, "angelo" => 11853, "elias" => 11801, "leonard" => 11677, "theodore" => 11567, "moise" => 11553, "kenzo" => 11547, "ilan" => 11474, "andy" => 11466, "basile" => 11455, "maximilien" => 11443, "henry" => 11428, "frank" => 11396, "marvin" => 11250, "grégory" => 11175, "walid" => 11155, "pablo" => 11101, "said" => 11005, "malik" => 10968, "brandon" => 10904, "octave" => 10897, "giovanni" => 10789, "celestin" => 10738, "melvin" => 10517, "carlos" => 10501, "charlie" => 10494, "isaac" => 10469, "cyprien" => 10409, "rayane" => 10387, "louka" => 10387, "léandre" => 10387, "kilian" => 10351, "loan" => 10270, "ugo" => 10211, "zakaria" => 10160, "ewen" => 10009, "claudius" => 9991, "steeve" => 9968, "karl" => 9872, "clovis" => 9869, "abdelkader" => 9866, "hippolyte" => 9848, "omar" => 9729, "wassim" => 9563, "eliot" => 9538, "hakim" => 9483, "vivien" => 9458, "davy" => 9333, "eden" => 9247, "mustapha" => 9221, "pierre-yves" => 9184, "joshua" => 9170, "ivan" => 9155, "eloi" => 9135, "emeric" => 9059, "rolland" => 8967, "nael" => 8928, "mohammed" => 8883, "jean-bernard" => 8845, "salim" => 8839, "geoffroy" => 8819, "moussa" => 8799, "amir" => 8734, "juan" => 8728, "luka" => 8699, "ulysse" => 8687, "brahim" => 8672, "nordine" => 8638, "gautier" => 8580, "anis" => 8510, "timothe" => 8480, "firmin" => 8446, "nathanael" => 8421, "kyllian" => 8417, "kleber" => 8377, "mike" => 8337, "téo" => 8272, "lukas" => 8219, "michaël" => 8218, "luis" => 8193, "roman" => 8191, "cesar" => 8148, "wilfrid" => 8141, "honore" => 8117, "mourad" => 8066, "anatole" => 8051, "milan" => 8015, "noham" => 7952, "virgile" => 7938, "rodrigue" => 7931, "brian" => 7911, "roméo" => 7910, "owen" => 7874, "guilhem" => 7854, "edgar" => 7850, "adem" => 7819, "adel" => 7813, "gildas" => 7810, "alix" => 7787, "gwenael" => 7771, "amedee" => 7723, "angel" => 7652, "aristide" => 7621, "joffrey" => 7616, "marco" => 7507, "nelson" => 7334, "jonas" => 7330, "fabio" => 7322, "francisco" => 7270, "leonce" => 7252, "sasha" => 7193, "françois-xavier" => 7164, "erwann" => 7158, "marin" => 7140, "donovan" => 7059, "leo" => 7059, "raphael" => 7019, "anas" => 7000, "djamel" => 6987, "hector" => 6955, "casimir" => 6950, "florentin" => 6887, "ambroise" => 6874, "felicien" => 6865, "milo" => 6830, "erick" => 6829, "prosper" => 6764, "kenny" => 6759, "paolo" => 6757, "elouan" => 6724, "barthelemy" => 6676, "elliot" => 6627, "edgard" => 6556, "walter" => 6549, "marwan" => 6512, "soan" => 6462, "nolann" => 6399, "joan" => 6399, "joannes" => 6358, "naël" => 6354, "sullivan" => 6339, "nils" => 6336, "stephen" => 6273, "hadrien" => 6254, "leny" => 6219, "amar" => 6213, "isidore" => 6181, "loïs" => 6123, "mamadou" => 6117, "gino" => 6095, "idriss" => 6085, "gianni" => 6074, "ewan" => 6068, "fares" => 6060, "nolhan" => 6040, "pierre-louis" => 6024, "imran" => 5990, "bilel" => 5973, "frantz" => 5939, "lyam" => 5929, "kaïs" => 5926, "armel" => 5874, "matis" => 5862, "sofian" => 5852, "mounir" => 5851, "aymen" => 5847, "sandro" => 5844, "djibril" => 5818, "mathurin" => 5791, "gwendal" => 5753, "aubin" => 5748, "omer" => 5704, "colin" => 5668, "josselin" => 5571, "gaël" => 5561, "tim" => 5536, "hicham" => 5534, "kais" => 5497, "elio" => 5416, "mahé" => 5413, "tommy" => 5344, "youcef" => 5328, "gary" => 5289, "marc-antoine" => 5272, "issa" => 5238, "come" => 5230, "reynald" => 5188, "jean-sébastien" => 5177, "fouad" => 5160, "andréa" => 5159, "ismail" => 5157, "peter" => 5123, "gervais" => 5069, "nadir" => 5054, "pedro" => 5035, "yan" => 5028, "abdallah" => 5012, "sam" => 5004, "carl" => 4988, "romaric" => 4959, "sohan" => 4949, "harry" => 4944, "reda" => 4943, "ilyas" => 4926, "albin" => 4923, "selim" => 4916, "theo" => 4880, "hassan" => 4867, "lino" => 4857, "valery" => 4847, "jean-pascal" => 4844, "warren" => 4819, "victorien" => 4794, "adil" => 4786, "régis" => 4751, "adrian" => 4731, "wesley" => 4728, "chris" => 4696, "sabri" => 4687, "fernando" => 4674, "paulin" => 4664, "issam" => 4655, "lohan" => 4655, "yassin" => 4626, "melvyn" => 4626, "ilian" => 4623, "ismaël" => 4611, "ylan" => 4575, "naim" => 4558, "vianney" => 4517, "francisque" => 4507, "driss" => 4499, "luigi" => 4459, "jérémie" => 4391, "abdel" => 4388, "hilaire" => 4368, "jamel" => 4349, "zacharie" => 4338, "eddie" => 4337, "irenee" => 4318, "alexy" => 4316, "toussaint" => 4299, "frederick" => 4288, "urbain" => 4283, "hocine" => 4280, "fred" => 4279, "dan" => 4277, "clement" => 4256, "jean-rené" => 4218, "fabian" => 4181, "blaise" => 4102, "matheo" => 4062, "joaquim" => 4050, "maximin" => 4045, "alois" => 4042, "pierre-antoine" => 4031, "clotaire" => 4026, "evann" => 4010, "timothé" => 4000, "malone" => 3961, "paulo" => 3952, "mustafa" => 3948, "nasser" => 3942, "calvin" => 3937, "khalid" => 3924, "salah" => 3906, "anton" => 3890, "swann" => 3887, "louison" => 3854, "sylvestre" => 3852, "medhi" => 3849, "ryad" => 3815, "imrane" => 3798, "mohamed-amine" => 3796, "pierre-marie" => 3760, "jean-loup" => 3753, "matthew" => 3738, "roberto" => 3724, "tarik" => 3711, "akim" => 3675, "matteo" => 3668, "cameron" => 3655, "marcelin" => 3652, "hamid" => 3639, "ilhan" => 3625, "aziz" => 3624, "donatien" => 3623, "leandro" => 3623, "salvatore" => 3615, "alcide" => 3607, "nathanaël" => 3590, "gil" => 3587, "landry" => 3587, "amand" => 3578, "narcisse" => 3543, "harold" => 3543, "ronald" => 3543, "aldo" => 3525, "nahil" => 3522, "yoni" => 3520, "anselme" => 3518, "rafaël" => 3507, "naïm" => 3476, "soufiane" => 3470, "steeven" => 3461, "tao" => 3454, "joao" => 3452, "alessio" => 3433, "hyacinthe" => 3423, "constantin" => 3415, "pierre-jean" => 3388, "josue" => 3385, "marcellin" => 3341, "elyes" => 3339, "ilies" => 3335, "livio" => 3322, "simeon" => 3318, "mehmet" => 3306, "ruddy" => 3303, "flavio" => 3301, "ludwig" => 3292, "philibert" => 3278, "ricardo" => 3271, "amin" => 3265, "terry" => 3259, "elian" => 3251, "ilias" => 3240, "celian" => 3239, "matys" => 3238, "andrew" => 3235, "jawad" => 3234, "igor" => 3218, "brayan" => 3211, "kelyan" => 3203, "yazid" => 3194, "pierre-emmanuel" => 3193, "jordy" => 3185, "hedi" => 3184, "alessandro" => 3184, "ignace" => 3182, "pierre-alexandre" => 3171, "wael" => 3168, "sergio" => 3165, "lubin" => 3161, "ayman" => 3133, "morad" => 3126, "joanny" => 3119, "jamal" => 3117, "yusuf" => 3108, "côme" => 3107, "marwane" => 3096, "jeannot" => 3088, "matthéo" => 3087, "pol" => 3081, "valere" => 3078, "edwin" => 3055, "khalil" => 3048, "sauveur" => 3039, "seraphin" => 3023, "paco" => 3021, "souleymane" => 3014, "abdoulaye" => 3012, "habib" => 2995, "faycal" => 2991, "allain" => 2985, "swan" => 2982, "yael" => 2979, "gatien" => 2954, "mylan" => 2951, "emilio" => 2937, "solal" => 2917, "khaled" => 2911, "jordane" => 2906, "erik" => 2896, "rabah" => 2879, "jean-daniel" => 2875, "yasin" => 2861, "joey" => 2860, "edward" => 2857, "kamal" => 2847, "imad" => 2845, "matthis" => 2843, "raynald" => 2834, "mahamadou" => 2826, "ulrich" => 2816, "idris" => 2812, "mederic" => 2808, "francesco" => 2808, "andreas" => 2803, "fortune" => 2802, "roch" => 2794, "williams" => 2772, "youri" => 2767, "enes" => 2766, "jacob" => 2761, "louca" => 2760, "lazare" => 2750, "marouane" => 2722, "ibrahima" => 2721, "ilyan" => 2720, "erwin" => 2719, "aissa" => 2713, "emir" => 2709, "stan" => 2702, "stefan" => 2701, "el" => 2700, "niels" => 2694, "terence" => 2694, "marlon" => 2692, "hermann" => 2662, "stanley" => 2659, "éric" => 2652, "lionnel" => 2652, "jacki" => 2645, "ezio" => 2640, "slimane" => 2629, "emre" => 2621, "maxim" => 2620, "oussama" => 2615, "jim" => 2614, "wilson" => 2611, "riad" => 2607, "loick" => 2597, "vladimir" => 2593, "tino" => 2585, "marcus" => 2578, "aloyse" => 2576, "jorge" => 2562, "lou" => 2557, "kelian" => 2555, "elyas" => 2553, "danny" => 2551, "abdellah" => 2547, "jeffrey" => 2533, "fredy" => 2529, "soren" => 2527, "youness" => 2519, "sonny" => 2516, "arnold" => 2514, "yanick" => 2507, "hichem" => 2504, "kamil" => 2503, "marley" => 2500, "matisse" => 2500, "luciano" => 2488, "amadou" => 2485, "nahel" => 2478, "riyad" => 2473, "brieuc" => 2470, "filipe" => 2467, "ousmane" => 2443, "redouane" => 2440, "thiago" => 2437, "calixte" => 2426, "billy" => 2419, "youssouf" => 2418, "ayden" => 2405, "sean" => 2404, "ahmet" => 2402, "abdelkrim" => 2400, "jibril" => 2393, "nohan" => 2388, "tyméo" => 2374, "loucas" => 2371, "mikail" => 2370, "toni" => 2370, "franco" => 2369, "severin" => 2365, "enrique" => 2362, "jayson" => 2361, "bruce" => 2359, "mayron" => 2358, "matt" => 2351, "judicael" => 2331, "noha" => 2323, "oumar" => 2309, "jarod" => 2309, "loann" => 2307, "giuseppe" => 2303, "tarek" => 2302, "bastian" => 2300, "jean-patrick" => 2299, "vital" => 2297, "kilyan" => 2295, "nestor" => 2283, "elvis" => 2277, "kenan" => 2273, "cherif" => 2270, "vadim" => 2268, "renald" => 2265, "pierre-henri" => 2263, "pierrot" => 2261, "faustin" => 2261, "timothy" => 2261, "muhammed" => 2245, "adriano" => 2235, "sandy" => 2228, "vincenzo" => 2225, "johny" => 2222, "abraham" => 2221, "léonard" => 2206, "sully" => 2202, "abdelaziz" => 2200, "pierre-olivier" => 2195, "ben" => 2195, "gaylord" => 2189, "alexander" => 2185, "anicet" => 2182, "bachir" => 2180, "joe" => 2171, "maé" => 2169, "andrea" => 2167, "dario" => 2167, "renan" => 2166, "mattis" => 2166, "jean-denis" => 2160, "geraud" => 2144, "malek" => 2144, "hans" => 2109, "alberto" => 2091, "adama" => 2086, "jessim" => 2084, "arno" => 2084, "lyes" => 2082, "noan" => 2081, "jérome" => 2078, "jacquy" => 2067, "yasser" => 2058, "aymane" => 2057, "lambert" => 2057, "zinedine" => 2049, "mehdy" => 2048, "hamed" => 2040, "virgil" => 2024, "valerian" => 2023, "mikaël" => 2023, "haroun" => 2015, "jesus" => 2012, "francky" => 2002, "murat" => 1996, "toufik" => 1993, "mayeul" => 1983, "neil" => 1976, "bradley" => 1975, "vivian" => 1966, "wissem" => 1963, "gurvan" => 1960, "fatih" => 1952, "zachary" => 1949, "yaniss" => 1943, "louis-marie" => 1932, "cyriaque" => 1929, "victorin" => 1922, "mark" => 1921, "marian" => 1914, "merlin" => 1914, "tahar" => 1913, "lenzo" => 1912, "arsène" => 1909, "hayden" => 1907, "janick" => 1902, "bertin" => 1901, "ramzi" => 1894, "hassen" => 1880, "nathael" => 1878, "sylvio" => 1873, "gonzague" => 1871, "miloud" => 1869, "irène" => 1869, "mahdi" => 1863, "anass" => 1862, "julio" => 1859, "elijah" => 1858, "elliott" => 1858, "nourdine" => 1858, "moustapha" => 1857, "iban" => 1855, "matias" => 1855, "charles-henri" => 1852, "cedrick" => 1848, "audric" => 1844, "achraf" => 1836, "salvador" => 1836, "france" => 1836, "mohamed-ali" => 1835, "oualid" => 1832, "curtis" => 1832, "carlo" => 1828, "stevens" => 1827, "hasan" => 1820, "aymerick" => 1818, "chahine" => 1814, "iyad" => 1811, "dimitry" => 1805, "pacome" => 1804, "jolan" => 1804, "natan" => 1800, "rui" => 1793, "jean-robert" => 1790, "yvonnick" => 1786, "pierre-françois" => 1785, "emerick" => 1784, "saad" => 1783, "aloise" => 1779, "salem" => 1778, "lylian" => 1771, "farouk" => 1770, "léopold" => 1767, "belkacem" => 1765, "randy" => 1761, "alexi" => 1758, "elisee" => 1758, "gaby" => 1756, "camil" => 1754, "anouar" => 1749, "alberic" => 1747, "mae" => 1745, "youenn" => 1743, "nizar" => 1743, "jad" => 1742, "billal" => 1742, "sullyvan" => 1740, "ian" => 1733, "samson" => 1733, "loup" => 1732, "norman" => 1731, "loukas" => 1729, "pierre-alain" => 1725, "ylann" => 1721, "smail" => 1718, "leonardo" => 1713, "alvin" => 1707, "brendan" => 1704, "faouzi" => 1701, "neo" => 1700, "zakariya" => 1696, "jayden" => 1689, "wissam" => 1677, "anael" => 1677, "djamal" => 1670, "antoni" => 1670, "lamine" => 1669, "enguerrand" => 1665, "badis" => 1662, "akram" => 1659, "samba" => 1654, "jean-guy" => 1652, "tomas" => 1650, "sylvere" => 1649, "lisandro" => 1649, "clarence" => 1649, "lotfi" => 1647, "jany" => 1638, "ralph" => 1633, "marvyn" => 1626, "arnauld" => 1626, "jean-hugues" => 1620, "ramon" => 1615, "baptistin" => 1610, "yvann" => 1610, "ismaïl" => 1610);
+$topFemaleNames = array("marie" => 2235043, "jeanne" => 552323, "françoise" => 401520, "monique" => 399853, "catherine" => 394651, "nathalie" => 382818, "isabelle" => 377814, "jacqueline" => 372558, "anne" => 365006, "sylvie" => 364661, "martine" => 320191, "madeleine" => 304048, "nicole" => 293351, "suzanne" => 287966, "hélène" => 280741, "christine" => 280539, "marguerite" => 271037, "denise" => 263386, "christiane" => 259551, "yvonne" => 257057, "louise" => 256186, "valérie" => 253079, "sophie" => 244550, "sandrine" => 240276, "stéphanie" => 238549, "céline" => 238115, "véronique" => 235768, "chantal" => 232201, "marcelle" => 229417, "renée" => 221883, "simone" => 219887, "jeannine" => 218683, "andrée" => 215533, "paulette" => 213459, "julie" => 212937, "germaine" => 211124, "annie" => 210124, "patricia" => 207329, "yvette" => 203502, "brigitte" => 202580, "lucie" => 199235, "camille" => 197436, "odette" => 192641, "emilie" => 191640, "léa" => 191430, "geneviève" => 185981, "alice" => 185842, "aurélie" => 182408, "laurence" => 181726, "michèle" => 179829, "cécile" => 177335, "thérèse" => 175724, "colette" => 174248, "virginie" => 171490, "lucienne" => 170771, "dominique" => 168031, "raymonde" => 164961, "sarah" => 163359, "corinne" => 162888, "manon" => 162034, "elisabeth" => 161172, "claire" => 159046, "claudine" => 158988, "juliette" => 158977, "danielle" => 158194, "elodie" => 156696, "caroline" => 156096, "christelle" => 155740, "pauline" => 155329, "josette" => 154204, "georgette" => 153085, "florence" => 147957, "laura" => 146173, "emma" => 145585, "charlotte" => 143164, "bernadette" => 141559, "audrey" => 141285, "chloé" => 140202, "mathilde" => 140154, "maria" => 137757, "gisèle" => 137010, "mélanie" => 132898, "laetitia" => 132408, "ginette" => 131690, "annick" => 131495, "nadine" => 131329, "béatrice" => 131056, "mireille" => 129895, "evelyne" => 127997, "delphine" => 127529, "anaïs" => 127414, "henriette" => 126995, "marion" => 124297, "josiane" => 123128, "marthe" => 122656, "michelle" => 122105, "karine" => 121060, "marine" => 118763, "elise" => 113922, "eliane" => 113544, "agnès" => 112377, "liliane" => 112044, "micheline" => 111895, "anna" => 106953, "carole" => 105844, "fabienne" => 105327, "simonne" => 105197, "sandra" => 103584, "jocelyne" => 103551, "pascale" => 102629, "anne-marie" => 99769, "amélie" => 97212, "myriam" => 96634, "gabrielle" => 96178, "sabrina" => 95323, "amandine" => 95220, "rose" => 94916, "joëlle" => 93687, "odile" => 93100, "clara" => 92991, "francine" => 92730, "alexandra" => 92382, "justine" => 92088, "maryse" => 91826, "solange" => 90681, "huguette" => 90206, "josephine" => 90146, "aline" => 89716, "inès" => 88995, "marie-thérèse" => 88453, "fernande" => 85162, "sonia" => 83145, "laure" => 83033, "océane" => 82191, "pierrette" => 81962, "irène" => 81694, "vanessa" => 80431, "severine" => 80423, "emmanuelle" => 80021, "eva" => 79749, "fanny" => 79560, "daniele" => 79528, "clémence" => 78783, "arlette" => 78603, "jade" => 78559, "angelique" => 76603, "marie-christine" => 75058, "magali" => 74132, "morgane" => 74067, "nadia" => 73925, "estelle" => 73518, "antoinette" => 72585, "muriel" => 70717, "berthe" => 70710, "jessica" => 70446, "angèle" => 70319, "lucette" => 69957, "nelly" => 69883, "eugénie" => 69814, "janine" => 68548, "jennifer" => 65456, "aurore" => 65053, "lisa" => 64902, "lola" => 64750, "ghislaine" => 64352, "cindy" => 64046, "sabine" => 63993, "julia" => 63717, "mélissa" => 63635, "lydie" => 63099, "régine" => 63069, "gilberte" => 62218, "marie-claude" => 57241, "claude" => 56737, "edith" => 56668, "noemie" => 55690, "coralie" => 55082, "margaux" => 54957, "célia" => 54744, "léonie" => 54722, "adeline" => 54205, "yolande" => 53788, "marie-france" => 53659, "zoé" => 53556, "sylviane" => 53071, "mauricette" => 52861, "viviane" => 52767, "lina" => 52519, "elisa" => 52408, "romane" => 52350, "frédérique" => 50001, "jeanine" => 49723, "rachel" => 49300, "maeva" => 48681, "marie-louise" => 48554, "gaelle" => 47877, "claudette" => 47768, "léna" => 47086, "alicia" => 46429, "paule" => 46261, "carine" => 46027, "valentine" => 45717, "emilienne" => 45387, "agathe" => 44918, "marina" => 43813, "elsa" => 43718, "andréa" => 42839, "ludivine" => 41808, "margot" => 41293, "nadege" => 41140, "lilou" => 40052, "rolande" => 39955, "ambre" => 39954, "marianne" => 39201, "augustine" => 39101, "blanche" => 38917, "murielle" => 37955, "marie-hélène" => 37594, "maryline" => 37451, "maud" => 37248, "adèle" => 36529, "alexia" => 36455, "lou" => 36447, "olivia" => 36402, "geraldine" => 36204, "lucile" => 36095, "clémentine" => 35817, "nina" => 35736, "marie-claire" => 35736, "victoria" => 35528, "maryvonne" => 35516, "ophélie" => 35460, "marie-laure" => 35277, "adrienne" => 34916, "marie-josé" => 34688, "reine" => 34082, "emeline" => 33912, "annette" => 33497, "lise" => 33098, "anne-sophie" => 32325, "charlène" => 32156, "marlène" => 32121, "marie-pierre" => 31538, "aude" => 31284, "charline" => 31170, "lydia" => 31131, "louna" => 31034, "solène" => 30985, "katia" => 30953, "linda" => 30615, "carmen" => 30435, "julienne" => 30036, "marjorie" => 30034, "natacha" => 29793, "laurie" => 29657, "anita" => 29297, "benedicte" => 29103, "clarisse" => 28470, "noëlle" => 28215, "albertine" => 28139, "france" => 28096, "maelys" => 27861, "marie-françoise" => 27847, "ingrid" => 27833, "aimée" => 27779, "blandine" => 27676, "cathy" => 27217, "clotilde" => 26866, "fatima" => 26754, "johanna" => 26502, "armelle" => 26291, "deborah" => 26175, "barbara" => 25854, "magalie" => 25832, "carla" => 25200, "laurine" => 24821, "sara" => 24504, "claudie" => 24459, "yasmine" => 24458, "olga" => 24343, "maelle" => 24339, "kelly" => 24311, "mylène" => 24206, "léone" => 24157, "mélina" => 24005, "roselyne" => 23960, "cassandra" => 23756, "léontine" => 23559, "axelle" => 23394, "constance" => 23337, "malika" => 23183, "eloise" => 23039, "salomé" => 22788, "perrine" => 22694, "cynthia" => 22405, "leila" => 22372, "héloïse" => 22257, "violette" => 22231, "louane" => 21692, "sofia" => 21618, "alix" => 21475, "sylvia" => 21370, "christel" => 21207, "marie-noëlle" => 21204, "rosalie" => 20916, "edwige" => 20649, "victoire" => 20513, "anne-laure" => 20386, "claudia" => 20332, "coline" => 20311, "lana" => 20223, "gwendoline" => 20205, "louisette" => 20122, "flora" => 20001, "candice" => 19822, "cécilia" => 19725, "jeannette" => 19638, "floriane" => 19603, "marie-jeanne" => 19508, "capucine" => 19412, "diane" => 19223, "angelina" => 19072, "nora" => 19066, "marie-paule" => 18864, "gwenaelle" => 18828, "luna" => 18790, "roseline" => 18545, "tiphaine" => 18284, "flavie" => 18266, "anissa" => 18121, "annabelle" => 18044, "roxane" => 17958, "elena" => 17906, "eleonore" => 17823, "lily" => 17741, "anaelle" => 17714, "eveline" => 17712, "victorine" => 17632, "samantha" => 17556, "faustine" => 17554, "peggy" => 17532, "rosa" => 17412, "marinette" => 17382, "augusta" => 17355, "esther" => 17324, "corine" => 17165, "kenza" => 16742, "marielle" => 16739, "astrid" => 16693, "marie-ange" => 16633, "tiffany" => 16475, "mila" => 16249, "louisa" => 16199, "marie-line" => 16189, "marylene" => 16147, "stella" => 16033, "sandy" => 15846, "dorothee" => 15787, "alison" => 15738, "tatiana" => 15731, "ernestine" => 15439, "angélique" => 15301, "leslie" => 15087, "eve" => 14969, "sylvette" => 14881, "léane" => 14856, "assia" => 14839, "betty" => 14756, "séverine" => 14737, "samia" => 14715, "ida" => 14548, "helena" => 14412, "noémie" => 14335, "apolline" => 14061, "alexandrine" => 14032, "aurelia" => 14029, "lauriane" => 13797, "karen" => 13778, "yasmina" => 13611, "priscilla" => 13481, "enora" => 13470, "sophia" => 13465, "alphonsine" => 13360, "lila" => 13203, "nolwenn" => 13194, "angeline" => 13147, "christèle" => 13136, "line" => 13083, "irma" => 12968, "florine" => 12951, "samira" => 12716, "cloe" => 12608, "wendy" => 12479, "marie-rose" => 12423, "philomene" => 12418, "rebecca" => 12395, "megane" => 12325, "marie-madeleine" => 12313, "alizée" => 12295, "hortense" => 12247, "léana" => 12169, "ilona" => 12091, "inaya" => 11954, "gaëlle" => 11953, "maëlys" => 11941, "marie-anne" => 11917, "pascaline" => 11875, "maya" => 11867, "ninon" => 11755, "aya" => 11755, "celestine" => 11740, "flore" => 11597, "marilyne" => 11462, "amina" => 11430, "cassandre" => 11407, "felicie" => 11345, "karima" => 11238, "cyrielle" => 11189, "amel" => 11143, "fiona" => 11139, "dalila" => 11131, "armande" => 11116, "roberte" => 11034, "aicha" => 11015, "noelie" => 10824, "nicolle" => 10800, "mariette" => 10751, "imane" => 10745, "rejane" => 10729, "melodie" => 10722, "rose-marie" => 10658, "doriane" => 10503, "dolores" => 10401, "emmy" => 10323, "marie-josephe" => 10322, "marie-odile" => 10272, "elina" => 10240, "iris" => 10145, "lysiane" => 10112, "emy" => 10054, "ines" => 10020, "chrystelle" => 9955, "erika" => 9935, "lilia" => 9931, "judith" => 9924, "loane" => 9923, "bérénice" => 9894, "antonia" => 9827, "gladys" => 9827, "ariane" => 9809, "lyna" => 9792, "soraya" => 9738, "yamina" => 9714, "oriane" => 9689, "adelaide" => 9686, "laëtitia" => 9664, "yveline" => 9629, "amélia" => 9581, "ana" => 9533, "alyssa" => 9490, "nancy" => 9483, "jenny" => 9439, "tania" => 9412, "garance" => 9402, "orlane" => 9398, "lison" => 9328, "sylvaine" => 9294, "manuela" => 9256, "anny" => 9224, "albane" => 9217, "selma" => 9205, "rosine" => 9176, "alberte" => 9159, "raphaelle" => 9149, "lara" => 9100, "lucille" => 9050, "fatiha" => 8903, "manel" => 8866, "coraline" => 8830, "marcelline" => 8781, "eden" => 8687, "meline" => 8659, "dounia" => 8627, "mailys" => 8572, "sidonie" => 8545, "nour" => 8526, "farida" => 8503, "anouk" => 8498, "suzette" => 8488, "angela" => 8468, "farah" => 8435, "melinda" => 8381, "manuella" => 8341, "cléa" => 8338, "lindsay" => 8334, "mia" => 8271, "soline" => 8249, "chiara" => 8178, "marie-josee" => 8177, "paola" => 8164, "violaine" => 8147, "elea" => 8113, "anne-lise" => 8094, "lucia" => 8082, "emilia" => 8080, "jane" => 8073, "fatoumata" => 8070, "giulia" => 8060, "marceline" => 8050, "diana" => 8010, "jasmine" => 7995, "christianne" => 7972, "salma" => 7960, "maureen" => 7952, "melody" => 7916, "mariam" => 7906, "priscillia" => 7901, "pamela" => 7881, "shana" => 7860, "honorine" => 7837, "francette" => 7800, "dany" => 7794, "laurette" => 7759, "joanna" => 7740, "daphné" => 7725, "sirine" => 7691, "enola" => 7689, "etiennette" => 7673, "christina" => 7634, "marie-agnès" => 7544, "marie-antoinette" => 7507, "graziella" => 7506, "géraldine" => 7484, "naomi" => 7452, "tess" => 7442, "ornella" => 7438, "eliette" => 7423, "lou-anne" => 7411, "rita" => 7387, "luce" => 7382, "nadège" => 7372, "naima" => 7372, "romy" => 7370, "elia" => 7362, "khadija" => 7336, "guylaine" => 7293, "celina" => 7219, "lucy" => 7213, "zelie" => 7201, "asma" => 7198, "lylou" => 7187, "marie-annick" => 7166, "eline" => 7116, "tessa" => 7110, "sana" => 7108, "lena" => 7080, "camélia" => 7075, "giselle" => 7041, "lolita" => 7026, "berengere" => 7025, "laurene" => 6935, "eloïse" => 6925, "fatma" => 6890, "maryam" => 6844, "muguette" => 6828, "maylis" => 6810, "thais" => 6709, "naomie" => 6701, "maëlle" => 6671, "charlie" => 6637, "philippine" => 6630, "katy" => 6614, "djamila" => 6602, "kimberley" => 6583, "aminata" => 6544, "dina" => 6542, "noella" => 6516, "berangere" => 6507, "magdeleine" => 6479, "lea" => 6453, "dorine" => 6435, "lya" => 6427, "anastasia" => 6372, "rania" => 6371, "nawel" => 6350, "amanda" => 6341, "zohra" => 6340, "rachida" => 6338, "lou-ann" => 6285, "chloe" => 6262, "salima" => 6233, "lili" => 6225, "livia" => 6144, "anne-claire" => 6099, "desiree" => 6096, "marwa" => 6094, "amira" => 6057, "chaima" => 6020, "paula" => 5980, "safia" => 5917, "solenn" => 5916, "paloma" => 5889, "rosette" => 5859, "clothilde" => 5826, "celeste" => 5816, "maissa" => 5782, "bénédicte" => 5764, "gwladys" => 5761, "stacy" => 5725, "mina" => 5662, "edmonde" => 5653, "sasha" => 5639, "laly" => 5633, "mary" => 5617, "maite" => 5614, "eulalie" => 5608, "ella" => 5603, "marie-cécile" => 5568, "hanna" => 5564, "auriane" => 5545, "prescillia" => 5534, "marie-dominique" => 5509, "mandy" => 5470, "allison" => 5463, "eglantine" => 5445, "gina" => 5416, "maëva" => 5389, "rachelle" => 5389, "séréna" => 5381, "alfreda" => 5378, "lynda" => 5370, "suzy" => 5361, "doris" => 5345, "jessie" => 5338, "ségolène" => 5318, "maude" => 5313, "meriem" => 5278, "armandine" => 5250, "yannick" => 5239, "marjolaine" => 5174, "solenne" => 5114, "noa" => 5103, "marilyn" => 5092, "gislaine" => 5048, "alycia" => 5029, "laureen" => 5005, "siham" => 5004, "kathleen" => 4998, "jamila" => 4996, "halima" => 4988, "fleur" => 4968, "danièle" => 4946, "mya" => 4920, "kim" => 4904, "marilou" => 4902, "maiwenn" => 4895, "ema" => 4888, "marie-chantal" => 4882, "gaetane" => 4868, "jenna" => 4848, "bertille" => 4844, "soizic" => 4842, "mona" => 4823, "regina" => 4823, "laurianne" => 4807, "emily" => 4799, "typhaine" => 4779, "anaëlle" => 4774, "gertrude" => 4773, "lily-rose" => 4763, "laila" => 4760, "octavie" => 4750, "louanne" => 4745, "leïla" => 4727, "selena" => 4679, "marylou" => 4661, "madison" => 4654, "johanne" => 4652, "marie-andrée" => 4634, "clelia" => 4629, "daisy" => 4598, "hanane" => 4528, "kathy" => 4524, "hawa" => 4516, "tiphanie" => 4512, "hermine" => 4487, "lisette" => 4486, "zoe" => 4457, "tamara" => 4453, "joséphine" => 4448, "shirley" => 4445, "rozenn" => 4444, "shanna" => 4443, "nesrine" => 4442, "kassandra" => 4442, "laury" => 4428, "olympe" => 4393, "thaïs" => 4373, "yousra" => 4372, "émilie" => 4355, "mercedes" => 4332, "josseline" => 4327, "lilly" => 4327, "alisson" => 4324, "prisca" => 4320, "lauryne" => 4305, "lorraine" => 4302, "elizabeth" => 4285, "elvire" => 4281, "anne-cécile" => 4265, "joy" => 4262, "lalie" => 4245, "louison" => 4245, "marie-charlotte" => 4240, "josianne" => 4238, "edmee" => 4237, "déborah" => 4234, "ashley" => 4221, "brenda" => 4212, "juliana" => 4207, "maia" => 4199, "hajar" => 4187, "florentine" => 4182, "sixtine" => 4157, "chrystel" => 4155, "joana" => 4154, "baptistine" => 4154, "anne-charlotte" => 4148, "chrystele" => 4128, "norah" => 4119, "alya" => 4100, "méline" => 4092, "zélie" => 4055, "loubna" => 4043, "annaelle" => 4037, "malvina" => 4032, "josephe" => 4016, "yolaine" => 3978, "guillemette" => 3975, "chantale" => 3971, "lauren" => 3952, "tracy" => 3952, "latifa" => 3939, "ketty" => 3920, "cloé" => 3894, "isabel" => 3871, "eléonore" => 3839, "eléna" => 3828, "sandie" => 3827, "wanda" => 3820, "aliette" => 3818, "aliya" => 3804, "jessy" => 3801, "loetitia" => 3797, "ava" => 3794, "colombe" => 3768, "felicite" => 3732, "marie-laurence" => 3726, "lamia" => 3725, "syrine" => 3712, "alyssia" => 3696, "leona" => 3689, "ilyana" => 3679, "georgina" => 3677, "souad" => 3660, "ilana" => 3651, "kahina" => 3645, "marie-lise" => 3643, "katell" => 3634, "imene" => 3633, "tina" => 3628, "dorothée" => 3613, "domitille" => 3602, "elif" => 3598, "hannah" => 3575, "élodie" => 3572, "marie-catherine" => 3570, "soumaya" => 3564, "joselyne" => 3559, "suzie" => 3554, "lilas" => 3515, "lilya" => 3507, "alexane" => 3507, "madeline" => 3498, "lia" => 3481, "mathilda" => 3477, "belinda" => 3466, "anais" => 3453, "hana" => 3451, "arielle" => 3451, "kiara" => 3449, "noura" => 3426, "isaure" => 3417, "monia" => 3400, "zahra" => 3400, "juline" => 3393, "imen" => 3389, "elora" => 3375, "maïssa" => 3373, "aurélia" => 3371, "mayssa" => 3355, "lorena" => 3347, "aïcha" => 3337, "lorine" => 3323, "johana" => 3314, "servane" => 3305, "amal" => 3299, "vanina" => 3278, "roxanne" => 3244, "francesca" => 3244, "thea" => 3225, "frieda" => 3224, "nabila" => 3223, "ombeline" => 3221, "donia" => 3208, "mallaury" => 3200, "penelope" => 3199, "sephora" => 3196, "jeanne-marie" => 3187, "sabah" => 3176, "nassima" => 3175, "hind" => 3174, "gwenola" => 3167, "marylise" => 3162, "emie" => 3143, "juliane" => 3134, "saida" => 3132, "noeline" => 3127, "grace" => 3125, "safa" => 3110, "yuna" => 3103, "meryem" => 3094, "anae" => 3089, "thalia" => 3088, "anastasie" => 3083, "lorene" => 3076, "leyna" => 3071, "sacha" => 3066, "zineb" => 3060, "felicia" => 3059, "guylene" => 3046, "loriane" => 3044, "cassie" => 3031, "antonine" => 3027, "yaelle" => 3025, "jeannie" => 3022, "elyne" => 3022, "emelyne" => 3022, "maguy" => 3015, "gloria" => 3005, "elya" => 2998, "maeline" => 2998, "mounia" => 2983, "margaret" => 2976, "cleo" => 2964, "mae" => 2952, "josee" => 2951, "orane" => 2950, "marie-lou" => 2944, "erine" => 2930, "yael" => 2930, "carol" => 2928, "astride" => 2923, "joyce" => 2918, "emelie" => 2914, "beatrix" => 2907, "gwenaëlle" => 2904, "charlyne" => 2895, "jennyfer" => 2893, "maelie" => 2893, "joanne" => 2893, "liza" => 2892, "bettina" => 2889, "sybille" => 2880, "jihane" => 2876, "lyana" => 2864, "josyane" => 2860, "louann" => 2855, "cendrine" => 2855, "amy" => 2842, "hafsa" => 2834, "sibylle" => 2826, "adriana" => 2814, "iman" => 2810, "assya" => 2801, "calie" => 2798, "sakina" => 2797, "anick" => 2797, "fadila" => 2793, "lisiane" => 2787, "mélodie" => 2786, "iliana" => 2773, "alyson" => 2771, "saliha" => 2767, "cristina" => 2761, "milena" => 2755, "kheira" => 2744, "hanae" => 2743, "ruth" => 2741, "joseline" => 2732, "alia" => 2730, "prune" => 2729, "erna" => 2727, "loïs" => 2715, "houria" => 2702, "anaé" => 2701, "laureline" => 2697, "guilaine" => 2694, "théa" => 2694, "nawal" => 2682, "kelya" => 2680, "bouchra" => 2680, "orianne" => 2676, "virginia" => 2672, "alienor" => 2670, "houda" => 2661, "nell" => 2660, "fantine" => 2658, "melissa" => 2657, "annik" => 2651, "zelia" => 2647, "anouck" => 2645, "aliyah" => 2642, "eléa" => 2639, "barbe" => 2638, "gracieuse" => 2625, "malak" => 2621, "magaly" => 2617, "lyliane" => 2613, "maurine" => 2607, "awa" => 2605, "melina" => 2601, "marie-elisabeth" => 2601, "raphaëlle" => 2600, "shaina" => 2599, "tara" => 2596, "shayna" => 2589, "florie" => 2588, "naila" => 2582, "fabiola" => 2580, "marie-pascale" => 2574, "lylia" => 2555, "amalia" => 2553, "celia" => 2552, "priscille" => 2545, "aida" => 2543, "sihem" => 2536, "angie" => 2530, "ilham" => 2523, "malorie" => 2514, "daniela" => 2512, "nais" => 2504, "martha" => 2501, "clemence" => 2499, "marie-amélie" => 2496, "noele" => 2495, "raphaele" => 2492, "nassera" => 2489, "maely" => 2475, "anabelle" => 2472, "isaline" => 2460, "ghyslaine" => 2452, "marie-caroline" => 2431, "josepha" => 2430, "ange" => 2428, "cheyenne" => 2425, "emmie" => 2420, "marie-joëlle" => 2418, "mouna" => 2413, "gabriella" => 2413, "lyne" => 2408, "alma" => 2406, "leyla" => 2405, "karina" => 2399, "naelle" => 2397, "monica" => 2396, "sabrine" => 2389, "leonie" => 2386, "lorie" => 2380, "sanaa" => 2380, "faiza" => 2373, "heidi" => 2372, "irina" => 2372, "rosita" => 2367, "marie-sophie" => 2360, "marie-reine" => 2359, "sahra" => 2358, "neyla" => 2356, "lorette" => 2355, "eloane" => 2354, "gillette" => 2353, "charlette" => 2353, "leocadie" => 2349, "edithe" => 2344, "stessy" => 2344, "élise" => 2343, "sharon" => 2341, "valentina" => 2340, "mariane" => 2340);

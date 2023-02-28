@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/prism.css" rel="stylesheet" media="all"/>
+    <link href="css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="js/html5.js"></script>
+    <![endif]-->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.smooth-scroll.js"></script>
+    <script src="js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    
+    <link rel="shortcut icon" href="images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+
+<div id="___" class="container-fluid">
+        
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content namespace">
+                    <nav>
+                                                
+                                            </nav>
+                    <h1><small></small>\</h1>
+
+                    
+                    
+                    
+                                    </div>
+
+            </div>
+
+            
+                        <div class="row-fluid">
+                <section class="span8 content namespace">
+                    <h2>Functions</h2>
+                </section>
+                
+            </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_computeNeighborCandidates" name="method_computeNeighborCandidates" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">computeNeighborCandidates()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">computeNeighborCandidates(integer  <span class="argument">$neighbor</span>) : array</pre>
+                <p><em>A method to compute candidate names from a given neighbor.</em></p>
+                <p>The set of names are first extracted (local candidates), and
+for each of these names the score is updated.
+The score of a name is computed based on the number of times it was prefered.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$neighbor </td>
+                                <td><p>the neighbor</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>The local candidates. key => value pairs, where key is a name id and value is the score for the name.</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_gender" name="method_gender" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">gender()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">gender(integer  <span class="argument">$nameId</span>) : string</pre>
+                <p><em>Get the gender of a name</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$nameId </td>
+                                <td><p>The name id</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>The gender ('m' or 'f')</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getName" name="method_getName" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">getName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getName(integer  <span class="argument">$id</span>) : string</pre>
+                <p><em>Get a name from its id</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$id </td>
+                                <td><p>The name id</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>The name</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getNameId" name="method_getNameId" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">getNameId()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getNameId(string  <span class="argument">$name</span>) : integer</pre>
+                <p><em>Get the id of a name</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td><p>The name</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                            &mdash; <p>The id of the name</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getNeighbors" name="method_getNeighbors" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">getNeighbors()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getNeighbors(integer  <span class="argument">$userId</span>, integer  <span class="argument">$k</span>) : array</pre>
+                <p><em>Get similar users (based on their preferences)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$userId </td>
+                                <td><p>the id of the user for whom to find similar users</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$k </td>
+                                <td><p>the number of neighbors</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>the neighbors. key => value pairs, where key is user_id and value is the similarity.</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRandomNames" name="method_getRandomNames" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">getRandomNames()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRandomNames(string  <span class="argument">$gender</span>, integer  <span class="argument">$userId</span>, integer  <span class="argument">$number</span>) : array&lt;mixed,string&gt;</pre>
+                <p><em>Pick names at random with a probability that is dependent on the popularity of the name. The names must have been not yet compared by the user.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$gender </td>
+                                <td><p>the gender of the names</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$userId </td>
+                                <td><p>the id of the user</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$number </td>
+                                <td><p>the number of names to pick</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>the selected names</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getRecommendations" name="method_getRecommendations" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">getRecommendations()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getRecommendations(string  <span class="argument">$gender</span>, integer  <span class="argument">$userId</span>, integer  <span class="argument">$number</span>) : array&lt;mixed,string&gt;</pre>
+                <p><em>Get name recommendations.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$gender </td>
+                                <td><p>The gender of the names</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$userId </td>
+                                <td><p>The id of the user for whom to provide recommendations</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$number </td>
+                                <td><p>The number of names to recommend</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>The selected names</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hasBeenCompared" name="method_hasBeenCompared" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">hasBeenCompared()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hasBeenCompared(integer|string  <span class="argument">$name</span>, integer  <span class="argument">$userId</span>) : integer</pre>
+                <p><em>Check if a name has already been compared to some other name by a user</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer|string</td>
+                                <td>$name </td>
+                                <td><p>the name</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$userId </td>
+                                <td><p>the user id</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                            &mdash; <p>the id of the name</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_knn" name="method_knn" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">knn()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">knn(string  <span class="argument">$gender</span>, integer  <span class="argument">$userId</span>, integer  <span class="argument">$number</span>) : array&lt;mixed,string&gt;</pre>
+                <p><em>Get name recommendations based on the nearest neighbors.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$gender </td>
+                                <td><p>the gender of the names</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$userId </td>
+                                <td><p>the id of the user for whom to provide recommendations</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$number </td>
+                                <td><p>the number of names to recommend</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>the selected names</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_selectRandomName" name="method_selectRandomName" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">selectRandomName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">selectRandomName(array  <span class="argument">$names</span>) : string</pre>
+                <p><em>Pick a name at random with a probability that is dependent on its popularity.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$names </td>
+                                <td><p>An array containing the names and their popularities</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>The selected name</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_similarity" name="method_similarity" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">similarity()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">similarity(array  <span class="argument">$prefUser</span>, array  <span class="argument">$prefOtherUser</span>) : float</pre>
+                <p><em>Binary cosine between two user preference vectors (arrays)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$prefUser </td>
+                                <td><p>the preferences of the first user</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$prefOtherUser </td>
+                                <td><p>the preferences of the other user</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    float
+                                            &mdash; <p>the similarity</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_topElements" name="method_topElements" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">topElements()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">topElements(array  <span class="argument">$array</span>, integer  <span class="argument">$k</span>) : array</pre>
+                <p><em>Get the elements with the highest values</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$array </td>
+                                <td><p>An associative array of elements with numerical values.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$k </td>
+                                <td><p>The number of elements to get.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>The resulting associative array.</p>
+                                    				
+                            </article>
+        </div>
+    </div>
+
+                            
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,998 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Web avancé - CM2</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white-bonnin.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/zenburn.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Web avancé</h1>
+
+					<p id="author">Geoffray Bonnin</p>
+					<p style="font-size: 28px; text-align: center">Cours mis à jour par Gaël Guibon</p>
+				</section>
+
+				<!-- Change the font size for the stat table -->
+				<style type="text/css">
+					.stats {
+						font-size: .5em !important;
+						margin: 0 !important;
+						
+					}
+
+					.stats tr{
+						border: solid black;
+						border-width: 1px 0 0 0;
+					}
+				</style>
+
+				<section>
+					<h2>Rétrospective TD01 et TD02</h2>
+
+					<p>Travaux rendus Ex1 : 90%</p>
+					<p>Travaux rendus Ex2 : 70%</p>
+
+					<table class="stats">
+						<tr>
+							<td>Ex 2.2 (keyframes)</td>
+							<td>85%</td>
+						</tr>
+						<tr>
+							<td>Ex 2.3 (position aléatoire)</td>
+							<td>70%</td>
+						</tr>
+						<tr>
+							<td>Ex 2.4 (setInterval)</td>
+							<td>60%</td>
+						</tr>
+						<tr>
+							<td>Ex 2.5 (disparition au clic)</td>
+							<td>35%</td>
+						</tr>
+						<tr>
+							<td>Ex 2.6 (explosion)</td>
+							<td>0%</td>
+						</tr>
+					</table>
+				</section>
+				
+				
+
+
+				<!-- ------------------------ -->
+				<!-- ------- Partie 2 ------- -->
+				<!-- ------------------------ -->
+
+				<section>
+					<div class="section-title">Technologies client : approfondissement</div>
+
+					<ol>
+						<li><strong>Programmation orientée objet en JS</strong></li>
+						<li>jQuery</li>
+						<li>AJAX</li>
+					</ol>
+				</section>
+
+				<!-- POO en JS -->
+
+				<section>
+					<div class="section-title">Programmation objet en JavaScript</div>
+				</section>
+
+				<section>
+					<h2>Deux manères de créer des objets</h2>
+
+					<h4>En utilisant un initialisateur d'objet</h4>
+					<pre class="js-example"><code class="javascript">var edwin = { name: "Starr", born: 1942 };
+console.log(edwin.name); // Affiche "Starr"</code></pre>
+
+					<h4>Avec un constructeur</h4>
+					<pre class="js-example"><code class="javascript">function Artist(name, born){
+  this.name = name;
+  this.born = born;
+}
+
+var edwin = new Artist("Starr", 1942);
+
+console.log(edwin.name); // Affiche "Starr" aussi</code></pre>
+				</section>
+
+				<section>
+					<h2>Prototypes</h2>
+
+					<h3>Deux représentations possibles pour la POO</h3>
+					<ul>
+						<li>Classes : utilisé par Java, C++...</li>
+						<li>Prototypes : utilisé par JavaScript mais aussi Self, Lua, Cecil...</li>
+					</ul>
+
+					<h3>Principe</h3>
+					<ul>
+						<li>Création d'objets généraux, appelés prototypes</li>
+						<li>Les prototypes peuvent alors être clonés et étendus</li>
+					</ul>
+
+					<h3>Pas de véritable notion d'héritage</h3>
+					<ul>
+						<li>Pour les clones, les prototypes ne sont qu'un outil de délégation</li>
+						<li>Quand ils ne possèdent pas une proprité ou une fonction, le navigateur va consulter leurs prototypes</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Exemples</h2>
+
+					<h4>Création de prototype</h4>
+					<pre class="js-example"><code class="javascript" contentEditable="true">function guitarist(name, guitar) {
+  this.name = name;
+  this.guitar = guitar;
+}
+
+var jimi = new guitarist("jimi", "fender");
+var eric = new guitarist("eric", "fender");</code></pre>
+
+					<h4>Ajout d'une propriété à un objet</h4>
+					<pre class="js-example"><code class="javascript" contentEditable="true">jimi.born = 1942;
+console.log(jimi.born); // 1942
+console.log(eric.born); // undefined</code></pre>
+
+					<p><code>born</code> ajouté à <code>jimi</code>, mais pas à <code>eric</code>.</p>
+				</section>
+
+				<section>
+					<h4>Ajout d'une propriété à un prototype</h4>
+
+					<p>Dans le constructeur</p>
+					<pre class="js-example"><code class="javascript" contentEditable="true">function guitarist(name, guitar) {
+  this.name = name;
+  this.guitar = guitar;
+  this.born = 1942;
+}</code></pre>
+					
+					<p>Il est aussi possible d'utiliser l'attribut <code>prototype</code></p>
+					<pre class="js-example"><code class="javascript" contentEditable="true">function guitarist(name, guitar) {
+  this.name = name;
+  this.guitar = guitar;
+}
+
+guitarist.prototype.born = 1942;</code></pre>
+
+				</section>
+
+				<section>
+					<h2>Classes en JavaScript</h2>
+
+					<h3>Fonctionnalité de ES6</h3>
+					<ul>
+						<li>Pas encore implémenté par tous les navigateurs actuels</li>
+						<li>Syntaxe similaire à Java</li>
+						<li>Sous le capot, utilise les prototypes</li>
+					</ul>
+
+					<h3>Syntaxe</h3>
+					<pre class="js-example"><code class="javascript" contentEditable="true" data-noescape">class Artist {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class Guitarist extends Artist {
+  constructor(name, guitar) {
+    super(name);
+    this.guitar = guitar;
+  }
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>Commentaires en JavaScript</h2>
+
+					<h3>Commenter une fonction</h3>
+					<pre class="js-example"><code class="javascript" contentEditable="true" data-noescape>/**
+ * Draw a snake
+ * @param {Object} snake - The snake to draw
+ * @param {string} headColor - The color of the head of the snake
+ * @param {string} tailColor - The color of the tail of the snake
+ */
+function drawSnake(snake, headColor, tailColor){
+  // Head
+  grid[snake.head[0]][snake.head[1]].css("background-color", headColor);
+
+  // Tail
+  for (var k = 0; k < snake.tail.length; k++){
+    grid[snake.tail[k][0]][snake.tail[k][1]].css("background-color", tailColor);
+  }
+}</code></pre>
+
+				</section>
+
+				<section>
+					<h3>Commenter un constructeur</h3>
+					<pre class="js-example"><code class="javascript" contentEditable="true" data-noescape>/**
+ * The prototype constructor of Snake objects
+ * @constructor
+ * @param {number} x - The initial x coordinate of the snake.
+ * @param {number} y - The initial y coordinate of the snake.
+ */
+function Snake(x, y){
+  this.head = [x, y];
+  this.tail = [
+    [x, y],
+    [x, y],
+    [x, y],
+    [x, y],
+    [x, y]
+  ];
+  var direction = randomDirection(); // private attribute
+
+  /**
+   * Get the direction of the snake
+   * @return {number} the direction
+   */
+  this.getDirection = function(){
+    return direction;
+  }
+
+  /**
+   * Set the direction of the snake
+   * @param {number} d - the direction
+   */
+  this.setDirection = function(d){
+    if (!oppositeDirections(direction, d)){
+      direction = d;
+    }
+  }
+}</code></pre>
+				</section>
+
+				<section>
+					<style type="text/css">
+						#install-jsdoc p{
+							font-size: .8em;
+						}
+					</style>
+
+					<h3>Générer une documentation</h3>
+					<ol id="install-jsdoc">
+						<li>Installer <a href="https://nodejs.org/">Node.js</a></li>
+						<li>Ouvrir l'invite de commande</li>
+						<li>Installer jsdoc avec la commande<p><code>npm install -g jsdoc</code></p></li>
+						<li>Générer la documentation avec la commande<p><code>jsdoc path/to/file.js</code></p></li>
+					</ol>
+				</section>
+
+				<section>
+					<iframe src="jsdoc example/index.html" width="960px" height="650px"></iframe>
+				</section>
+
+				<section>
+					<div class="section-title">Technologies client : approfondissement</div>
+
+					<ol>
+						<li>Programmation orientée objet en JS</li>
+						<li><strong>jQuery</strong></li>
+						<li>AJAX</li>
+					</ol>
+				</section>
+
+				<!-- jQuery -->
+
+				<section>
+					<h2>jQuery</h2>
+
+					<h3>Bibliothèque JavaScript</h3>
+					<ul>
+						<li>Très facile à apprendre</li>
+						<li>Fonctionne sur tous les navigateurs</li>
+						<li>Une des rares à résisiter au passage du temps</li>
+					</ul>
+
+					<h3>Utilisation</h3>
+					<ul>
+						<li>Soit en téléchargeant la bibliothèque : <a href="www.jquery.com">www.jquery.com</a></li>
+						<li>Soit en l'intégrant via un Content Delivery Network (CDN)</li>
+					</ul>
+
+					<pre class="html-example"><code class="html" contentEditable="true">&lt;script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"&gt;&lt;/script&gt;</code></pre>
+				</section>
+
+				<section>
+					<h2>Syntaxe de jQuery</h2>
+
+					<pre class="js-example"><code class="javascript" contentEditable="true">$(selector).action()</code></pre>
+
+					<ul>
+						<li><code class="javascript" contentEditable="true">$()</code> : fonction principale jQuery</li>
+						<li><code class="javascript" contentEditable="true">selector</code> : sélection d'éléments de l'arbre DOM</li>
+						<li><code class="javascript" contentEditable="true">action()</code> : appel de méthode (action à effectuer)</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Sélections d'éléments de l'arbre DOM</h2>
+
+					<p>Utilise la syntaxe CSS :</p>
+
+					<table>
+						<tr>
+							<th>Syntaxe</th>
+							<th>Résulat</th>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("*")</code></td>
+							<td>Tous les éléments de l'arbre DOM</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("p")</code></td>
+							<td>Tous les éléments paragraphe</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala")</code></td>
+							<td>L'élément ayant l'identifiant « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$(".lala")</code></td>
+							<td>Tous les éléments de la classe « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("ul li:first")</code></td>
+							<td>Le premier élément d'une liste à puce</td>
+						</tr>
+					</table>
+				</section>
+
+				<style type="text/css">
+					.examples-jquery-methods{
+						width: 100%;
+						margin: 0 !important;
+					}
+					.examples-jquery-methods td{
+						font-size: .8em;
+					}
+				</style>
+
+				<section>
+					<h2>Appel de méthodes</h2>
+
+					<h3>Getters et setters</h3>
+
+					<table class="examples-jquery-methods">
+						<tr>
+							<th>Syntaxe</th>
+							<th>Résulat</th>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").css("color")</code></td>
+							<td>Récupère la valeur de la couleur de l'élément « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").css("color", "blue")</code></td>
+							<td>Colore en bleu l'élément « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").text()</code></td>
+							<td>Récupère le contenu textuel de  « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").text("tralala")</code></td>
+							<td>Change le contenu textuel de « lala » en « tralala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").attr("width")</code></td>
+							<td>Récupère la largeur de « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").attr("width", "150")</code></td>
+							<td>Change la largeur de « lala » à 150px</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h3>Evènements</h3>
+
+					<pre class="js-example"><code class="javascript" contentEditable="true">// Change the direction of the snake of the user using the keybord
+$(document).keydown(function(e){
+  var code = e.keyCode;
+  if (code == LEFT || code == UP || code == RIGHT || code == DOWN){
+    goodSnake.setDirection(code);
+  }
+});</code></pre>
+
+					<p>Autres fonctions d'évènements : click, mouseup, hover, keypress, submit, focus, resize...</p>
+
+				</section>
+
+				<section>
+					<h3>Fonctions d'effet</h3>
+
+					<table class="examples-jquery-methods">
+						<tr>
+							<th>Syntaxe</th>
+							<th>Résulat</th>
+						</tr>
+						<tr>
+							<td><code class="javascript">animate()</code></td>
+							<td>Lance une animation (paramétrable) sur les éléments sélectionnés</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">fadeIn()</code></td>
+							<td>Fait apparaître les éléments sélectionnés avec un fondu</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">slideDown()</code></td>
+							<td>Fait apparaître les éléments avec un glissement vers le bas</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">stop()</code></td>
+							<td>Arrête l'animation des éléments sélectionnés</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h3>Manipulation de l'arbre DOM</h3>
+
+					<table class="examples-jquery-methods">
+						<tr>
+							<th>Syntaxe</th>
+							<th>Résulat</th>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").parent()</code></td>
+							<td>Renvoie l'élément parent de « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#grandfather").children()</code></td>
+							<td>Renvoie tous les élément fils de « lala »</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").remove()</code></td>
+							<td>Supprime « lala » et tous ses descendants</td>
+						</tr>
+						<tr>
+							<td><code class="javascript">$("#lala").empty()</code></td>
+							<td>Supprime tous les descendants de « lala »</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<div class="section-title">Technologies client : approfondissement</div>
+
+					<ol>
+						<li>Programmation orientée objet en JS</li>
+						<li>jQuery</li>
+						<li><strong>AJAX</strong></li>
+					</ol>
+				</section>
+
+				<!-- AJAX -->
+
+				<section>
+					<h2>AJAX</h2>
+
+					<p style="font-size: .8em; margin: 40px 0;">Asynchronous JavaScript and XML</p>
+
+					<h3>Technologie Web permettant</h3>
+					<ul>
+						<li>D'échanger des données avec le serveur</li>
+						<li>De manière asynchrone</li>
+						<li>Sans avoir à actualiser toute la page</li>
+					</ul>
+
+					<h3>Correspond à l'ensemble des technologies</h3>
+					<ul>
+						<li>HTML et CSS</li>
+						<li>XML ou JSON (ou autre)</li>
+						<li>L'objet <code>XMLHttpRequest</code> de JavaScript</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>AJAX et Google</h2>
+
+					<div>
+						<img src="img/ajax-google-history.svg">
+					</div>
+				</section>
+
+				<section>
+					<h2>Focus sur Google Agenda</h2>
+
+					<style type="text/css">
+						#calendar-focus{
+							position: relative;
+						}
+
+						#calendar-focus img{
+							position: absolute;
+							top: 0;
+							left: 0;
+							height: 550px;
+							max-height: none;
+						}
+					</style>
+
+					<div id="calendar-focus">
+						<img src="img/calendar1.png">
+						<img src="img/calendar2.png" class="fragment">
+						<img src="img/calendar3.png" class="fragment">
+						<img src="img/calendar4.png" class="fragment">
+						<img src="img/calendar5.png" class="fragment">
+						<img src="img/calendar6.png" class="fragment">
+						<img src="img/calendar7.png" class="fragment">
+					</div>
+				</section>
+
+				<section>
+					<h2>Quelques règles pour AJAX</h2>
+
+					<style type="text/css">
+						#ajax-rules p{
+							font-size: 1em;
+							font-style: italic;
+							color: dimgrey;
+						}
+					</style>
+
+					<ol id="ajax-rules">
+						<li>Informer l'utilisateur du retour de ses actions<p>Tout est dans une page unique</p></li>
+						<li>Gérer le bouton précédent (back button)<p>Pas de page précédente</p></li>
+						<li>Bien dissocier forme et contenu<p>Pour optimiser les transferts</p></li>
+						<li>Gérer les données sous forme de cache local<p>Pour optimiser les transferts</p></li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Fonctionnement d'AJAX</h2>
+
+					<video width="650" controls>
+						<source src="videos/ajax.mp4" type="video/mp4">
+					</video>
+				</section>
+
+				<section>
+					<h2>L'appel AJAX côté JavaScript</h2>
+
+					<h3>Utilisation de l'objet <code>XMLHttpRequest</code></h3>
+					<ul>
+						<li>Permet d'envoyer une requête HTTP</li>
+						<li>Et de recevoir la réponse</li>
+					</ul>
+
+					<h3>Compatibilité</h3>
+					<ul>
+						<li>Compatible avec tous les navigateurs actuels</li>
+						<li>IE6 et antérieurs utilisent <code>ActiveXObject</code></li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Envoi d'une requête</h3>
+
+					<pre class="js-example"><code class="javascript" contentEditable="true">// Création d'une instance de l'objet XMLHttpRequest
+var req = new XMLHttpRequest();
+
+// Paramétrage de la requête
+req.open('GET', 'data.json');
+
+// Envoi de la requête
+req.send();
+</code></pre>
+
+					<p style="margin-top: 40px;">Paramètres de <code>open(<i>method</i>, <i>url</i>)</code></p>
+					<ul style="font-size: .6em">
+						<li><code>method</code> : <code>GET</code> ou <code>POST</code></li>
+						<li><code>url</code> : URL du contenu à récupérer</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Réception de la réponse</h3>
+
+					<pre class="js-example"><code class="javascript" contentEditable="true">// Réception de la réponse
+req.onreadystatechange = function(){
+  if (req.readyState == 4 &amp;&amp; req.status == 200){
+    // Changement du contenu de la div en le contenu de la réponse
+    document.getElementById("myDiv").innerHTML = req.responseText;
+  }
+}</code></pre>
+
+					<div style="float:left; width:40%">
+						<h4><code>req.onreadystatechange</code></h4>
+						<p>La fonction appelée quand<br> une réponse arrive</p>
+
+						<h4><code>req.readyState</code></h4>
+						<p>Valeur entre 0 et 4, vaut 4 si la réponse est bien arrivée</p>
+					</div>
+
+					<div style="float:left; width:60%">
+						<h4><code>req.status</code></h4>
+						<p>Le code de réponse (200 pour « OK », 404 pour « Page not found »...)</p>
+
+						<h4>Contenu de la réponse</h4>
+						<ul style="font-size: .6em">
+							<li><code>req.responseXML</code> : pour un contenu XML<br/></li>
+							<li><code>req.responseText</code> : pour un contenu JSON<br/>(ou autre, non XML)<br/></li>
+						</ul>					
+					</div>
+				</section>
+
+				<section>
+					<h3>Appel AJAX complet</h3>
+
+					<pre class="js-example"><code class="javascript" contentEditable="true" style="max-height: 550px">function loadJSONDoc(){
+  // Instantiate the XMLHttpRequest object (Check browser)
+  var req;
+  
+  if (window.XMLHttpRequest){
+    // code for current browsers
+    req = new XMLHttpRequest();
+  }
+  else{
+    // code for IE5 and IE6
+    req = new ActiveXObject("Microsoft.req");
+  }
+
+  // Things to do when a response arrives
+  req.onreadystatechange = function(){
+    if (req.readyState == 4 &amp;&amp; req.status == 200){
+      // Change div content to the text content of the response
+      document.getElementById("myDiv").innerHTML = req.responseText;
+    }
+  }
+
+  // Initialize request
+  req.open("GET", "data.json");
+    
+  // Send
+  req.send();
+}</code></pre>					
+				</section>
+
+				<section>
+					<h3>Avec jQuery</h3>
+
+					<pre class="js-example"><code class="javascript" contentEditable="true">function loadJSONDoc(){
+  $.ajax({
+    type: "GET",
+    url: "data.json",
+    dataType: "json",
+    success: function(json){
+      $("#myDiv").text(json);
+    }
+  });
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>XML</h2>
+
+					<h3>Extensible Markup Language</h3>
+					<ul>
+						<li>Langage à balises extensible</li>
+						<li>Standard du W3C</li>
+					</ul>
+
+					<h3>Permet</h3>
+					<ul>
+						<li>de représenter des données</li>
+						<li>de manière arborescente</li>
+					</ul>
+
+					<h3>Ne permet pas de « faire » quelque-chose</h3>
+					<ul>
+						<li>Pas un langage de programmation</li>
+						<li>Pas un protocole de transport réseau</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Modèle de données XML</h2>
+
+					<h3>XML fournit un encodage pour construire des arbres</h3>
+
+					<img src="img/xml-tree.png" style="width: 450px;">
+
+					<h3>Ces arbres ont plusieurs types de <strong>nœuds</strong></h3>
+					<ul>
+						<li><strong>Nœuds élément</strong> (ici <code>a</code>, <code>b</code>, etc.) : portent un nom et peuvent avoir n’importe quel nombre de fils.</li>
+						<li><strong>Nœuds texte</strong> (ici <code><i>foo</i></code>, <code><i>bar</i></code>) : ont un contenu textuel arbitraire ; ne peuvent pas avoir de fils.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Exemple de code XML</h2>
+
+					<pre class="html-example"><code class="xml">&lt;?xml version='1.0' encoding='utf-8'?&gt;
+&lt;!-- Example from www.w3.org --&gt;
+&lt;catalog&gt;
+  &lt;tshirt code='T1534017' sizes='M L XL'&gt;
+    &lt;title&gt;Staind: Been Awhile Tee Black (1-sided)&lt;/title&gt;
+    &lt;description&gt;
+      Lyrics from the hit song 'It's Been Awhile' are shown in
+      white, beneath the large 'Flock &amp;amp; Weld' Staind logo.
+    &lt;/description&gt;
+    &lt;price currency='EUR'&gt;25.00&lt;/price&gt;
+  &lt;/tshirt&gt;
+&lt;/catalog&gt;</code></pre>
+
+					<style type="text/css">
+						.bubble {
+							position: absolute;
+							width: 100px;
+							background: dimgrey;
+							border-radius: .4em;
+							font-size: .4em !important;
+							padding: 4px !important;
+							color: white;
+						}
+
+						.bubble:after {
+							content: '';
+							position: absolute;
+							left: 0;
+							top: 50%;
+							width: 0;
+							height: 0;
+							border: 10px solid transparent;
+							border-right-color: dimgrey;
+							border-left: 0;
+							margin-top: -10px;
+							margin-left: -10px;
+						}
+
+						.beautiful-box{
+							position: absolute;
+							border-radius: .4em;
+							border: solid 4px lightgrey !important;
+						}
+					</style>
+
+					<div class="bubble fragment current-visible" style="top: 60px; left: 440px;" data-fragment-index="1">
+						Nœud d'instruction de traitement
+					</div>
+
+					<div class="bubble fragment current-visible" style="top: 95px; left: 380px;" data-fragment-index="2">
+						Nœud commentaire
+					</div>
+					
+					<div class="beautiful-box fragment current-visible" style="top: 175px; left: 40px; width: 85px; height: 25px;" data-fragment-index="3"></div>
+					<div class="beautiful-box fragment current-visible" style="top: 175px; left: 545px; width: 100px; height: 25px;" data-fragment-index="3"></div>
+					<div class="bubble fragment current-visible" style="top: 165px; left: 680px;" data-fragment-index="3">
+						Nœud élément
+					</div>
+
+					<div class="beautiful-box fragment current-visible" style="top: 175px; left: 115px; width: 440px; height: 25px;" data-fragment-index="4"></div>
+					<div class="bubble fragment current-visible" style="top: 175px; left: 585px;" data-fragment-index="4">Nœud texte</div>
+
+					<div class="beautiful-box fragment current-visible" style="top: 290px; left: 115px; width: 165px; height: 25px;" data-fragment-index="5"></div>
+					<div class="bubble fragment current-visible" style="top: 280px; left: 305px;" data-fragment-index="5">Nœud attribut</div>
+				</section>
+
+				<section>
+					<h2>Parser du XML avec JavaScript</h2>
+
+					<p>JavaScript pur</p>
+					<pre class="js-example" style="font-size: .4em;"><code class="javascript">// Things to do when a response arrives
+req.onreadystatechange = function(){
+  if (req.readyState == 4 &amp;&amp; req.status == 200){
+    // Get the content of the text node in the description node
+    var descriptionNode = req.responseXML.getElementsByTagName("description")[0];
+    var descriptionTextNode = descriptionNode.childNodes[0];
+    var descriptionContent = descriptionTextNode.nodeValue;
+  }
+}</code></pre>
+
+					<p>XML</p>
+					<pre class="html-example" style="font-size: .4em;"><code class="xml">&lt;?xml version='1.0' encoding='utf-8'?&gt;
+&lt;!-- Example from www.w3.org --&gt;
+&lt;catalog&gt;
+  &lt;tshirt code='T1534017' sizes='M L XL'&gt;
+    &lt;title&gt;Staind: Been Awhile Tee Black (1-sided)&lt;/title&gt;
+    &lt;description&gt;
+      Lyrics from the hit song 'It's Been Awhile' are shown in
+      white, beneath the large 'Flock &amp;amp; Weld' Staind logo.
+    &lt;/description&gt;
+    &lt;price currency='EUR'&gt;25.00&lt;/price&gt;
+  &lt;/tshirt&gt;
+&lt;/catalog&gt;</code></pre>
+
+				</section>
+
+				<section>
+					<h2>Parser du XML avec JavaScript</h2>
+
+					<p>Avec jQuery</p>
+					<pre class="js-example" style="font-size: .4em;"><code class="javascript">$.ajax({
+  type: "GET",
+  url: "catalog.xml",
+  dataType: "xml",
+  success: function(xml){
+    var descriptionContent = $(xml).find("description").text();
+    console.log(descriptionContent);
+  }
+});</code></pre>
+
+					<p>XML</p>
+					<pre class="html-example" style="font-size: .4em;"><code class="xml">&lt;?xml version='1.0' encoding='utf-8'?&gt;
+&lt;!-- Example from www.w3.org --&gt;
+&lt;catalog&gt;
+  &lt;tshirt code='T1534017' sizes='M L XL'&gt;
+    &lt;title&gt;Staind: Been Awhile Tee Black (1-sided)&lt;/title&gt;
+    &lt;description&gt;
+      Lyrics from the hit song 'It's Been Awhile' are shown in
+      white, beneath the large 'Flock &amp;amp; Weld' Staind logo.
+    &lt;/description&gt;
+    &lt;price currency='EUR'&gt;25.00&lt;/price&gt;
+  &lt;/tshirt&gt;
+&lt;/catalog&gt;</code></pre>
+				</section>
+
+				<section>
+					<h2>JSON - JavaScript Object Notation</h2>
+
+					<div class="quarter">
+
+						<h3>Utilise la syntaxe JavaScript</h3>
+
+						<pre class="js-example"><code class="javascript">{
+   "tracks":[
+      {
+         "name":"Three Little Birds",
+         "artist":{
+            "name":"Bob Marley"
+         }
+      },
+      {
+         "name":"Don't Worry Be Happy",
+         "artist":{
+            "name":"Bobby McFerrin"
+         }
+      }
+   ]
+}</code></pre>
+					</div>
+
+					<div class="quarter">
+						<p>À prononcer « d'geille - zone »</p>
+
+						<img src="img/jason.png" height=470 style="margin-top: 7px;">
+					</div>
+				</section>
+
+				<section>
+					<h2>Types de données</h2>
+
+					<div class="quarter">
+						<h3>6 types de données</h3>
+						<ul>
+							<li>Objets</li>
+							<li>Tableaux</li>
+							<li>Chaîne de caractères</li>
+							<li>Nombres</li>
+							<li>Booléens</li>
+							<li>null</li>
+						</ul>
+					</div>
+
+					<div class="quarter">
+						<pre class="js-example"><code class="javascript">{
+  "name": "Polyphemus",
+  "numberOfEyes": 1,
+  "isBadGuy": true,
+  "proofOfExistence": null,
+  "hobbies": [
+    "Drinking wine",
+    "Eating humans"
+  ]
+}</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2>Parser du JSON avec JavaScript</h2>
+
+					<p>JavaScript</p>
+					<pre class="js-example" style="font-size: .4em;"><code class="javascript">// Things to do when a response arrives
+req.onreadystatechange = function(){
+  if (req.readyState == 4 &amp;&amp; req.status == 200){
+    // Get the content of the text in the description
+    var json = JSON.parse(req.responseText);
+    var description = json.catalog.description;
+  }
+}</code></pre>
+
+					<p>JSON</p>
+					<pre class="js-example" style="font-size: .4em;"><code class="javascript">{
+   "catalog":{
+      "tshirt":{
+         "code":"T1534017",
+         "sizes":[ "M", "L", "XL" ]
+      },
+      "description":"Lyrics from the hit song 'It's Been Awhile' are shown in white, beneath the large 'Flock &amp; Weld' Staind logo.",
+      "price":{
+         "currency":"EUR",
+         "value":25.00
+      }
+   }
+}</code></pre>
+				</section>
+
+
+				<section>
+					<h2>Ressources externes</h2>
+
+					<h3>Sur le Web</h3>
+					<ul>
+						<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML">Mozilla Developer Network (MDN)</a></li>
+						<li><a href="https://www.w3schools.com/default.asp">w3schools.com</a></li>
+					</ul>
+
+					<h3>Cours en ligne et MOOC</h3>
+					<ul>
+						<li><a href="https://openclassrooms.com/courses/apprenez-a-creer-votre-site-web-avec-html5-et-css3">Cours en ligne d'OpenClassrooms</a></li>
+						<li><a href="https://www.codecademy.com/learn/learn-html">Cours en ligne de Codecademy</a></li>
+						<li><a href="https://www.coursera.org/learn/web-development">Introduction to Web Development</a>, MOOC de Daniel Randall</li>
+					</ul>
+				</section>
+
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+		<script>
+			// Skip 10 slides at a time when hitting "page up" and "page down"
+			Reveal.configure({
+				keyboard: {
+					33: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.prev();
+    					}
+    				},
+    				34: function() {
+    					for (var i = 0; i < 10; i++){
+    						Reveal.next();
+    					}
+    				}
+				}
+			});
+
+		</script>
+	</body>
+</html>
+

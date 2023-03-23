@@ -36,7 +36,7 @@
 					}
 				</style>
 
-				<section>
+				<!-- <section>
 					<h2>Rétrospective TD01 et TD02</h2>
 
 					<p>Travaux rendus Ex1 : 90%</p>
@@ -64,7 +64,7 @@
 							<td>0%</td>
 						</tr>
 					</table>
-				</section>
+				</section> -->
 				
 				
 
@@ -294,7 +294,7 @@ function Snake(x, y){
 					<ul>
 						<li>Très facile à apprendre</li>
 						<li>Fonctionne sur tous les navigateurs</li>
-						<li>Une des rares à résisiter au passage du temps</li>
+						<li>Une des rares à résister au passage du temps</li>
 					</ul>
 
 					<h3>Utilisation</h3>
@@ -399,7 +399,7 @@ function Snake(x, y){
 				</section>
 
 				<section>
-					<h3>Evènements</h3>
+					<h3>Evénements</h3>
 
 					<pre class="js-example"><code class="javascript" contentEditable="true">// Change the direction of the snake of the user using the keybord
 $(document).keydown(function(e){
@@ -409,7 +409,7 @@ $(document).keydown(function(e){
   }
 });</code></pre>
 
-					<p>Autres fonctions d'évènements : click, mouseup, hover, keypress, submit, focus, resize...</p>
+					<p>Autres fonctions d'événements : click, mouseup, hover, keypress, submit, focus, resize...</p>
 
 				</section>
 
@@ -496,6 +496,7 @@ $(document).keydown(function(e){
 						<li>HTML et CSS</li>
 						<li>XML ou JSON (ou autre)</li>
 						<li>L'objet <code>XMLHttpRequest</code> de JavaScript</li>
+						<li>Nouvelles approches javascript : <code>async</code> et <code>await</code></li>
 					</ul>
 				</section>
 
@@ -659,6 +660,23 @@ req.onreadystatechange = function(){
   // Send
   req.send();
 }</code></pre>					
+				</section>
+
+				<section>
+					<h3>En JS moderne</h3>
+					<pre class="js-example"><code class="javascript" contentEditable="true">
+async function getAllProjects(){
+	let response= await fetch(baseURL+'/projectlist');
+	let listProject= await response.json();
+	if (response.ok){
+		console.log(listProject);
+		return listProject;
+	}
+	else{
+		console.log('error');
+	}
+}
+					</code></pre>
 				</section>
 
 				<section>

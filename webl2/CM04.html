@@ -22,60 +22,6 @@
 					<p style="font-size: 28px; text-align: center">Cours mis à jour par Gaël Guibon</p>
 				</section>
 
-				<!-- Begin retrospective -->
-
-				<section>
-					<h2>Rétrospective TD05</h2>
-
-					<h3>Travaux rendus : xx%</h3>
-					
-					<p>Complétion</p>
-					<table class="stats">
-						<tr>
-							<td>Partie HTML/CSS</td>
-							<td>xx%</td>
-						</tr>
-						<tr>
-							<td>Partie AJAX (au moins une requête bien traitée)</td>
-							<td>xx%</td>
-						</tr>
-						<tr>
-							<td>Complètement réussi</td>
-							<td>xx%</td>
-						</tr>
-					</table>
-				</section>
-
-				<section>
-					<h2>Rétrospective TD06</h2>
-
-					<h3>Travaux rendus : xx%</h3>
-					
-					<p>Complétion</p>
-					<table class="stats">
-						<tr>
-							<td>Formulaire patates</td>
-							<td>xx%</td>
-						</tr>
-						<tr>
-							<td>Affichage images</td>
-							<td>xx%</td>
-						</tr>
-						<tr>
-							<td>Traduction</td>
-							<td>xx%</td>
-						</tr>
-						<tr>
-							<td>Inversion</td>
-							<td>xx%</td>
-						</tr>
-					</table>
-				</section>
-
-				<!-- End retrospective -->
-
-				<!-- Suite cours -->
-
 				<section>
 					<div class="section-title" style="margin-top: 150px;">Technologies serveur</div>
 
@@ -601,7 +547,7 @@ function getRecommendations($gender, $userId, $number){
 
 					<div style="clear: both; float: left;">
 						<h4 style="margin-top: 28px">Requête</h4>
-						<p><code>SELECT Name, InStock, Supplier<br/>FROM Ingredients, SoldBy<br/>Where Name=Ingredient</code></p>
+						<p><code>SELECT Name, InStock, Supplier<br/>FROM Ingredients, SoldBy<br/>WHERE Name=Ingredient</code></p>
 					</div>
 
 					<div style="float: right">
@@ -661,9 +607,9 @@ function getRecommendations($gender, $userId, $number){
 				</section>
 
 				<section>
-					<h2>Utilser MySQL avec PHP</h2>
+					<h2>Utiliser MySQL avec PHP</h2>
 
-					<h3>Deux possibiltiés</h3>
+					<h3>Deux possibilités</h3>
 
 					<h4>MySQLi (MySQL improved)</h4>
 					<ul>
@@ -671,11 +617,66 @@ function getRecommendations($gender, $userId, $number){
 						<li>Deux API : une procédurale et une OO</li>
 					</ul>
 
-					<h4>PDO (PHP Data Objects) – recommandé</h4>
+					<h4>PDO (PHP Data Objects)</h4>
 					<ul>
 						<li>Interaction avec 12 SGBD différents, dont MySQL</li>
 						<li>Uniquement OO</li>
 					</ul>
+
+					<p class="fragment"><span style="color:red;">L'orienté objet (OO) est recommandé !</span></p>
+				</section>
+
+				<section>
+					<h2>Avec MySQLi</h2>
+
+					<pre class="html-example"><code class="php" style="max-height: 530px;">
+// Infos pour se connecter
+$db_host = 'localhost';
+$db_user = 'root';
+$db_password = 'root';
+$db_db = 'produits';
+$db_port = 8889;
+
+// Ouverture de la connexion
+$connection = new mysqli($db_host, $db_user, $db_password, $db_db);
+
+// Préparation de la requête (query)
+$sql = "SELECT * FROM Ingredients WHERE Name = 'Kahlua';";
+$results = $connection->query($sql);
+
+// Parcours du résultat
+while($row = $results->fetch_assoc()) {
+	echo $row['Price'] . "\n";
+}
+
+// Fermeture de la connexion
+$connection->close();
+					</code></pre>
+				</section>
+
+				
+
+				<section>
+					<h3>Création dynamique de requête (MySQLi)</h3>
+					<ul>
+						<li>
+							Ajout de valeurs directement dans la requête
+							<pre class="html-example"><code class="php">
+$name = "Kahlua";
+$query = "SELECT * FROM Ingredients WHERE Name = '$name'";
+$connection->query($query);
+	</code></pre>
+							</li>
+							<li>
+								Utilisation de marqueurs (requête préparée)
+								<pre class="html-example"><code class="php">
+// Prepare statement
+$statement = $connection->prepare("SELECT * FROM Ingredients WHERE Name = ? ;");
+// Bind value ("s" = String ; "i" = Integer)
+$statement->bind_param("s", $name);
+// Execute query
+$statement->execute();
+	</code></pre>
 				</section>
 
 				<section>
@@ -690,7 +691,7 @@ function getRecommendations($gender, $userId, $number){
   );
 
   // Make the query
-  $query = "SELECT * FROM Ingredients WHERE Name = 'Kahlua'";
+  $query = "SELECT * FROM Ingredients WHERE Name = 'Kahlua';";
   $results = $connection->query($query);
 
   // Browse the results

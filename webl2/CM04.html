@@ -670,12 +670,14 @@ $connection->query($query);
 							<li>
 								Utilisation de marqueurs (requête préparée)
 								<pre class="html-example"><code class="php">
-// Prepare statement
+// Preparationd e la requête
 $statement = $connection->prepare("SELECT * FROM Ingredients WHERE Name = ? ;");
-// Bind value ("s" = String ; "i" = Integer)
+// Lier les valeurs aux points d'interrogation ("s" = String ; "i" = Integer)
 $statement->bind_param("s", $name);
-// Execute query
+// Exécuter la requête
 $statement->execute();
+// Obtenir le(s) résultat(s)
+$results = $statement->get_result();
 	</code></pre>
 				</section>
 
